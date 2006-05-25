@@ -1,0 +1,57 @@
+
+\documentclass{minimal}
+\usepackage{amssymb}
+\usepackage{faktor}
+
+\makeatletter
+  \newlength{\h@uteurnumerateur}
+  \newlength{\h@uteurdenominateur}
+\newcommand*{\quotientdroite}[2]{
+   \mathchoice%
+   {%displaystyle
+     \settoheight{\h@uteurnumerateur}{\ensuremath{#1#2}}%
+     \settoheight{\h@uteurdenominateur}{\ensuremath{#1#2}}%
+     \raisebox{0.5\h@uteurnumerateur}{\ensuremath{#1}}%
+     \mkern-5mu\diagup\mkern-4mu%
+     \raisebox{-0.5\h@uteurdenominateur}{\ensuremath{#2}}%
+   }
+   {%textstyle
+     \settoheight{\h@uteurnumerateur}{\ensuremath{#1#2}}%
+     \settoheight{\h@uteurdenominateur}{\ensuremath{#1#2}}%
+   \raisebox{0.2\h@uteurnumerateur}{\ensuremath{#1}}%
+   /%
+   \raisebox{-0.2\h@uteurdenominateur}{\ensuremath{#2}}%
+   }
+   {%scriptstyle
+     \settoheight{\h@uteurnumerateur}{\ensuremath{\scriptstyle{#1#2}}}%
+     \settoheight{\h@uteurdenominateur}{\ensuremath{\scriptstyle{#1#2}}}%
+   \raisebox{0.2\h@uteurnumerateur}{\ensuremath{\scriptstyle{#1}}}%
+   /%
+   \raisebox{-0.2\h@uteurdenominateur}{\ensuremath{\scriptstyle{#2}}}%
+   }
+   {%scriptscriptstyle
+   \settoheight{\h@uteurnumerateur}{\ensuremath{\scriptscriptstyle{#1#2}}}%
+   \settoheight{\h@uteurdenominateur}{\ensuremath{\scriptscriptstyle{#1#2}}}%
+   \raisebox{0.2\h@uteurnumerateur}{\ensuremath{\scriptscriptstyle{#1}}}%
+   /%
+   \raisebox{-0.2\h@uteurdenominateur}{\ensuremath{\scriptscriptstyle{#2}}}%
+   }
+}
+\makeatother
+\begin{document}
+\errorcontextlines=20
+Le quotient $\quotientdroite{A}{B} = \faktor{A}{B}$ est le quotient
+\[
+\quotientdroite{A}{B} = \faktor{A}{B}
+\]
+La somme $\sum_{a\in\quotientdroite{A}{B}}a = \sum_{a \in \faktor{A}{B}} a$ est la
+\[
+\sum_{a\in\quotientdroite{A}{B}}a = \sum_{a \in \faktor{A}{B}} a.
+\]
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% font-lock-mode: t
+%%% End: 

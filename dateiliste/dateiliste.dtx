@@ -1,0 +1,1198 @@
+% \iffalse meta-comment
+%<*package|driver>
+%%  (C) 2006 Paul Ebermann (Hauptautor)
+%%  (C) 2006 Rolf Niepraschk (einiges an Code gespendet)
+%%
+%%   Package dateiliste - Zur Ausgabe der Liste der Dateien im Dokument.
+%%
+%%   Die Datei dateiliste.dtx sowie die dazugehörige
+%%   dateiliste.ins sowie die damit generierte
+%%   dateiliste.sty stehen unter der
+%%   "LaTeX Project Public License" (LPPL, zu finden
+%%   unter http://www.latex-project.org/lppl/, sowie
+%%   auch in den meisten TeX-Distributionen in
+%%   texmf/docs/latex/base/lppl*.txt), Version 1.3b oder
+%%   später (nach Wahl des Verwenders).
+%%
+%%   Der 'maintenance-status' ist (zur Zeit) 'maintained'.
+%%   
+%%   Das heißt in etwa, die Dateien dürfen frei vertrieben werden,
+%%   bei Änderungen (durch andere Personen als Paul Ebermann)
+%%   ist aber der Name der Datei zu ändern.
+%</package|driver>
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[draft%
+   ]
+  {ltxdoc}
+\usepackage{pauldoc}[2006/04/03]
+\usepackage{dateiliste}
+\usepackage{enumerate}
+\listfiles
+\begin{document}
+   \DocInput{dateiliste.dtx}
+\end{document}
+%</driver>
+%
+%<readme|en>This README is for version:
+%<eo>Tiu README (legumin) estas por versio:
+%<de>Dieses README ist für Version:
+%<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
+%<package>\ProvidesPackage{dateiliste}[%
+%
+%
+%<package|readme|en|de|eo>      2006/04/19 v0.2 %
+%
+%
+%<package>      Ausgabe der Dateiliste (PE)]
+%<readme|en|de|eo>----------------
+%
+% Hier noch der Inhalt der Readme-Datei.
+%<*readme>
+([de] unten - [eo] sube)
+----------------
+[en]
+%</readme>
+%<*en|readme>
+LaTeX-package 'dateiliste' - include list of used files
+(like \listfiles) in the document, and related features.
+
+Author:  Paul Ebermann <Paul-Ebermann@gmx.de>
+License: LPPL 1.3b or later, author-maintained
+         (see http://www.latex-project.org/lppl/).
+
+All Documentation (other than this file) is in german.
+
+The typesetting of the documentation needs 'pauldoc' (from the
+same author).
+Additionally you'll need the packages 'ltxtable', 'tabularx',
+'longtable' and 'rcsinfo'.
+
+The package comes as .dtx + .ins.
+Run "latex dateiliste.ins" to create the style file and the
+README-files (and maybe put them to texmf/tex/latex/paul/, if
+your docstrip is configured accordingly), (after that and
+maybe updating your TeX hash) run "latex dateiliste.dtx"
+(some times) to create the documentation.
+
+ Usage
+-------
+The package has three main features, which can
+be used independently, but together are specially
+useful.
+
+(1) automatic version infos:
+
+  If you have your LaTeX source files in a CVS,
+  you may use the ID tag to generate the date and
+  version number for the version string in \listfiles.
+  Use
+
+    \ProvideFileInfos{$Id: dateiliste.dtx,v 1.1.1.1 2006-05-25 18:01:46 epaul Exp $}
+                     {short description}
+
+  in your file, and do a CVS commit.
+
+(2) include main file:
+
+  Normally the "main" file (given on the command
+  line to LaTeX) does not appear in the list given
+  by \listfiles. This is changed by the package for
+  the case that the file has the name \jobname.tex.
+
+  (More precisely, the package adds \jobname.tex
+   iff this file exists and it not can be determinded[1]
+   to be already in the file list [2].)
+
+  This is enabled by default and may be disabled
+  using the package option 'noaddmain'.
+  The macro
+    \mainFileToList
+  may also be invoked manually to add the main file.
+
+(3) include file list also in the (dvi) result
+
+  You can use the command
+
+    \printFileList[<section command>]
+
+  to include a pretty-printed version of the
+  file list as a section (by default \section*,
+  any sectioning command may be given as an
+  optional argument).
+
+  You also have to use \listfiles in the
+  document preamble (otherwise you'll only get
+  an error message).
+
+  The table only appears from the second LaTeX-run,
+  from the third one is complete, and may need some
+  more runs to align correctly.
+
+  The title, preamble and table headers may be localized
+  with babel - translations for 'english', 'german',
+  'ngerman' and 'esperanto' are included.
+  If you need something else or don't use babel, you have
+  to redefine the following macros:
+
+  \fileListName     - title ("List of Files")
+  \fileListPreamble - preamble (typeset before the table)
+  \fileNameName     - table header "file name"
+  \dateName         - table header "date"
+  \verName          - table header "version"
+  \descriptionName  - table header "description"
+
+-----
+[1] this determination can be configured with
+    the package options
+    nocat12 - does only work with eTeX, else
+       may give double entry 
+    cat12 - works also without eTeX, but may
+       have some side effects to other macro
+       packages, since it converts \@filelist
+       to cat 12.
+    The default setting works like cat12 on non-eTeX
+    and like nocat12 on eTeX.
+
+[2] this may occur when you invoke
+    LaTeX with "\input{mainfile.tex}".
+%</en|readme>
+%<*readme>
+----------------
+[de]
+%</readme>
+%<*de|readme>
+LaTeX-Paket 'dateiliste' - Liste der verwendeten Dateien im Dokument
+
+Autor:  Paul Ebermann (Paul-Ebermann@gmx.de).
+Lizenz: LPPL 1.3b oder später, mit Maintenance-Status
+        "author-maintained". Siehe http://www.latex-project.org/lppl/.
+
+Geschrieben für den eigenen Gebrauch
+(-> http://www.math.hu-berlin.de/~ebermann/alg-script/),
+aber  vielleicht ist es auch für andere von Nutzen.
+
+Zum Setzen der Dokumentation wird das Paket 'pauldoc'
+(vom selben Autor) benötigt.
+
+Das Paket kommt als .dtx + .ins.
+Mit "latex dateiliste.ins" wird die .sty-Datei erstellt (und
+eventuell gleich nach texmf/tex/latex/paul/ installiert,
+wenn docstrip entsprechend eingerichtet ist), mit
+latex dateiliste.dtx kann (danach und eventuell nach einer
+Aktualisierung der TeX-Dateidatenbank) die Dokumentation neu
+erstellt werden.
+
+Zur Verwendung siehe dateiliste.pdf.
+%</de|readme>
+%<*readme>
+----------------
+[eo-h]
+%</readme>
+%<*eo|readme>
+LaTeX-pakajho 'dateiliste' - Variajho de \DeclareRobustCommand,
+kiu antaue elprovas, chu la nomo jam ekzistas.
+
+Autoro:  Paulo Ebermann (Paul-Ebermann@gmx.de).
+Licenzo: LPPL 1.3, 'author-maintained'
+         (-> http://www.latex-project.org/lppl/).
+
+Kreitaj por propra uzo, sed eble iom de ghi ankau
+uzeblas por aliaj.
+
+La dokumentaro (escepte tiu chi dosiero) estas nur en la germana
+lingvo.
+
+La pakajho bezonas la pakajhojn 'ltxtable', 'longtable',
+'tabularx' kaj 'rcsinfo'.
+Por krei la dokumentadon vi krome bezonas 'pauldoc' (de la sama autoro).
+
+La pakajho venas en .dtx + .ins.
+Voku "latex dateiliste.ins" por krei la .sty-dosieron (kaj
+eble meti ghin al texmf/tex/latex/paul/, se via docstrip estis
+konfigurita laue), voku "latex dateiliste.dtx" por rekrei
+la dokumentaron.
+
+ Uzado
+-------
+
+La pakajho konsistas el tri chefaj bonajhoj, kiujn
+oni povas uzi sendepende, sed kune ili estas speciale
+utile.
+
+
+(1) automataj versio-informoj.
+
+  Se via LaTeX-dosieroj estas ene de CVS, vi povas
+  uzi tion por automate generi la daton kaj
+  versi-numeron por la listo kreita de \listfiles
+  (kaj la listo de (3).)
+  Uzu
+
+    \ProvideFileInfos{$Id: dateiliste.dtx,v 1.1.1.1 2006-05-25 18:01:46 epaul Exp $}
+                     {mallonga priskribo}
+
+  en via dosiero, kaj faru 'cvs commit'. (CVS enmetos
+  informojn, kiun \ProvideFileInfos uzas.)
+
+(2) aldono de chefa dosiero
+
+  Kutime la chefa dosiero (kiun vi donis en la
+  latex-voko) ne aperas en la listo kreita de
+  \listfiles. Tiun la pakajho shanghas, se tiu
+  dosiero havas la nomfinajhon .tex
+
+  (Pli precize, la pakajho aldonas '\jobname.tex',
+   se tiu dosiero ekzistas, kaj se ne eblas eltrovi[1],
+   ke la dosiero estas jam en la listo[2].)
+
+  Tiu aldonado estas kutime shaltita, sed eblas
+  malshalti ghin per la pakajh-opcio 'noaddmain'.
+  Tiam ankau eblas voki
+    \mainFileToList
+  por fari tion.
+
+(3) enmetu la dosierliston en la rezulton
+
+  Vi povas uzi la komandon
+
+    \printFileList[<section command>]
+
+  por enmeti bele formatitan version de la
+  dosierlisto kiel sekcio (kutime '\section*',
+  sed vi povas uzi iun ajn sekci-komandon kiel
+  opcia argumento) en la dokumenton.
+
+  Vi krome devas uzi \listfiles en la komenca
+  parto de la dokumento (antau \begin{document}),
+  alikaze vi nur ricevos erarmesaghon.
+
+  La tabelo nur aperos ekde la dua LaTeX-voko, kaj
+  eble bezonos kelkajn pliajn por aspekti ghuste.
+
+  Eblas traduki la titolon de la sekcio, la antautekston
+  kaj la tabelkapoj helpe de la babel-pakajho - tradukojn
+  por 'english', 'german', 'ngerman' kaj 'esperanto' estas
+  la pakajho jam enhavas.
+  Se vi bezonas aliajn lingvojn au ne uzas 'babel',
+  redifinu la sekvajn makroojn:
+
+  \fileListName     - titolo ("Listo de dosieroj")
+  \fileListPreamble - antauteksto (printita inter titolo
+                       kaj tabelo)
+  \fileNameName     - table header "dosiernomo"
+  \dateName         - table header "dato"
+  \verName          - table header "versio"
+  \descriptionName  - table header "priskribo"
+
+-----
+[1] Tiun determinadon vi povas konfiguri per la
+    pakajh-opcioj:
+     nocat12 - nur funkcias se vi uzas eTeX, alikaze
+       eble la cxef-dosiero aperos dufoje.
+     cat12 - funkcias kun aux sen eTeX, koncertante
+       la enhavon de \@filelist al kategorio 12.
+    Se vi neniun de tiuj opcioj donas, gxi laboras
+    kiel 'nocat12' en eTeX kaj kiel 'cat12' en ne-eTeX.
+
+[2] Tio povas okazi ekzemple, se vi invokas
+    LaTeX kun "\input{mainfile.tex}".
+%</eo|readme>
+%
+% \fi
+% \CheckSum{0}
+%
+% \changes{v0.0}{2006/03/23}{Erste Fassung}
+% \changes{v0.1a}{2006/04/05}{Kleine Änderungen der Dokumentation.}
+% \changes{v0.2}{2006/04/19}{README-Dateien werden jetzt auch aus
+%                            der .dtx-Datei generiert.}
+%
+% \GetFileInfo{dateiliste.sty}
+%
+%
+% \title{Das \pack{dateiliste}-Package -- Liste der verwendeten Dateien im Dokument\thanks{%
+% Dieses Dokument gehört zu \pack{dateiliste}~\fileversion,
+% vom~\filedate.}}
+% \author{Paul Ebermann\thanks{E-Mail: \texttt{Paul-Ebermann@gmx.de}}
+%         \thanks{Rolf Niepraschk (\texttt{Rolf.Niepraschk@ptb.de})
+%                 hat das Package \pack{printfilelist}
+%                 geschrieben und mir geschickt, dessen Code bildete die Basis
+%                 für \cs{printFileList}. Für den jetztigen Code
+%                 (insbesondere dessen Fehler) bin ich (Paul) aber
+%                 selbst verantwortlich.}}
+%
+% \maketitle
+%
+%  \begin{abstract}
+%  Dieses Paket implementiert einige Befehle, um den
+%  Überblick über Versionen und Änderungsdaten von \LaTeX-Quelltexten
+%  zu behalten: Automatische Versionsinfos aus dem CVS, Hauptdatei
+%  in der Dateiliste, Inklusion der Dateiliste im Dokument.
+%  \end{abstract}
+%
+% \tableofcontents
+%
+%
+% \section{Benutzerdokumentation der Befehle}
+%
+%  Die drei Teile \emph{automatische Versionsinfos} (mittels '\ProvideFileInfos'),
+%  \emph{Hauptdatei in der Dateiliste} (mittels '\mainFileToList' bzw. der Package-Option)
+%  und \emph{Dateilisten-Ausgabe} (mittels 'printFileList') sind unabhängig voneinander
+%  nutzbar, aber die ersten beiden Features werden durch das letzte erst richtig nützlich,
+%  und damit das letzte eine vernünftige Ausgabe hat, sind die ersten beiden hilfreich.
+%  Daher also alles in einem Package.
+%
+% \subsection{README in Englisch, Deutsch und Esperanto}
+%
+%  Eine README-Datei mit einer Kurzübersicht des Paketes auf
+%  Englisch, Deutsch und Esperanto kann ebenfalls mit docstrip
+%  aus der dtx-Datei generiert werden, die beiliegende Datei
+%  'dateiliste.ins' tut dies neben der Generierung der
+% '.sty'-Datei.
+%
+% \subsection{Automatische Versionsinfos}
+%
+%  \noindent\DescribeMacro{\ProvideFileInfos}\marg{id-string}\marg{kurzbeschreibung}
+%
+%  Ändert die Informationen für die Datei, in der es aufgerufen wurde.
+%  \meta{id-string} sollte ein String sein, der wie
+%\begin{verbatim}
+%   $Id: dateiliste.dtx,v 1.1.1.1 2006-05-25 18:01:46 epaul Exp $
+%\end{verbatim}
+% (Beispiel für diese Datei) aussieht.
+%  Diesen lässt man am besten von seinem CVS produzieren, schreibt also etwas wie
+%\begin{quote}
+%  '\ProvideFileInfos{$''Id:$}{Algebraische Geometrie I}'
+%\end{quote}
+%  in seine Datei und macht dann ein 'cvs commit' -- dadurch werden von CVS die
+%  passenden Informationen eingefüllt.
+%
+%  \meta{kurzbeschreibung} sollte eine kurze Beschreibung der Funktion/des
+%   Inhaltes der Datei sein, optimalerweise nur ASCII-Zeichen.
+%
+%  Das Makro sorgt dann dafür, dass in der durch '\listfiles' sowie
+%  auch der durch '\printFileList' (siehe Abschnitt \ref{describe:printfilelist})
+%  erzeugten Liste die richtigen Daten (d.h. das Commit-Datum und die
+%  RCS/CVS-Versionsnummer) stehen.
+%
+%  \subsection{Hauptdatei in der Dateiliste, Package-Optionen}
+%  \DescribeMacro{\mainFileToList}
+%  Fügt die Haupt-Datei (\meta{jobname}'.tex') am Anfang der Dateiliste ein,
+%  falls sie existiert. Zuvor wird versucht, ein etwaiges Vorkommen dieses
+%  Namens in der Liste aus dieser zu entfernen.
+%  (Ein solches Vorkommen kann nur dann sein, wenn die Haupt-Datei mit '\input{...}'
+%  geladen wurde, anstatt einfach so den Namen auf der Kommandozeile anzugeben, oder
+%  wenn die Hauptdatei sich selbst noch einmal einliest.)
+%
+%  Die interne Funktionsweise (und damit etwaige Nebenwirkungen) \DescribeMacro{cat12}
+%  hängt davon ab, ob eine der
+%  Package-Optionen 'cat12' oder 'nocat12' \DescribeMacro{nocat12} gegeben wurde:
+%  \begin{itemize}
+%    \item Mit Option 'cat12' wird die interne Liste der geladenen Dateien
+%       in Kategorie-12-Zeichen (d.h. other) umgewandelt, um den eventuell dort
+%       schon vorhandenen Namen der Hauptdatei zu löschen. Dies kann Nebenwirkungen
+%       auf andere Pakete haben, wenn diese ebenfalls diese Liste verarbeiten
+%       und dabei auf die Kategorien der Zeichen angewiesen sind.
+%    \item Mit Option 'nocat12' funktioniert es bei Verwendung von \eTeX\ auch ohne
+%       die eben geschilderte Umwandlung, bei \TeX\ ist das nicht möglich und
+%       es wird einfach so der Dateiname eingefügt -- mit dem Effekt, dass er eventuell
+%       doppelt auftaucht.
+%    \item Ohne diese Optionen wird bei Verwendung von \eTeX\ die nebenwirkungsfreie
+%       Variante, ohne \eTeX\ die Kategorie-12-Variante gewählt.
+%  \end{itemize}
+%  Details dazu sind im Implementationsteil nachzulesen.
+%
+%  Dieses Makro wird automatisch am Ende des
+%  Dokumentes ausgeführt, falls nicht die Package-Option 'noaddmain'
+%  \DescribeMacro{noaddmain} gesetzt wurde.
+%  Mit 'addmain' \DescribeMacro{addmain} kann das Vorgabe-Verhalten erzwungen werden.
+%
+%  \subsection{Dateilisten-Ausgabe}\label{describe:printfilelist}
+%  \noindent\DescribeMacro{\printFileList}\oarg{gliederung}
+%
+%  Fügt an der aktuellen Stelle eine Liste der im aktuellen Dokument
+%  verwendeten Dateien (ohne die Haupt-Datei) ein.
+%  \meta{gliederung} ist ein Gliederungsbefehl (wie '\section',
+%  '\chapter' etc., Vorgabewert ist '\section*' (für einen
+%  unnummerierten Abschnitt).
+%
+%  Damit eine Liste ausgegeben wird, muss in der Präambel des Dokumentes
+%  ein '\listfiles' auftauchen. (Andernfalls gibt '\printFileList' nur
+%  eine Warnung auf der Konsole aus und tut sonst nichts.)
+%
+%  Die Liste selbst ist erst ab dem zweiten \LaTeX-Lauf im Dokument zu
+%  sehen (und enthält ab dem dritten Lauf dann auch die Dateilisten-Datei).
+%
+%  Die Liste wird als 4-spaltige Tabelle gesetzt.
+%
+%
+%  Falls das Paket \pack{babel} vor oder nach diesem Paket geladen wird,
+%  sind die Spaltenüberschriften, die Gliederung sowie die Präambel auch
+%  übersetzbar -- zur Zeit werden von diesem Paket die Sprachoptionen 'english',
+%  'german', 'ngerman' und 'esperanto' unterstützt.
+%
+%  Ansonsten \DescribeMacro{\fileListName}\DescribeMacro{\fileListPreamble}
+%  \DescribeMacro{\fileNameName}\DescribeMacro{\dateName}\DescribeMacro{\verName}
+%  \DescribeMacro{\descriptionName} kann durch Neudefinition der Befehle
+%  '\fileListName' (Überschrift), '\fileListPreamble' (einleitender Text,
+%  normalerweise mit Fußnote),
+%  sowie '\fileNameName', '\dateName', '\verName' und '\descriptionName' (Tabellenkopf)
+%  der Inhalt der statischen Texte verändert werden. (Auch das wirkt sich
+%  erst im folgenden \LaTeX-Lauf aus.)
+%
+%  Im folgenden mal ein Beispiel aus diesem Dokument, erzeugt mit:
+%\begin{verbatim}
+%  \printFileList[\subsubsection]
+%\end{verbatim}
+%
+%  \printFileList[\subsubsection]
+%
+%  \subsection{Abhängigkeiten}
+%
+%  Für die Funktion des Paketes sind die Pakete \pack{rcsinfo} (Jürgen Vollmer) und
+%  \pack{ltxtable} -- damit auch \pack{tabularx}, \pack{longtable} (alle drei von
+%  David Carlisle) und  \pack{array} (Frank Mittelbach) -- notwendig. \pack{babel}
+%  (Johannes Braams) wird, falls ebenfalls geladen, auch genutzt.
+%
+%  Falls das Paket \pack{pauldoc} (von mir) ebenfalls geladen wird, werden einige spezielle
+%  Anpassungen getroffen.
+%
+%  Für die korrekte Erkennung, dass der Name der Hauptdatei schon in der Liste der
+%  geladenen Dateien auftaucht, ist der primitive \eTeX-Befehl '\scantokens' notwendig --
+%  falls kein \eTeX\ verwendet wird, kann eine nicht-Erkennung (und damit am Ende das
+%  doppelte Auftauchen der Haupt-Datei) vorkommen.
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%  \DoNotIndex{\',\@currname,\^,\begin,\end,\begingroup,\endgroup,
+%              \csname,\endcsname,\day,\def,\DeclareOption,\do,
+%              \edef,\else,\endinput,\expandafter,\fi,\footnote,
+%              \IfFileExists,\ifx,\immediate,\LaTeX,\let,\makeatletter,
+%              \makeatother,\month,\newcommand,\newif,\newwrite,
+%              \protect,\relax,\renewcommand,\space,\string,\textbf,
+%              \the,\two@digits,\u,\write,\xdef,\year}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+%  \subsection{Optionen}
+%  \changes{v0.1}{2006/04/02}{Optionen \texttt{addmain} und \texttt{noaddmain} hinzugefügt.}
+%  Wir merken uns die ausgewählte Option in einem '\if'.
+%    \begin{macrocode}
+\newif\if@dateiliste@addMain
+\DeclareOption{addmain} {%
+   \@dateiliste@addMaintrue
+}
+\DeclareOption{noaddmain} {%
+   \@dateiliste@addMainfalse
+}
+%    \end{macrocode}
+%
+%  \changes{v0.2}{2006/04/19}{Optionen 'cat12' und 'nocat12' hinzugefügt.}
+%  Das gleiche gilt für 'cat12'/'nocat12'.
+%    \begin{macrocode}
+\newif\if@dateiliste@catxii \@dateiliste@catxiifalse
+\newif\if@dateiliste@nocatxii \@dateiliste@nocatxiifalse
+\DeclareOption{cat12} {%
+   \@dateiliste@catxiitrue
+}
+\DeclareOption{nocat12} {%
+   \@dateiliste@nocatxiitrue
+}
+%    \end{macrocode}
+%  Die Standard-Option ist 'addmain'.
+%    \begin{macrocode}
+\ExecuteOptions{addmain}
+\ProcessOptions
+%    \end{macrocode}
+%
+%
+% \subsection{Aktuelle Versionsnummern in der Dateiliste}
+%
+%  Zunächst wollen wir in der durch '\listfiles'
+%  provozierten Ausgabe automatisch sinnvolle Infos haben. Dafür
+%  laden wir das Paket \pack{rcsinfo}.
+%  Wir verwenden die Parameter 'nofancy', weil sonst die Fußzeile
+%  umgestellt wird, und 'notoday', weil sonst das aktuelle Datum umgestellt
+%  wird.
+%  \changes{v0.1}{2006/03/30}{\pack{rcsinfo} nun mit \texttt{notoday}-Parameter.}
+%    \begin{macrocode}
+\RequirePackage[nofancy, notoday]{rcsinfo}
+%    \end{macrocode}
+%
+%  \begin{macro}{\ProvideFileInfos}\noindent\marg{id-string}\marg{kurzbeschreibung}
+%
+%
+%    \begin{macrocode}
+\newcommand*{\ProvideFileInfos}[2] {%  
+%    \end{macrocode}
+%  Zunächst lassen wir '\rcsInfo' den \meta{id-string} analysieren. Dies definiert
+%  (unter anderem) die Makros '\rcsInfoFile' (der Dateiname), '\rcsInfoDate'
+%  (Datum, im 'YYYY/MM/DD'-Format) und '\rcsInfoRevision' (die Versionsnummer).
+%
+%  Das Leerzeichen nach dem '#1' ist notwendig, damit '\rcsInfo' erkennt, wo
+%  der \meta{id-string} aufhört - in der Definition steht da nämlich ein Leerzeichen
+%  am Ende der Parameterliste.
+%    \begin{macrocode}
+   \rcsInfo #1 %
+%    \end{macrocode}
+%  Dann rufen wir '\ProvidesFile' aus dem \LaTeX-Kernel auf.
+%    \begin{macrocode}
+   \ProvidesFile%
+%    \end{macrocode}
+%  Als erster Parameter wird der Dateiname übergeben, der von '\rcsInfo' ermittelt wurde.
+%  Mittels '\expandafter\@firstofone' entfernen wir dabei noch das von '\rcsInfo' (zumindest
+%  in meiner Version) eingebaute Leerzeichen am Anfang
+%  (welches ja einen anderen Namen ergibt und damit verhindern würde, dass die Information der
+%   richtigen Datei zugeschrieben wird).
+%    \begin{macrocode}
+   {\expandafter\@firstofone\rcsInfoFile}%
+%    \end{macrocode}
+%  Dann das, wofür wir das ganze eigentlich machen: Das Datum, ein
+%  Leerzeichen, dann die Versionsnummer (mit einem 'v' davor). Schließlich
+% hängen wir noch \meta{kurzbeschreibung} an.
+%    \begin{macrocode}
+   [\rcsInfoDate\space v\rcsInfoRevision\space #2]%
+%    \end{macrocode}
+%  '\ProvidesFile' definiert jetzt ein Makro ('\ver@'\meta{dateiname}) mit
+%   diesem Text als Inhalt, welches später von '\@dofilelist' (und
+%   unserem '\@writefilelist') verwendet wird.
+%    \begin{macrocode}
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \subsection{Dateiliste}
+%   
+%   \changes{v0.1}{2006/03/31}{\pack{ltxtable} verwendet.}
+%   Da die Liste ziemlich lang (länger als eine Seite) werden kann, verwende
+%   ich \pack{longtable} statt der eingebauten (oder der von \pack{array} verbesserten)
+%   'tabular'-Umgebung. Und damit
+%   ich in der letzten Spalte nicht die Breite fest einstellen muss, sondern
+%   einfach die restliche Breite (abhängig von Seitenbreite und der Breite der
+%   anderen Spalten, welche ja abhängig vom Inhalt ist) nehmen kann, lade
+%   ich \pack{ltxtable},  welches \pack{longtable} mit \pack{tabularx} kreuzt
+%   (und beide Pakete auch lädt).
+%
+%    \begin{macrocode}
+\RequirePackage{ltxtable}
+%    \end{macrocode}
+%
+%
+%  \begin{macro}{\dateiliste@preInclude}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  \begin{macro}{\dateiliste@postInclude}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%   Diese beiden Macros werden vor bzw. nach dem
+%   Laden (und setzen) der Dateiliste aufgerufen.
+%   Sie sorgen dafür, dass \verb+'+ innerhalb der Liste
+%   nicht mehr in den Verbatim-Mode schaltet, wie das
+%   von \pack{pauldoc} eingestellt wird.
+%   Deswegen werden sie auch nur dann so definiert, wenn
+%   \pack{pauldoc} geladen wurde. (Und weil '\@ifpackageloaded'
+%   nur in der Präambel erlaubt ist, müssen wir die beiden
+%   Befehle schon zu Beginn des Dokumentes definieren, anstatt
+%   einfach die Abfrage dann zu machen, wenn es gebraucht
+%   wird.)
+%    \begin{macrocode}
+\AtBeginDocument{%
+   \@ifpackageloaded{pauldoc}{%
+      \newcommand*{\dateiliste@preInclude}{\DeleteShortVerb{\'}}%
+      \newcommand*{\dateiliste@postInclude}{\MakeShortVerb{\'}}%
+   }{%
+      \newcommand*{\dateiliste@preInclude}{\relax}%
+      \newcommand*{\dateiliste@postInclude}{\relax}%
+   }%
+}%
+%    \end{macrocode}
+%   Die beiden Makros kann man sich auch selbst umdefinieren,
+%   falls andere Pakete Inkompatibilitäten ergeben.
+%  \end{macro}
+%  \end{macro}
+%
+%  \subsubsection{Ausgabe der Liste}
+%
+%  \begin{macro}{\printFileList}\noindent\oarg{gliederung}
+% \changes{v0.1}{2006/04/02}{Fast komplett neue Implementation,
+%                            entsprechend auch anderes Ergebnis.}
+%
+%  Der Vorgabewert für \meta{gliederung} ist '\section*',
+%  also ein unnummerierter Abschnitt.
+%    \begin{macrocode}
+\newcommand*{\printFileList}[1][\section*] {% \printFileList
+%    \end{macrocode}
+%  Zunächst überprüfen wir, ob '\listfiles' in der Präambel gegeben
+%  wurde. Dies zeigt sich darin, dass das Kommando '\dofilelist'
+%  definiert ist. Andernfalls gibt es eine Warnung, und wir machen
+%  nichts.
+%    \begin{macrocode}
+   \@ifundefined{@dofilelist}
+   {%
+      \PackageWarning{dateiliste}
+      {
+         \protect\printFileList\space works only if
+         \protect\listfiles\space is given in the preamble.
+      }
+   }%
+   {%                      else (\@ifundefined{@dofilelist})
+%    \end{macrocode}
+%  Andernfalls beginnen wir einen neuen Abschnitt (oder ein Kapitel oder was auch immer mit
+%  \meta{gliederung} festgelegt wurde), mit Namen '\fileListName' und einem Label,
+%  falls man mal von wo anders darauf verweisen möchte.
+%  Danach kommt etwas beschreibender Text in '\fileListPreamble'.
+%    \begin{macrocode}
+      #1{\fileListName}\label{sec:filelist}%
+      \fileListPreamble
+%    \end{macrocode}
+%   In der Datei \meta{jobname}'.filelist' befindet sich nach dem ersten
+%   \LaTeX-Lauf der Inhalt der Tabelle (siehe unten). Wir überprüfen zunächst,
+%    ob die Datei schon existiert.
+%    \begin{macrocode}
+      \IfFileExists{\jobname.filelist}{%
+%    \end{macrocode}
+%   \begin{macro}{\dateiliste@addtofilelist}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%   \begin{macro}{\@addtofilelist}
+%  \changes{v0.1}{2006/03/31}{neu: Umdefinition.}
+%   Falls ja, dann definieren wir zunächst '\@addtofilelist' um,
+%   da '\LTXtable' die Datei \meta{jobname}'.filelist' mehrfach einliest, wir
+%   aber nur einen Eintrag in der Dateiliste haben wollen.
+%   Wir verwenden nicht einfach '\@gobble', um in dem Fall, dass
+%   durch das Setzen der Datei weitere Dateien (Schriften etc.)
+%   geladen werden, diese doch aufzunehmen. (Wir vergleichen also
+%   den Dateinamen mit dem unserer Dateinamens-Datei, und rufen
+%   im Fall der Nichtübereinstimmung das Original-'\@addtofilelist' auf.)
+%    \begin{macrocode}
+         \let \dateiliste@addtofilelist = \@addtofilelist
+         \def\@addtofilelist####1{%
+            \edef\dateiliste@tempa{####1}%
+            \edef\dateiliste@tempb{\jobname.filelist}\relax%
+            \ifx\dateiliste@tempa\dateiliste@tempb
+              \relax
+            \else
+              \dateiliste@addtofilelist{####1}
+            \fi
+         }%
+%    \end{macrocode}
+%   \end{macro}
+%   \end{macro}
+%   '\dateiliste@preInclude' schaltet \verb+'+ als verbatim-Char ab (und
+%   das Makro '\dateiliste@postInclude' schaltet es nachher wieder an),
+%   falls \pack{pauldoc} geladen wurde (ansonsten  tun sie nichts, falls
+%   nicht von jemand anders neudefiniert). Die
+%   Datei selbst wird mittels '\LTXtable' geladen.
+%    \begin{macrocode}
+         \dateiliste@preInclude
+         \LTXtable{\linewidth}{\jobname.filelist}%
+         \dateiliste@postInclude
+%    \end{macrocode}
+%  Danach stellen wir '\@addtofilelist' wieder her und
+%  fügen unsere Dateilisten-Datei auch hinzu.
+%    \begin{macrocode}
+         \let \@addtofilelist = \dateiliste@addtofilelist
+         \@addtofilelist{\jobname.filelist}%
+      }
+%    \end{macrocode}
+%    Falls \meta{jobname}'.filelist' nicht vorhanden war, geben
+%    wir einen Hinweistext aus, dass man \LaTeX\ noch einmal
+%    laufen lassen soll.
+%    \begin{macrocode}
+      {%
+         \PackageWarning{dateiliste}{
+            Run LaTeX again to include the File list.
+         }%
+      }%
+%    \end{macrocode}
+%
+%
+%  \subsubsection{Erstellen der Liste}
+%
+%  Jetzt noch ein paar Befehle, um die Listen-Datei zu generieren \ldots
+%  (Wir sind immer noch innerhalb von '\printFileList', das alles passiert
+%  also nur, wenn dieser Befehl aufgerufen wird.)
+%
+%  Am Ende des Dokumentes -- d.h., wenn die Dateiliste vollständig gesammelt
+%  wurde -- schreiben wir sie -- mit den passenden Formatierungsanweisungen --
+%   in eine Datei.
+%  (Das ganze in einer Gruppe, damit nichts kaputtgeht, und temporäre Makros
+%   nachher wieder freigegeben werden.)
+%    \begin{macrocode}
+      \AtEndDocument{%
+         \begingroup
+         \@writefilelist
+         \endgroup
+      }%
+%    \end{macrocode}
+%  \begin{macro}{\@writefilelist}
+%  Eine Variante von '\@dofilelist', die den Inhalt -- als Tabellenzeilen -- in
+%  die Datei \meta{jobname}'.filelist' schreibt.
+%    \begin{macrocode}
+      \newcommand*{\@writefilelist}{%  \@writefilelist
+         \newwrite\dateiliste@file
+         \immediate\openout\dateiliste@file = \jobname.filelist
+%    \end{macrocode}
+%  Zunächst schreiben wir eine '\ProvidesFile'-Anweisung mit dem aktuellen Datum
+%  in die '.filelist'-Datei. (Das hat den Effekt, dass diese Datei selbst auch
+%  in der Liste erscheint.)
+%    \begin{macrocode}
+         \edef\dateiliste@today{%
+            \the\year/\two@digits{\the\month}/\two@digits{\the\day}}%
+         \immediate\write\dateiliste@file{%
+            \string\ProvidesFile{\jobname.filelist}%
+            [\dateiliste@today\space --- automatically %
+            generated filelist]%
+         }%
+%    \end{macrocode}
+%  Die eigentliche Liste wird in einer 'longtable' gesetzt.
+%  Diese soll drei linksbündig gesetzte Spalten ('l') und dann
+%  eine mit einem Absatz ('X' -- mittels \pack{ltxtable} aus \pack{tabularx}
+%  importiert), welche den restlichen Platz ausfüllt, enthalten.
+%  Damit die letzte Spalte linksbündig (statt Blocksatz) wird, verwenden
+%  wir '>{\raggedright\arraybackslash}' als Modifikator \footnote{wie im \LaTeX-Begleiter,
+%  zweite Auflage, Beispiel 5-3-2 vorgeschlagen.}
+%  \changes{}{2006/05/10}{jetzt auch die letzte Spalte linksbündig.}
+%    \begin{macrocode}
+         \immediate\write\dateiliste@file{%
+            \string\LTleft=0pt%
+            \string\LTright=0pt%
+            \string\begin{longtable}{lll>{\string\raggedright\string\arraybackslash}X}%
+%    \end{macrocode}
+%  Die Überschrift -- aus übersetzbaren Textteilen, siehe unten, bestehend --
+% wiederholt sich auf jeder Seite (deswegen '\endhead' anstatt '\\').
+%    \begin{macrocode}
+               \string\textbf{\fileNameName} &
+               \string\textbf{\dateName} &
+               \string\textbf{\verName} &
+               \string\textbf{\descriptionName}
+               \string\endhead%
+            }%
+%    \end{macrocode}
+%  Jetzt kommt die Schleife mit den einzelnen Dateien.
+%  Das ist zum Großteil abgekupfert von '\@dofilelist' aus
+%  dem \LaTeX-Kernel ('ltfiles.dtx'), welches die Liste zum
+%  Terminal ausgibt.
+%    \begin{macrocode}
+         \@for\@currname:=\@filelist\do{%  \@for
+%    \end{macrocode}
+%  Zunächst bestimmen wir den genauen Dateinamen -- d.h. wir hängen, falls nötig,
+%  ein '.tex' an. Außerdem finden wir den zugehörigen Versions-String heraus.
+%    \begin{macrocode}
+            \filename@parse\@currname
+            \edef\dateiliste@filename{%
+               \filename@base.%
+               \ifx\filename@ext\relax tex\else\filename@ext\fi}%
+            \expandafter\let\expandafter\dateiliste@fileversion
+            \csname ver@\dateiliste@filename\endcsname
+%    \end{macrocode}
+%  Jetzt schreiben wir, durch '&' getrennt, die einzelnen Felder raus.
+%  Zunächst der Dateiname, \ldots
+%    \begin{macrocode}
+            \immediate\write\dateiliste@file{%
+               \dateiliste@filename\space& %
+%    \end{macrocode}
+%  \ldots\ dann entweder ein "`---"' (falls kein Versions-String gegeben wurde), \dots
+%    \begin{macrocode}
+               \ifx\dateiliste@fileversion\relax
+               ---
+               \else
+%    \end{macrocode}
+%  \ldots\ oder der Versionsstring selbst, an den ersten beiden Leerzeichen durch
+%  '&' getrennt. Dafür verfüttern wir das expandierte '\dateiliste@fileversion'
+%  an '\dateiliste@parse@ver'. (Für den Fall, dass da nicht genug Leerzeichen drin
+%  sind, sind am Ende noch ein paar '{}' mit Leerzeichen dazwischen -- die werden
+%  am Ende ja nicht ausgegeben.)
+%    \begin{macrocode}
+               \expandafter\dateiliste@parse@ver
+               \dateiliste@fileversion{} {} {} \relax
+               \fi
+%    \end{macrocode}
+%   Und jetzt noch ein '\\', um die Tabellenzeile zu beenden.
+%    \begin{macrocode}
+               \string\\}%
+         }%  \@for
+%    \end{macrocode}
+%   Nach der Schleife beenden wir die Tabelle und schließen
+%   dann die Datei wieder.
+%    \begin{macrocode}
+      \immediate\write\dateiliste@file{\string\end{longtable}}
+         \immediate\closeout\dateiliste@file
+      }%
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\dateiliste@parse@ver}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  Dieses Makro nimmt zwei durch Leerzeichen getrennte Parameter, und
+%  gibt sie, mit zusätzlichen '&', wieder zurück.
+%    \begin{macrocode}
+      \def\dateiliste@parse@ver##1 ##2 {##1 & ##2 & }%
+%    \end{macrocode}
+%  \end{macro}
+%  Damit ist der else-Teil und auch das ganze Makro '\printFileList' zu Ende.
+%    \begin{macrocode}
+   }% 
+}%  
+%    \end{macrocode}
+%  \end{macro}
+%  \subsubsection{Anpassbare Texte und Übersetzungen}
+%  \begin{macro}{\fileListPreamble}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  \begin{macro}{\fileListName}
+%  \begin{macro}{\fileNameName}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  \begin{macro}{\dateName}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  \begin{macro}{\verName}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  \begin{macro}{\descriptionName}
+%  \changes{v0.1}{2006/03/31}{Neu}
+%  Einige Namen für übersetzbare Texte -- standardmäßig auf Englisch.
+%    \begin{macrocode}
+\newcommand*\fileListPreamble{
+   Here is the list of all files used during the run of \LaTeX{}
+   which produced this document. \footnote{More precisely, it is
+      the list of files used one \LaTeX-run before the one which
+      produced this document, but after some runs the list should
+      stabilize.}
+}
+\newcommand*\fileListName{List of Files}
+\newcommand*\fileNameName{file name}
+\newcommand*\dateName{release date}
+\newcommand*\verName{version}
+\newcommand*\descriptionName{description}
+%    \end{macrocode}
+%   \begin{macro}{\dateiliste@babel}
+%  Hier noch gleich ein paar Übersetzungen.
+%  Wir definieren hier ein einmal-Makro, welches
+%  für mehrere Sprachen\footnote{Genauer: genau für die Sprachen, welche ich soweit
+%  beherrsche, dass ich diese Texte übersetzen konnte.} zum jeweiligen Initialisierungsmakro
+%  Neudefinitionen dieser fünf Befehle hinzufügt.
+%    \begin{macrocode}
+\newcommand*{\dateiliste@babel}{
+%    \end{macrocode}
+%  Zunächst Englisch - das sollte das gleiche wie die Standard-Einstellungen sein.
+%    \begin{macrocode}
+   \addto{\extrasenglish}{%
+      \renewcommand*\fileListPreamble{%
+         Here is the list of all files used during the run of \LaTeX{}
+         which produced this document.\footnote{More precisely, it is
+            the list of files used one \LaTeX-run before the one which
+            produced this document, but after some runs the list
+            should stabilize.}
+      }
+      \renewcommand*\fileListName{List of Files}%
+      \renewcommand*\fileNameName{file name}
+      \renewcommand*\dateName{release date}
+      \renewcommand*\verName{ver.}
+      \renewcommand*\descriptionName{description}
+   }%
+%    \end{macrocode}
+%  Deutsch mit neuer Rechtschreibung.
+%    \begin{macrocode}
+   \addto{\extrasgerman}{%
+      \renewcommand*\fileListPreamble{%
+         Hier die Liste aller Dateien, die während des \LaTeX-Laufes,
+         welcher dieses Dokument erzeugte, verwendet wurden.
+         \footnote{genauer: Es ist die Liste aller Dokumente, die 
+            einen \LaTeX-Lauf früher verwendet wurden. Aber nach
+            einigen Läufen sollte sich die Liste stabilisieren.}
+      }
+      \renewcommand*\fileListName{Liste der Dateinamen}%
+      \renewcommand*\fileNameName{Dateiname}
+      \renewcommand*\dateName{Datum}
+      \renewcommand*\verName{Ver.}
+      \renewcommand*\descriptionName{Beschreibung}
+   }%
+%    \end{macrocode}
+%  Deutsch mit alter Rechtschreibung: ist das gleiche (hier tauchen
+%  keine Fälle mit Änderungen auf.)
+%    \begin{macrocode}
+   \addto{\extrasngerman}{%
+      \renewcommand*\fileListPreamble{%
+         Hier die Liste aller Dateien, die während des \LaTeX-Laufes,
+         welcher dieses Dokument erzeugte, verwendet wurden.
+         \footnote{genauer: Es ist die Liste aller Dokumente, die 
+            einen \LaTeX-Lauf früher verwendet wurden. Aber nach
+            einigen Läufen sollte sich die Liste stabilisieren.}
+      }
+      \renewcommand*\fileListName{Liste der Dateinamen}%
+      \renewcommand*\fileNameName{Dateiname}
+      \renewcommand*\dateName{Datum}
+      \renewcommand*\verName{Ver.}
+      \renewcommand*\descriptionName{Beschreibung}
+   }%
+%    \end{macrocode}
+%  Für die Verwender der Internationalen Sprache (siehe 'www.esperanto.de'):
+%    \begin{macrocode}
+   \addto{\extrasesperanto}{%
+      \renewcommand*\fileListPreamble{%
+         Jen listo de \^ciuj dosieroj, kiuj estis uzitaj dum
+         la \LaTeX-rulo, kiu produktis tiun \^ci dokumenton.
+         \footnote{Pli precize: estas la listo de dosieroj uzitaj
+            unu rulon anta\u{u} tiu, kiu produktis tiun \^ci
+            dokumenton. Sed kutime post kelkaj ruloj la listo
+            devus stabili\^gi.}
+      }
+      \renewcommand*\fileListName{Listo de dosieroj}%
+      \renewcommand*\fileNameName{dosiernomo}
+      \renewcommand*\dateName{dato}
+      \renewcommand*\verName{versio}
+      \renewcommand*\descriptionName{priskribo}
+   }%
+%    \end{macrocode}
+%  Am Ende der Ausführung von '\dateiliste@babel' vernichtet der Befehl sich
+%  selbst. Das spart etwas Speicher, und sorgt dafür, dass er nicht versehentlich
+%  mehrfach ausgeführt wird (auch wenn das wohl nicht schädlich wäre).
+%    \begin{macrocode}
+   \let \dateiliste@babel = \relax%
+}%
+%    \end{macrocode}
+%  \end{macro}
+%  Wir untersuchen jetzt, ob \pack{babel} schon geladen wurde.
+%  Diese Fallunterscheidung ist notwendig, weil der Code von
+%  '\dateiliste@babel' zwar das Paket benötigt (also nach ihm
+%  ausgeführt werden sollte), aber nicht einfach direkt mit '\AtBeginDocument'
+%  ans Ende geschoben werden sollte, da er (falls \pack{babel} schon vor
+%  diesem Paket geladen wurde) dort nach dem \pack{babel}-Code (der die
+%  Sprache auswählt) kommen würde, und damit mehr nichts bewirkt.
+%
+%  Falls \pack{babel} jetzt schon geladen wurde, \ldots
+%    \begin{macrocode}
+\@ifpackageloaded{babel}
+{%
+%    \end{macrocode}
+%   \ldots informieren wir es sofort über die neuen Namen, die beim
+%   Sprachwechsel bitte angepasst werden sollten.
+%    \begin{macrocode}
+   \dateiliste@babel%
+}%
+%    \end{macrocode}
+%   Ansonsten verschieben wir das zum Beginn des Dokumentes (und machen
+%   das auch dann nur, wenn \pack{babel} inzwischen geladen wurde --
+%   ansonsten ist das ganze ja überflüssig, und '\addto' gibt es auch
+%   nicht, also können wir dann '\dateiliste@babel' vernichten).
+%    \begin{macrocode}
+{%
+   \AtBeginDocument{%
+      \@ifpackageloaded{babel}{%
+         \dateiliste@babel%
+      }{%
+         \let \dateiliste@babel = \relax
+      }%
+   }%
+}%
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \subsection{Hauptdatei in die Dateiliste}
+%  \begin{macro}{\mainFileToList}
+%  \changes{v0.1}{2006/04/02}{Neu}
+%  \changes{v0.2}{2006/04/19}{Mögliche Erkennung des Dateinamens jetzt auch ohne \eTeX}
+%   Zunächst sehen wir nach, ob es eine Datei mit Namen \meta{jobname}'.tex'
+%   gibt. 
+%    \begin{macrocode}
+\newcommand*{\mainFileToList}{%  \mainFileToList
+   \IfFileExists{\jobname.tex} {%
+      \begingroup
+%    \end{macrocode}
+%   Falls ja, dann ist das höchstwahrscheinlich die Haupt-Datei des
+%   Dokumentes, und taucht wahrscheinlich -- nämlich, wenn sie auf der
+%   Kommandozeile oder mit '\input '\meta{jobname}'.tex' anstatt
+%   '\input{'\meta{jobname}'.tex}' geladen wurde -- nicht in der Dateiliste
+%   auf. 
+%
+%   Das Problem an der Erkennung des letzten Falles (\LaTeX-'\input{}') ist,
+%   dass '\jobname' die Zeichen (auch die Buchstaben) in
+%   Kategorie 12 (\emph{other}) liefert anstatt in der natürlichen Kategorie
+%   (d.h. Buchstaben in 11 = \emph{letter}) (wie die Dateien, deren Name
+%   irgendwo im Quelltext auftaucht und dann in '\@filelist' landet).
+%
+%   Ich habe drei Möglichkeiten gefunden, damit umzugehen:
+%   \begin{enumerate}[(1)]
+%    \item Wir wandeln '\@filelist' komplett in Kategorie-12-Zeichen um.
+%       (Den Tipp, wie das geht, habe ich zufällig beim Durchstöbern der UK-\TeX-FAQ
+%        gefunden: \texttt{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=compjobnam})
+%    \item Wir wandeln '\jobname' (bzw. die Buchstaben darin) in ihre "`richtige"'
+%      Kategorie (11 für Buchstaben) um.
+%    \item Wir ignorieren das Problem und leben damit, dass eventuell der
+%      Dateiname doppelt auftaucht.
+%   \end{enumerate}
+%
+%   (2) funktioniert leider nur bei Verwendung von \eTeX, (1)
+%   hat den Nachteil, dass anschließend '\@filelist' komplett aus
+%   Kategorie-12-Zeichen besteht, was eventuell zu Problemen mit anderen
+%   Paketen führt, welche ebenfalls diese Liste verarbeiten und auf deren
+%   Catcodes angewiesen sind.
+%
+%   Daher haben ich zwei Paket-Optionen hinzugefügt, welche eine entsprechende
+%   Auswahl ermöglichen:
+%   \begin{description}
+%     \item[Standardvorgehen:] Falls \eTeX\ verwendet wurde, nimm (2),
+%       für \TeX\ nimm (1).
+%     \item[Mit Option \texttt{nocat12}:] Falls \eTeX\ verwendet wurde, nimm (2),
+%       sonst (3).
+%     \item[Mit Option \texttt{cat12}:] Nimm immer (1).
+%   \end{description}
+%  
+%  (Vor Version 0.2 gab es nur das Verhalten, welches jetzt 'nocat12' entspricht.)
+%
+%   \begin{macro}{\dateiliste@catxii@transform}
+%   Hier die Implementation für (1). Wir wandeln auch das '.tex' in Kategorie 12 um,
+%   mittels '\meaning' (mit '\strip@prefix' entfernen wir etwas Text, der vor der
+%   Makrodefinition steht)
+%    \begin{macrocode}
+      \newcommand*{\dateiliste@catxii@transform}
+      {
+         \edef\dateiliste@mainfile{\jobname.tex}%
+         \edef\dateiliste@mainfile{%
+            \expandafter\strip@prefix\meaning\dateiliste@mainfile
+         }%
+%    \end{macrocode}
+%   Jetzt das gleiche für '\@filelist'.
+%    \begin{macrocode}
+         \edef\@filelist{\expandafter\strip@prefix\meaning\@filelist}%
+      }%
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\dateiliste@scantoken@tr}
+%   Hier die Implementation für (2) mit '\scantokens':
+%   In \eTeX\ gibt es dagegen den '\scantokens'-Befehl, welcher
+%   es ermöglicht, im Speicher von \TeX\ vorliegende Token neu aus
+%   einer Pseudo-Datei einzulesen. Wenn
+%   er definiert ist (nur dann wird dieses Makro aufgerufen), rufen wir ihn
+%   hier auf -- mit einigen '\expandafter', um nur den '\jobname' vor
+%   der '\scantokens'-Ausführung zu expandieren, und nicht die Token
+%   '\edef\dateiliste@mainfile{' und '.tex}' drumherum.
+%   '\scantokens' bekommt also die Zeichen \par
+%   '\makeatletter\edef\dateiliste@mainfile{'\meta{jobname}'.tex}\makeatother'\par
+%   \noindent zu lesen.
+%
+%   Das '\edef' wird dann also mit Kategorie-11-Buchstaben (also "`richtigen"')
+%   im Dateinamen ausgeführt. (Das '\makeatletter' und '\makeatother' ist
+%   notwendig, um das '@' auch als Buchstabe zuzulassen und somit '\dateiliste@mainfile'
+%   als einzelnen Makronamen anzusehen. Zu dem Zeitpunkt, zu dem '\scantokens'
+%   ausgeführt wird, sind ja die Dokumenten-Catcodes in Kraft, nicht die einer
+%    Package-Datei.)
+%    \begin{macrocode}
+      \newcommand*{\dateiliste@scantoken@tr}
+      {%
+         \scantokens
+         \expandafter{%
+            \expandafter\makeatletter
+            \expandafter\edef
+            \expandafter\dateiliste@mainfile
+            \expandafter{%
+               \jobname
+               .tex}%
+            \makeatother
+         }%
+      }%
+%    \end{macrocode}
+%   \end{macro}
+%   Hier jetzt die große Fallunterscheidung:
+%    \begin{macrocode}
+      \if@dateiliste@catxii
+        \dateiliste@catxii@transform
+      \else
+        \@ifundefined{scantokens}
+        {%
+          \if@dateiliste@nocatxii
+%    \end{macrocode}
+%  Das ist die Implementation für (3): wir merken uns den Dateinamen einfach
+%  so. Das geht wahrscheinlich schief, wenn nicht noch irgend ein anderes
+%  Makropaket eingreift, und wir können \meta{jobname}'.tex' nicht aus der
+%  Liste entfernen.
+%    \begin{macrocode}
+            \edef\dateiliste@mainfile{\jobname.tex}%
+          \else
+            \dateiliste@catxii@transform
+          \fi
+        }
+        {%
+          \dateiliste@scantoken@tr
+        }%
+      \fi
+%    \end{macrocode}
+%   Jetzt haben wir in '\dateiliste@mainfile' den Namen der Hauptdatei,
+%   auch (je nach Optionen und \eTeX-Verfügbarkeit) '@filelist' vorbereitet.
+% 
+%   Wir können nun mit '\@removeelement' (aus dem \LaTeX-Kernel)
+%   das Vorkommen von \meta{jobname}'.tex' entfernen (falls der Name dort vorhanden
+%   ist -- wahrscheinlich nicht).
+%    \begin{macrocode}
+      \@expandtwoargs\@removeelement{\dateiliste@mainfile}%
+      \@filelist\@filelist
+%    \end{macrocode}
+%   Anschließend fügen wir den Dateinamen an den \emph{Anfang} der Liste an.
+%    \begin{macrocode}
+      \xdef\@filelist{%
+         \dateiliste@mainfile,\@filelist
+      }%
+      \endgroup
+%    \end{macrocode}
+%   Falls \meta{jobname}'.tex' nicht existiert, ist dies sicher nicht
+%   die Hauptdatei. Dann haben wir es entweder mit einer '.dtx'-Datei
+%   zu tun (die sowieso durch das doppelte Einlesen noch einmal auftaucht),
+%   oder irgendeinen anderen Fall, den ich nicht vorhersehen kann. Also
+%   machen wir dann nichts.
+%    \begin{macrocode}
+   }{%
+      \relax
+   }%
+}%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  Am Ende des Dokumentes (aber noch vor dem Aufruf von '\@writefilelist', der von
+%  '\printFileList' hinzugefügt wird) rufen wir, sofern die passende
+%  Option gesetzt war, das eben definierte Makro auf.
+%    \begin{macrocode}
+\if@dateiliste@addMain
+  \AtEndDocument{\mainFileToList}
+\fi
+%    \end{macrocode}
+%
+% \subsection{Schluss}
+%    \begin{macrocode}
+\endinput %
+%</package>
+%    \end{macrocode}
+%
+% \Finale
+%\endinput
+%
+%<*müll>
+
+
+%%% Folgendes ist nur für meinen Editor.
+%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+%</müll>

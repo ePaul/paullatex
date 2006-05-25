@@ -1,0 +1,182 @@
+[en]
+LaTeX-package 'extpfeil' - extensible arrows, and a command to
+create new ones
+
+Author:  Paul Ebermann <Paul-Ebermann@gmx.de>
+License: LPPL 1.3b or later, author-maintained
+         (see http://www.latex-project.org/lppl/).
+
+All Documentation (other than this file) is in german.
+
+The typesetting of the documentation needs 'pauldoc' (from the
+same author).
+Additionally you'll need the packages 'amsmath' and 'amssymb'.
+
+The package comes as .dtx + .ins.
+Run "latex extpfeil.ins" to create the style file (and maybe put
+it to texmf/tex/latex/paul/, if your docstrip is configured
+accordingly), run (after that and maybe updating your TeX hash)
+"latex extpfeil.dtx" to create the documentation.
+
+ Usage
+-------
+
+Put \usepackage{extpfeil} in your document preamble.
+
+Then you can use the extensible arrows
+  \xtwoheadrightarrow  (----->>)
+  \xtwoheadleftarrow   (<<-----)
+  \xmapsto             (|----->)
+  \xequals             (=======)
+They work the same way as the extensible arrows in 'amsmath',
+'mathtools' or 'extarrows': you give one mandatory argument
+(superscript) and one optional argument (subscript), and the
+length of the arrow is adapted from the width of the arguments.
+
+    \xequals[sub]{super}
+
+
+But - and here is the difference, apart from other set of arrows -
+this package also gives a command to create new such arrows:
+
+  \newextarrow{\arrowname}{<spacing>}{<arrowdef>}
+
+defines \arrowname to be such an arrow.
+
+<spacing> should be a list of four numbers (single
+tokens or {}-groups), giving (in this order):
+ - additional space left of the arguments
+ - additional space right of the arguments
+   -> those are used to justify the sub/superscripts
+      after creating the arrow
+ - additional space left of the arguments
+ - additional space right of the arguments
+   -> those are used to determine the length
+      of the arrow. (I didn't understand the
+      difference between this two - maybe only
+      the sum of both matters.)
+All numbers are interpreted as mu (math units).
+
+<arrowdef> should be a list of three symbols (single
+tokens or {} groups), giving (in this order):
+ - left end of the arrow
+ - middle part of the arrow (will be multiplicated,
+    mostly \relbar or \Relbar)
+ - right end of the arrow.
+
+In the (german language) documentation extpfeil.pdf is
+also some description about how it works.
+
+----------------
+[de]
+LaTeX-Paket 'extpfeil' - eine Variante von
+\DeclareExtpfeil, welche vorher überprüft,
+ob der Befehl schon existiert.
+
+Autor:  Paul Ebermann (Paul-Ebermann@gmx.de).
+Lizenz: LPPL 1.3b oder später, mit Maintenance-Status
+        "author-maintained". Siehe http://www.latex-project.org/lppl/.
+
+Geschrieben für den eigenen Gebrauch
+(-> http://www.math.hu-berlin.de/~ebermann/alg-script/),
+aber  vielleicht ist es auch für andere von Nutzen.
+
+Das Paket benötigt 'amsmath' und 'amssymb'.
+Zum Setzen der Dokumentation wird das Paket 'pauldoc'
+(vom selben Autor) benötigt.
+
+Das Paket kommt als .dtx + .ins.
+Mit "latex extpfeil.ins" wird die .sty-Datei erstellt (und
+eventuell gleich nach texmf/tex/latex/paul/ installiert,
+wenn docstrip entsprechend eingerichtet ist), mit
+latex extpfeil.dtx kann (danach und eventuell nach einer
+Aktualisierung der TeX-Dateidatenbank) die Dokumentation neu
+erstellt werden.
+
+Zur Verwendung siehe extpfeil.pdf.
+----------------
+[eo-h]
+LaTeX-pakajho 'extpfeil' - Variajho de \DeclareRobustCommand,
+kiu antaue elprovas, chu la nomo jam ekzistas.
+
+Autoro:  Paulo Ebermann (Paul-Ebermann@gmx.de).
+Licenzo: LPPL 1.3, 'author-maintained'
+         (-> http://www.latex-project.org/lppl/).
+
+Kreitaj por propra uzo, sed eble iom de ghi ankau
+uzeblas por aliaj.
+
+La dokumentaro (escepte tiu chi dosiero) estas nur en la germana
+lingvo.
+
+La pakajho bezonas la pakajhojn 'amsmath' kaj 'amssymb'.
+Por krei la dokumentadon vi krome bezonas 'pauldoc' (de la sama autoro).
+
+La pakajho venas en .dtx + .ins.
+Voku "latex extpfeil.ins" por krei la .sty-dosieron (kaj
+eble meti ghin al texmf/tex/latex/paul/, se via docstrip estis
+konfigurita laue), voku "latex extpfeil.dtx" por rekrei
+la dokumentaron.
+
+ Uzado
+-------
+
+Metu
+
+    \usepackage{extpfeil}
+
+en la komencon de la dokumento (antau \begin{document}).
+
+Poste vi povas uzi la plilongigeblajn
+sagojn 
+  \xtwoheadrightarrow  (----->>)
+  \xtwoheadleftarrow   (<<-----)
+  \xmapsto             (|----->)
+  \xequals             (=======)
+Ili funkcias same kiel la plilongigeblaj sagoj en
+la pakajhoj 'amsmath', 'mathtools' kaj 'extarrows':
+vi donu kiel deviga argumento ajhon (formulon) kiu
+aperos super la sago, kiel opcia argumento ajhon
+(formulon)kiu aperos sub la sago. La longeco de
+la sago adaptighas lau la largheco de la argumentoj.
+
+	\xequals[sub]{super}
+
+
+Sed - kaj jen la diferenco al la menciitaj pakajhoj,
+krom alia aro de sagoj - tiu pakajho ankau donas
+komandon por krei pliajn tiajn sagojn:
+
+  \newextarrow{\sagonomo}{<spacoj>}{<sagodif>}
+
+difinas \sagonomo kiel tia sago.
+
+<spacoj> estu listo de kvar numeroj (unuopaj
+simboloj (ciferoj) au {}-listoj), donante
+(en tiu sinsekvo):
+ - plian spacon maldekstre de la formuloj
+ - plian spacon dekstre de la formuloj
+   -> tiuj estas uzataj post la konstruado de
+      la sago, por shovi la subajn kaj suprajn
+      formulojn dekstren au maldekstren.
+ - plian spacon maldekstre de la formuloj
+ - plian spacon dekstre de la formuloj
+   -> tiuj estas uzataj por kalkuli la longecon
+      de la sago. (Mi ne komprenis la diferencon
+      inter tiuj du - povas esti, ke nur la sumo
+      de ambau gravas.)
+Chiuj numeroj estas interpretataj kiel 'mu'
+(matematikaj unuoj).
+
+<arrowdef> estu listo de tri signoj (unuopaj simboloj
+au {}-grupoj), donante (en tiu sinsekvo):
+
+ - maldekstran finon de la sago
+ - mezan parton de la sago (tiu estos multobligita
+   por plilongigi la sagon, plej ofte estos \relbar
+   (-) au \Relbar (=)).
+ - dekstran finon de la sago
+
+
+In la (germanlingva) dokumentajho (extpfeil.pdf)
+estas ioma priskribo, kiel funkcias.

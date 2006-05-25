@@ -1,0 +1,70 @@
+\documentclass[twoside]{article}
+
+
+\errorcontextlines=5
+
+\makeatletter
+% In '\satz@box' werden wir unsere Sätze
+% zwischenspeichern.
+%    \begin{macrocode}
+  \newsavebox{\satz@box}
+%    \end{macrocode}
+% \end{macro}
+
+  \newenvironment{satzgen}[1]
+  {%
+    \begin{lrbox}{\satz@box}%
+    \par\par\ \ %
+    \begin{minipage}[t]{0.8\linewidth}%
+       \global\def\mpar@savedmargins{}%
+       \global\def\mpar@savedmargins{}
+       \renewcommand*{\marginpar}[2][\@empty]%
+       {%
+          \ifx\@empty##1%
+          \g@addto@macro\mpar@savedmargins{\marginpar{##2}}%
+          \else%
+          \g@addto@macro\mpar@savedmargins{\marginpar[##1]{##2}}%
+          \fi%
+       }%
+    \fbox{\textsc{#1.}}%
+  }
+%    \end{macrocode}
+%    \begin{macrocode}
+  {%
+\end{minipage}\end{lrbox}%
+    \par\medskip%
+    \fbox{\usebox{\satz@box}}%
+    \mpar@savedmargins
+%    \marginpar{Test}
+    \par\medskip%
+  }
+\makeatother
+
+
+\newcommand*{\testtext}{Dies ist ein Testtext zum f\"ullen der Seite. }
+\newcommand*{\langertext}{\testtext\testtext\testtext\testtext}
+
+\begin{document}
+   
+   \begin{satzgen}{Beispiel}
+      Hallo. \marginpar{Bla} Und noch mehr Text ...
+      
+      Ein zweiter Absatz in der Minipage. \marginpar[vielleicht auf der anderen Seite]{mit einer zweiten Randnotiz.}
+      \langertext
+   \end{satzgen}
+
+\newpage
+
+   \begin{satzgen}{Beispiel}
+      Hallo. \marginpar{Bla} Und noch mehr Text ...
+      
+      Ein zweiter Absatz in der Minipage. \marginpar[vielleicht auf der anderen Seite]{mit einer zweiten Randnotiz.}
+   \end{satzgen}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
