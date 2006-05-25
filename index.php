@@ -4,7 +4,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Pauls Algebra-Skripte</title>
 	<style type='text/css'>
+
 	  td, th { border: solid thin; padding: 0.5ex;}
+#disclaimer { border: solid thin;
+margin-left: auto;
+margin-right: auto;
+max-width: 30em;
+padding: 1ex;
+background-color: yellow;
+color:black;
+}
 	  li:first-child ul li,
 	 /* li ul li ul, */
       li ul li ul li { display: inline; }
@@ -27,70 +36,31 @@
 
   <body>
 
+	<div id="disclaimer">
+	<h3>Disclaimer</h3>
 	<p>
-	  <a href='../'>Paul Ebermann</a> - <a href='../packages/latex.html'>LaTeX-Packages</a> - <a href="../aufgaben/">Übungsaufgaben</a>
+	Ich habe gerade eben erst dieses Projekt begonnen und daher noch keine ordentliche
+	Homepage ... bisher ist das eine (etwas zusammengestrichende) Kopie meiner
+	<a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Algebra-Skript</a>-Seite.
+	Die meisten Links funktionieren noch nicht.
 	</p>
-	<hr/>
+	<p>
+	<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt="BerliOS Developer"> Berlios Developer</a> stellt uns CVS, Webseite und Entwicklungstools zur Verfügung - danke!  Dort gibt es auch eine <a href="http://developer.berlios.de/projects/paullatex/">Projektseite</a>.
+	</p>
+	</div>
+
 
 	<div id='neues'>
 	  <h2>Änderungen</h2>
 	  <dl>
-		<dt>2006-04-27</dt>
-		<dd>
-		  Neue Version des <a href="#spezialisierung">Spezialisierungs-Skriptes</a> (leider nur die PDF-Datei,
-		  ich habe keine Zeit, alles hochzuladen).
-		</dd>
-		<dt>2006-04-04</dt>
-		<dd>
-		  <a href="#abhang">Abhängigkeitsgraph</a> aller TeX-Dateien.
-		</dd>
-		<dt>2006-04-03</dt>
-		<dd>
-		  Neue Version von <a href="#dateiliste">dateiliste</a>, außerdem
-		  <a href="#pauldoc">pauldoc</a> und <a href="#specdefs">specdefs</a>.
-		  Außerdem eine mit diesen Packages neu gesetzte Version des
-		  <a href="#spezialisierung">Spezialisierungsskriptes</a>,
-		  ohne wesentliche inhaltliche Änderungen.
-		</dd>
-		<dt>2006-03-30 1:20</dt>
-		<dd>Neue Version von <a href="#specdefs">specdefs</a> und vom
-		  <a href="#spezialisierung">Spezialisierungsskript</a>.
-		</dd>
-		<dt>2006-03-23 15:44</dt>
-		<dd>Neue Version des <a href="#spezialisierung">Spezialisierungs-Skriptes</a>, jetzt mit
-		  <a href="#KategorielleAlgebra">KategorielleAlgebra</a> und etwas mehr
-		  Text für Algebraische Geometrie I. Außerdem ist ein Glossar enthalten,
-		  und einige Dateinamen wurden geändert.</dd>
-		<dt>2006-03-23 6:00</dt>
-		<dd>Neue Versionen von allen Packages, neue Packages
-		  <a href="#robustcommands">robustcommands</a>, <a href="#dateiliste">dateiliste</a>,
-		  <a href="#underline">underline</a>.<br/>
-		  Eine neue Version des Spezialisierungsskriptes kommt auch bald.
-		</dd>
-		<dt>2006-02-28</dt>
-		<dd>Neues Package <a href="#specdefs">specdefs</a>, welches die Definitionen
-		  aus <a href="#spezialisierung">spezialisierung.tex</a> auslagert (und jetzt
-		  eine Dokumentation hat). Wird ab der nächsten Version des Spezialisierungs-Skriptes
-		  verwendet.
-		</dd>
-		<dt>2006-02-23</dt>
-		<dd>Neue Version des <a href="#spezialisierung">Spezialisierungs-Skriptes</a> (Algebraische Geometrie I)</dd>
-		<dd>Neue Versionen von <a href='#pauldoc'>pauldoc</a> und <a href="#alg-script">alg-script</a>.</dd>
-		<dt>2006-02-14</dt>
-		<dd>Neue Versionen von <a href='#pauldoc'>pauldoc</a> und <a href="#alg-script">alg-script</a>.</dd>
-	  </dl>
+	<dt>2006-05-25</dt>
+	<dd>Erste Version der Homepage online</dd>
+	</dl>
 	</div>
 
-	<h1>Pauls Algebra-Skripte</h1>
-
+	<h1>Pauls L<sup>A</sup>T<sub>E</sub>X-Packages</h1>
 
 	<ul id='menu'>
-	  <li><a href='#skripte'>Meine Skripte</a>
-		<ul>
-		  <li><a href='#laag1'>Mengenlehre</a></li>
-		  <li><a href='#spezialisierung'>Spezialisierungsstoff</a></li>
-		</ul>
-		</li>
 	  <li><a href='#pakete'>Pakete</a>
 		<ul>
 		  <li><a href='#installation'>Installation</a></li>
@@ -110,118 +80,6 @@
 	  <li><a href='#kune'>Alles zusammen</a></li>
 	  <li><a href="#bugs">Entdeckte LaTeX-Bugs</a></li>
 	</ul>
-
-	<h2 style="clear:left;" id='skripte'>Meine Skripte</h2>
-	<p>
-	  Um diese Skripte selbst aus den Quelltexten setzen zu können, sind
-	  jeweils ein oder mehrere der unten erwähnten <a href='#pakete'>LaTeX-Pakete</a>
-	  erforderlich. Auch das <a href='#makedvi'>Makedvi</a>-Skript ist vielleicht
-	  nützlich.
-	</p>
-	<h3 id='laag1'>Mengenlehre-Skript</h3>
-	<p>
-	  In den Semesterferien zwischen erstem und zweitem Semester habe ich
-	  meine Vorlesungsmitschriften des nullten Kapitels &ndash; <em>Grundbegriffe der
-		naiven Mengenlehre</em> &ndash; der Vorlesung "Lineare
-	  Algebra und Analytische Geometrie I" geTeXt. Das Ergebnis ist hier als
-	  <a href='LAAG1-script.pdf'>PDF</a> und <a href='LAAG1-script.ps'>PS</a> zu finden.
-	</p>
-	<p>
-	  Der LaTeX-Quelltext ist
-	  <a href='LAAG1-script.tex'>LAAG1-script.tex</a>, <a href='kapitel0.tex'>kapitel0.tex</a>,
-	  benötigt wird außerdem alg-script.cls (<a href='#pakete'>siehe unten</a>).
-	</p>
-	<h3 id='spezialisierung'>Spezialisierungsstoff</h3>
-	<p>
-	  Ich habe jetzt angefangen, den Stoff der Spezialisierungsprüfung
-	  abzuschreiben. Folgende Vorlesungen sollen einmal darin behandelt
-	  werden:
-	</p>
-	<ul>
-	  <li>Algebra II</li>
-	  <li>Algebraische Geometrie I</li>
-	  <li>Algebraische Geometrie II</li>
-	  <li>(Ko)Homologietheorien und ihre Anwendungen</li>
-	</ul>
-	<p>
-	  Bisher habe ich einen Teil von <em>Algebraische Geometrie I</em>, außerdem
-	  die Mini-Vorlesung <em>Kategorielle Algebra</em> der Rest folgt.
-	</p>
-	<table>
-	  <thead>
-		<tr><th/>
-		  <th>Datei</th>
-		  <th>Änderungs-Datum</th>
-		  <th>Inhalt</th>
-		</tr>
-	  </thead>
-	  <tbody>
-		<tr>
-		  <th rowspan='8'>Quelltexte</th>
-		  <td><a href='spezialisierung/spezialisierung.tex'>spezialisierung.tex</a></td>
-		  <td>2002-03-23</td>
-		  <td>Die Haupt-Datei, welche alle anderen einbindet.</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/glossar.tex'>glossar.tex</a></td>
-		  <td>2002-03-23</td>
-		  <td>Ein paar Einträge und Einstellungen für das Glossar.</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/einleitung.tex'>einleitung.tex</a></td>
-		  <td><strong>2002-04-03</strong></td>
-		  <td>Eine Einleitung in das Dokument - eine Art Vorwort.</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/algebraII.tex'>algebraII.tex</a></td>
-		  <td>2002-03-23</td>
-		  <td><em>Algebra II</em>. Nur ein paar Seiten, mehr kommt später.</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/KategorielleAlgebra.tex'>KategorielleAlgebra.tex</a></td>
-		  <td>2002-03-23</td>
-		  <td>Eine Mini-Vorlesung vom 20. Februar 2003 &ndash; jetzt vollständig.</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/algebrGeomI.tex'>algebrGeomI.tex</a></td>
-		  <td><strong>2002-04-03</strong></td>
-		  <td><em>Algebraische Geometrie I</em>.
-			Daran schreibe ich gerade,
-			ist schon einiges, aber noch lange nicht vollständig.
-			(Der Dateiname hatte sich am 23.3. im Vergleich zur vorherigen Version
-			auch geändert, um einen Bug in meinem Betriebssystem zu umgehen.)
-		  </td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/algebrGeomII.tex'>algebrGeomII.tex</a></td>
-		  <td>2002-03-23</td>
-		  <td><em>Algebraische Geometrie II</em>.
-			Bisher nur eine Inhaltsübersicht. (Auch hier ein neuer Dateiname)</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/koHomTheo.tex'>koHomTheo.tex</a></td>
-		  <td>2002-03-23</td>
-		  <td><em>(Ko)Homologietheorien und Ihre Anwendung</em>.
-			Bisher nur eine Inhaltsübersicht.  (Auch hier ein neuer Dateiname)</td>
-		</tr>
-		<tr>
-		  <th rowspan='2'>Ergebnis-Dateien</th>
-		  <td><a href='spezialisierung/spezialisierung.pdf'>spezialisierung.pdf</a></td>
-		  <td><strong>2002-04-27</strong></td>
-		  <td>Alles zusammen als PDF-Datei (141 Seiten, 924 KB)</td>
-		</tr>
-		<tr>
-		  <td><a href='spezialisierung/spezialisierung.ps'>spezialisierung.ps</a></td>
-		  <td><strong>2002-04-03</strong></td>
-		  <td>Alles zusammen als Postscript-Datei (120 Seiten, 2159 KB)</td>
-		</tr>
-<!--		<tr>
-		  <td><a href=''></a></td>
-		  <td>2002-02-07</td>
-		  <td>.</td>
-		</tr> -->
-	  </tbody>
-	</table>
 
 
 	<h2 id='pakete'>LaTeX-Pakete</h2>
@@ -436,63 +294,6 @@
 	  aktualisieren wie die Pakete.)</p>
 	  
 
-	<h2 id='kune' style="clear:both;">Alles zusammen</h2>
-	<p>Ich habe eine Zip-Datei erstellt, in der alle hier zu habenden
-	  Dateien sind, und außerdem einige Auswahlen. (Falls die Links nicht
-	  gehen, gehe zunächst zur <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Original-Seite</a>.) Die Zip-Dateien werden nicht ganz so häufig aktualisiert
-	  &ndash; man braucht zusätzlich noch diejenigen Dateien, deren Datum
-	  oben fett hervorgehoben ist, wenn man auf dem aktuellsten Stand sein
-	  will.
-	</p>
-	<table>
-	  <tbody>
-		<tr>
-		  <td><a href='alles-2006-03-23.zip'>alles.zip</a></td>
-		  <td>7855 KB</td>
-		  <td>2006-03-23</td>
-		  <td rowspan="2">Wirklich alles, was auf dieser Seite beschrieben ist.</td>
-		</tr>
-		<tr>
-		  <td><a href='alles-2006-02-12.zip'>alles.zip</a></td>
-		  <td>2602 KB</td>
-		  <td>2006-02-12</td>
-		</tr>
-		<tr>
-		  <td><a href="nurpdf-2006-03-23.zip">nurpdf.zip</a></td>
-		  <td>2111 KB</td>
-		  <td>2006-03-23</td>
-		  <td rowspan="2">Nur die PDF-Dateien.</td>
-		</tr>
-		<tr>
-		  <td><a href="nurpdf-2006-02-12.zip">nurpdf.zip</a></td>
-		  <td>1230 KB</td>
-		  <td>2006-02-12</td>
-		</tr>
-		<tr>
-		  <td><a href="packages-2006-03-23.zip">packages.zip</a></td>
-		  <td>1108 KB</td>
-		  <td>2006-03-23</td>
-		  <td rowspan="2">Die Package-Dateien (dtx, ins, sty/cls, PDF).</td>
-		</tr>
-		<tr>
-		  <td><a href="packages-2006-02-12.zip">packages.zip</a></td>
-		  <td>527 KB</td>
-		  <td>2006-02-12</td>
-		</tr>
-		<tr>
-		  <td><a href="sources-2006-03-23.zip">sources.zip</a></td>
-		  <td>170 KB</td>
-		  <td>2006-03-23</td>
-		  <td rowspan="2">Die Quelltexte (dtx, tex, ins, sh).</td>
-		</tr>
-		<tr>
-		  <td><a href="sources-2006-02-12.zip">sources.zip</a></td>
-		  <td>120 KB</td>
-		  <td>2006-02-12</td>
-		</tr>
-	  </tbody>
-	</table>
-
 	<h2 id='bugs'>Entdeckte LaTeX-Bugs</h2>
 	<p>
 	  Während der Arbeit an den Skripten und den Packages habe ich
@@ -510,14 +311,5 @@
 	  das rechtzeitig gemerkt habe ...
 	</p>
 
-
-
-    <hr style="clear:right">
-	<a href='http://www.math.hu-berlin.de/~ebermann/alg-script/'>Original</a>
-    <address><a href="mailto:Paul-Ebermann@gmx.de">Paul Ebermann</a></address>
-<!-- Created: Sun Jun  9 20:52:39 MEZMS 2002 -->
-<!-- hhmts start -->
-Lasta modifado: Thu Apr 27 01:28:45 MEZMS 2006
-<!-- hhmts end -->
   </body>
 </html>
