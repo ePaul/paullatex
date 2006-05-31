@@ -1,48 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Pauls Algebra-Skripte</title>
-	<style type='text/css'>
-
-	  td, th { border: solid thin; padding: 0.5ex;}
-#disclaimer { border: solid thin;
-margin-left: auto;
-margin-right: auto;
-max-width: 30em;
-padding: 1ex;
-background-color: yellow;
-color:black;
-}
-	  li:first-child ul li,
-	 /* li ul li ul, */
-      li ul li ul li { display: inline; }
-	  #neues { float:right;
-	           width: 35ex;
-	           max-height: 12em;
-	           border:solid thin;
-               padding: 0.5ex 1ex 0.5ex 1ex;
-	           overflow: auto;
-	           margin: 2em 0.3em 1em 1em;
-	         }
-	  #neues dt { display: run-in;
-	              font-weight: bold;
-	              }
-	  #neues dt:after{ content: ": " }
-	  #neues dd { margin-left:1em;
-	              text-indent: -1em; } 
-	</style>
+    <title>Pauls LaTeX-Packages</title>
+<link rel="stylesheet" type="text/css" href="paullatex.css" />
   </head>
 
   <body>
 
-	<div id="disclaimer">
+	<div class="disclaimer">
 	<h3>Disclaimer</h3>
 	<p>
 	Ich habe gerade eben erst dieses Projekt begonnen und daher noch keine ordentliche
 	Homepage ... bisher ist das eine (etwas zusammengestrichende) Kopie meiner
 	<a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Algebra-Skript</a>-Seite.
-	Die meisten Links funktionieren noch nicht.
+	Einige Links funktionieren noch nicht.
 	</p>
 	<p>
 	<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt="BerliOS Developer"> Berlios Developer</a> stellt uns CVS, Webseite und Entwicklungstools zur Verfügung - danke!  Dort gibt es auch eine <a href="http://developer.berlios.de/projects/paullatex/">Projektseite</a>.
@@ -53,6 +26,8 @@ color:black;
 	<div id='neues'>
 	  <h2>Änderungen</h2>
 	  <dl>
+<dt>2006-05-31</dt>
+<dd>Kleine Aktualisierungen der Homepage</dd>
 	<dt>2006-05-25</dt>
 	<dd>Erste Version der Homepage online</dd>
 	</dl>
@@ -61,6 +36,7 @@ color:black;
 	<h1>Pauls L<sup>A</sup>T<sub>E</sub>X-Packages</h1>
 
 	<ul id='menu'>
+      <li><a href="#einführung">Einführung</a>
 	  <li><a href='#pakete'>Pakete</a>
 		<ul>
 		  <li><a href='#installation'>Installation</a></li>
@@ -77,17 +53,31 @@ color:black;
 		</ul>
 	  </li>
 	  <li><a href="#abhang">Abhängigkeitsgraph</a></li>
-	  <li><a href='#kune'>Alles zusammen</a></li>
 	  <li><a href="#bugs">Entdeckte LaTeX-Bugs</a></li>
 	</ul>
 
 
+    <h2 id="einführung">Einführung</h2>
+
+<p>
+Ich habe im Laufe der Zeit eine Reihe LaTeX-Pakete geschrieben,
+um einige Sachen umzusetzen, für die ich bisher keine Lösungen
+gefunden habe.
+</p>
+<p>
+Die hier vorhandenen Pakete sind durch die Arbeit an meinem
+aktuellen Projekt, einer
+ <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Digitalisierung
+einer Vorlesungs-Mitschrift</a>, entstanden. Einige frühere
+LaTeX-Pakete, allerdings schlechter dokumentiert und nicht
+mehr gepflegt, gibt es auf meine
+ <a href="http://www.math.hu-berlin.de/~ebermann/packages/latex.html">LaTeX-Seite
+am Mathe-Institut</a>. (Wenn ich mal viel Zeit habe und/oder es jemanden interessiert,
+						werde ich einiges davon hierher migrieren.)
+</p>
+
+
 	<h2 id='pakete'>LaTeX-Pakete</h2>
-	<p>Hier finden sich diejenigen Pakete, welche ich für
-	  die Skript-Erstellung benötigt (bzw. geschrieben) habe.
-	  Weitere gibt es auf
-	  <a href='../packages/latex.html'>meiner LaTeX-Package-Seite</a>.
-	</p>
 	
 
 	<h3 id='installation'>Installation</h3>
@@ -111,7 +101,21 @@ color:black;
 	  Package-Datei und die Dokumentation als PDF oder PostScript herunterladen.
 	</p>
 
+    
 	<h3 id='download'>Download:</h3>
+
+<p class="disclaimer">
+Die Download-Links funktionieren hier noch nicht.
+Bei <a href="http://www.dante.de/cgi-bin/ctan-index">CTAN</a> gibt
+es die aktuellste veröffentlichte Version (jeweils nach dem Package-Namen
+										   suchen),
+ auf meiner
+ <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Algebra-Skript</a>-Seite
+eine ältere Version. Im <a href="http://developer.berlios.de/cvs/?group_id=6747">CVS</a> gibt es die aktuelle Arbeits-Version (oft mit falscher Versions-Nummer).
+Ich muss hier noch einen Automatismus für den Verweis auf
+die jeweils aktuellste Version bei Berlios einbauen ...
+</p>
+
 	<table>
 	  <thead>
 		<tr>
@@ -126,25 +130,10 @@ color:black;
 	  </thead>
 	  <tbody>
 		<tr>
-		  <td>alg-script</td>
-		  <td id='alg-script'>
-			Meine Skripte verwenden die Klasse <em>alg-script</em>. Sie macht eine Reihe
-			netter Einstellungen, die für meine Skripte passen, und definiert einen Haufen
-			neue Befehle.
-		  </td>
-		  <td><a href='packages/alg-script.dtx'>DTX</a>, <a href='packages/alg-script.ins'>INS</a></td>
-		  <td><a href='packages/alg-script.cls'>CLS</a></td>
-		  <td><a href='packages/alg-script.ps'>PS</a>, <a href='packages/alg-script.pdf'>PDF</a></td>
-		  <td>v0.13</td>
-		  <td>2006/03/23</td>
-		</tr>
-		<tr>
 		  <td>dateiliste</td>
 		  <td id='dateiliste'>
 			Dieses Package erstellt eine Liste aller geladenen Dateien und nimmt sie
-			auch noch in die Ausgabedatei auf. Es wird vom
-			<a href='#spezialisierung'>Spezialisierungs-Skript</a>
-			verwendet.
+			auch noch in die Ausgabedatei auf.
 		  </td>
 		  <td><a href='packages/dateiliste.dtx'>DTX</a>, <a href='packages/dateiliste.ins'>INS</a></td>
 		  <td><a href='packages/dateiliste.sty'>STY</a></td>
@@ -156,9 +145,7 @@ color:black;
 		  <td>extpfeil</td>
 		  <td id='extpfeil'>
 			Dieses Package erstellt verlängerbare Pfeile im Mathe-Modus
-			mit Super- und Subskript. Dies wird in meinem
-			<a href='#spezialisierung'>Spezialisierungs-Skript</a>
-			verwendet.
+			mit Super- und Subskript.
 		  </td>
 		  <td><a href='packages/extpfeil.dtx'>DTX</a>, <a href='packages/extpfeil.ins'>INS</a></td>
 		  <td><a href='packages/extpfeil.sty'>STY</a></td>
@@ -171,8 +158,6 @@ color:black;
 		  <td id='faktor'>
 			Dieses Package hilft beim Setzen von Faktorstrukturen (Faktormengen,
 			Faktorringe, ...).
-			Es wird in meinem <a href='#spezialisierung'>Spezialisierungs-Skript</a>
-			verwendet.
 		  </td>
 		  <td><a href='packages/faktor.dtx'>DTX</a>, <a href='packages/faktor.ins'>INS</a></td>
 		  <td><a href='packages/faktor.sty'>STY</a></td>
@@ -196,8 +181,7 @@ color:black;
 		  <td id='randbild'>randbild</td>
 		  <td>
 			Dieses Package hilft dabei, kleine Diagramme auf dem Rand der
-			Seite unterzubringen. Es wird in  meinem
-			<a href='#spezialisierung'>Spezialisierungs-Skript</a> verwendet.
+			Seite unterzubringen.
 		  </td>
 		  <td><a href='packages/randbild.dtx'>DTX</a>, <a href='packages/randbild.ins'>INS</a></td>
 		  <td><a href='packages/randbild.sty'>STY</a></td>
@@ -209,9 +193,7 @@ color:black;
 		  <td id='robustcommand'>robustcommand</td>
 		  <td>
 			Dieses Package definiert ein Kommando, welches beim Definieren
-			von anderen Kommandos hilft. Es wird von den Packages
-			<a href="#specdefs">specdefs</a> und <a href="#underline">underline</a>
-			verwendet.
+			von anderen Kommandos hilft. 
 		  </td>
 		  <td><a href='packages/robustcommand.dtx'>DTX</a>, <a href='packages/robustcommand.ins'>INS</a></td>
 		  <td><a href='packages/robustcommand.sty'>STY</a></td>
@@ -220,25 +202,9 @@ color:black;
 		  <td>2006/03/23</td>
 		</tr>
 		<tr>
-		  <td id='specdefs'>specdefs</td>
-		  <td>
-			Dieses Package enthält alle Definitionen für das
-			<a href='#spezialisierung'>Spezialisierungs-Skript</a> sowie lädt notwendige
-			Packages, soweit diese nicht schon in <a href="#alg-script">alg-script</a>
-			geladen wurden.
-		  </td>
-		  <td><a href='packages/specdefs.dtx'>DTX</a>, <a href='packages/specdefs.ins'>INS</a></td>
-		  <td><a href='packages/specdefs.sty'>STY</a></td>
-		  <td><a href='packages/specdefs.ps'>PS</a> (925 KB), <a href='packages/specdefs.pdf'>PDF</a> (175 KB)</td>
-		  <td><strong>v0.3a</strong></td>
-		  <td><strong>2006/04/03</strong></td>
-		</tr>
-		<tr>
-		  <td id='underline'>underline</td>
+		  <td id='noitcrul'>noitcrul</td>
 		  <td>
 			Dieses Package ermöglicht schönere Unterstreichungen.
-			Es wird vom
-			<a href='#spezialisierung'>Spezialisierungs-Skript</a> verwendet.
 		  </td>
 		  <td><a href='packages/underline.dtx'>DTX</a>, <a href='packages/underline.ins'>INS</a></td>
 		  <td><a href='packages/underline.sty'>STY</a></td>
@@ -250,15 +216,6 @@ color:black;
 	</table>
 
 	<h3 id='makedvi'><a id='makepackage'></a>Makedvi- und Makepackage-Skripte</h3>
-	<p>
-	  Um aus einem LaTeX-Quelltext die fertige DVI-Datei zu machen (mit Index,
-	  Inhaltsverzeichnis, ...), muss man üblicherweise LaTeX mehrfach laufen
-	  lassen sowie zwischendurch auch noch makeindex aufrufen. Das Bash-Skript
-	  <a href='spezialisierung/makedvi.sh'>makedvi.sh</a> macht das alles für euch &ndash; außerdem
-	  überprüft es noch, ob die DTX-Dateien der notwendigen Packages neuer sind
-	  als die Packagedateien und baut sie entsprechend neu.
-	  (Dafür müssen am Anfang der Datei gegebenenfalls die Pfade angepasst werden.)
-	</p>
 	<p>
 	  Um aus <code>.ins</code>- und <code>.dtx</code> das Package
 	  und die Dokumentation zu erstellen, ist das Bash-Skript
@@ -273,12 +230,12 @@ color:black;
 
 	<h2 id="abhang">Abhängigkeitsgraph</h2>
 	<div style="float:left; margin: 1ex;">
-	  <a href="abhang.png"><img  src="abhang-sehr-klein.png" alt=""></a>
+	  <a href="abhang.png"><img  src="abhang-klein2.png" alt=""></a>
 	</div>
 	<p>
 	  Ich habe einen <a href="abhang.png">Abhängigkeitsgraphen</a> gemalt
 	  (bzw. von <a href="http://www.graphviz.org/">dot</a> malen lassen).
-	  Eingezeichnet sind alle für die hier vorhandenen PDF-Dateien
+	  Eingezeichnet sind alle für die Dokumentation der Packages
 	  verwendeten TeX/LaTeX-Quelltexte, inklusive der bei meinem
 	  <acronym title="LaTeX">L<sup>A</sup>T<sub>E</sub>X</acronym>-System
 	  (MikTeX) mitgelieferten Pakete, aber ohne Fontdeskriptoren und
@@ -290,17 +247,19 @@ color:black;
 	  hat. (In dem Bereich der Pakete, die nicht von mir sind, fehlen
 	  wahrscheinlich noch einige Quer-Abhängigkeiten.)
 	</p>
-	<p>Stand ist der 4.4.2006. (Ich werde den Graphen wohl nicht so häufig
+	<p>Stand ist der 4.4.2006, daher heißt auf dem Bild das <a href="#noitcrul">noitcrul-Paket</a> noch <em>underline</em>. (Ich werde den Graphen wohl nicht so häufig
 	  aktualisieren wie die Pakete.)</p>
 	  
 
-	<h2 id='bugs'>Entdeckte LaTeX-Bugs</h2>
+	<h2 id='bugs' style="clear:left;">Entdeckte LaTeX-Bugs</h2>
 	<p>
 	  Während der Arbeit an den Skripten und den Packages habe ich
 	  <a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?category=anything&amp;keyword=Ebermann'>folgende Bugs in LaTeX</a>
 	  gefunden und gemeldet (umgekehrt chronologisch).
 	</p>
 	<ul>
+<li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3860'>latex/3860: documentation error in ltmath.dtx: \(, \), \[, \]</a>
+(da gab es bisher keine Reaktion)</li>
 	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3840'>latex/3840*: doc: \DoNotIndex{\ } doesn't work</a></li>
 	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3839'>latex/3839: License: LaTeX-version too unflexible</a></li>
 	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3835'>latex/3835: doc: documentation-code-inconsistency for \changes</a></li>

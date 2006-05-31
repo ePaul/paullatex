@@ -1,0 +1,31 @@
+/**
+ * CSS-Datei für die PaulLaTeX-Webseite.
+ */
+
+td, th { border: solid thin; padding: 0.5ex;}
+
+.disclaimer { border: solid thin;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 30em;
+  padding: 1ex;
+  background-color: yellow;
+  color:black;
+}
+li:first-child ul li,
+/* li ul li ul, */
+li ul li ul li { display: inline; }
+#neues { float:right;
+  width: 35ex;
+  max-height: 12em;
+  border:solid thin;
+  padding: 0.5ex 1ex 0.5ex 1ex;
+  overflow: auto;
+  margin: 2em 0.3em 1em 1em;
+}
+#neues dt { display: run-in;
+  font-weight: bold;
+}
+#neues dt:after{ content: ": " }
+#neues dd { margin-left:1em;
+  text-indent: -1em; } 
