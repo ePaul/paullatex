@@ -25,7 +25,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{extpfeil}
-%<package> [2006/03/23 v0.2b Extensible Pfeile (PE)]
+%<package> [2006/07/27 v0.3 Extensible Pfeile (PE)]
 %
 %<*driver>
 \documentclass[ngerman, draft]{ltxdoc}
@@ -40,7 +40,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{0}
+% \CheckSum{79}
 %
 % \changes{v0.0}{2006/01/18}{Anfang der Fassung als DTX}
 %
@@ -94,6 +94,7 @@
 %  \DescribeMacro{\xtwoheadleftarrow}
 %  \DescribeMacro{\xmapsto}
 %  \DescribeMacro{\xlongequal}
+%  \DescribeMacro{\xtofrom}
 %  \begin{tabular}[t]{lcp{5cm}}
 %    '\xtwoheadrightarrow[a]{b}' &  $\xtwoheadrightarrow[a]{b}$  & ein einfacher Pfeil nach
 %                                                                  rechts mit Doppelspitze \\
@@ -102,7 +103,8 @@
 %    '\xmapsto[a]{b}' &  $\xmapsto[a]{b}$  & ein \emph{wird-abgebildet-auf}-Pfeil nach
 %                                               rechts. \\
 %  '\xlongequal[a]{b}' & $\xlongequal[a]{b}$ & kein Pfeil, sondern einfach nur ein
-%                                               verlängerbares Gleichheitszeichen.
+%                                               verlängerbares Gleichheitszeichen. \\
+%  '\xtofrom[a]{b}' & $\xtofrom[a]{b}$ & Ein Doppelpfeil in beide Richtungen.
 %  \end{tabular}
 %
 % 
@@ -257,7 +259,7 @@
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \subsection{Verschiedene Pfeile übereinander}
+%  \subsection{Verschiedene Pfeile übereinander} \label{twoarrows}
 %
 %  In einigen Schriftsammlungen sind Pfeile wie $\rightleftarrows$
 %  und $\rightrightarrows$ (\pack{\AmS symb}) vorhanden. Leider gibt
@@ -274,6 +276,7 @@
 %  
 %  \begin{macro}{\twoarrowsleft}\noindent\marg{Pfeil1}\marg{Pfeil2}
 %
+%  \changes{v0.3}{2006/07/27}{Neu.}
 %  Setzt zwei Pfeile (oder Striche etc.) so zusammen, dass der erste
 %  zur oberen Linie, der zweite zur unteren Linie von $\Relbar$ ('\Relbar')
 %  passt. Die beiden Symbole sind am linken Ende ausgerichtet.
@@ -290,6 +293,7 @@
 %    \end{macrocode}
 %  \end{macro}
 %  \begin{macro}{\twoarrowsright}
+%  \changes{v0.3}{2006/07/27}{Neu.}
 %   Das gleiche für die Rechtsausrichtung.
 %    \begin{macrocode}
 \newcommand*{\twoarrowsright}[2]{%
@@ -336,7 +340,8 @@
 %   \changes{v0.2}{2006/03/19}{Neu.}
 %    Hier noch eine verlängerbare Variante von $\mapsto$ und $\longmapsto$.
 %    \pack{mathtools} hat bereits eine Implementation davon, aber diese
-%    ist etwas länger und gefällt mir daher besser.
+%    ist etwas länger und gefällt mir daher besser (das '\let' sorgt
+%    dafür, dass sich '\newcommand' nicht beschwert).
 %    \begin{macrocode}
 \let\xmapsto\undefined
 \newextarrow{\xmapsto}{0599}{{\mapstochar\relbar}\relbar\rightarrow}
@@ -351,13 +356,26 @@
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{\xtofrom}
+%  \changes{v0.3}{2006/07/27}{Neu}
+%  Ein Doppelpfeil: $\xtofrom[\sin]{\cos}$.
+%    \begin{macrocode}
+\newextarrow
+  {\xtofrom}%
+  {55{40}0}%
+  {%
+    {\twoarrowsleft\relbar\shortleftarrow}%
+    \Relbar%
+    {\twoarrowsright\shortrightarrow\relbar}%
+  }%
+%    \end{macrocode}
+%  \end{macro}
+
 %  \section{Schluss}
 %  Das war es fürs erste -- später kommen
 %  bestimmt noch mehr Pfeile hinzu.
 %
 %    \begin{macrocode}
-\newextarrow{\xtofrom}{55{40}0}
-{{\twoarrowsleft\relbar\shortleftarrow}\Relbar{\twoarrowsright\shortrightarrow\relbar}}
 \endinput
 %</package>
 %    \end{macrocode}

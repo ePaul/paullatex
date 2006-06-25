@@ -28,6 +28,8 @@ Then you can use the extensible arrows
   \xtwoheadleftarrow   (<<-----)
   \xmapsto             (|----->)
   \xequals             (=======)
+  \xtofrom             (------>
+                        <----- )
 They work the same way as the extensible arrows in 'amsmath',
 'mathtools' or 'extarrows': you give one mandatory argument
 (superscript) and one optional argument (subscript), and the
@@ -133,6 +135,8 @@ sagojn
   \xtwoheadleftarrow   (<<-----)
   \xmapsto             (|----->)
   \xequals             (=======)
+  \xtofrom             (------>
+                        <----- )
 Ili funkcias same kiel la plilongigeblaj sagoj en
 la pakajhoj 'amsmath', 'mathtools' kaj 'extarrows':
 vi donu kiel deviga argumento ajhon (formulon) kiu
