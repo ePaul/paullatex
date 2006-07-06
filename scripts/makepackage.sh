@@ -5,9 +5,9 @@ then
 echo 'makepackage  -  installiert ein LaTeX-Package und erstellt die
                 Dokumentation als .dvi
 Nutzung:
-   makepackage -clean
    makepackage -help
-   makepackage [-pdf] [-w <workdir>] [<packagedir>] <dtxname>
+   makepackage [-w <workdir>] -clean
+   makepackage [-w <workdir>] [-pdf] [<packagedir>] <dtxname>
 
 Es wird das Package installiert (d.h. aus der .dtx-Datei eine .sty- oder
 .cls-Datei erstellt, und diese in das vorhergesehene Verzeichnis gesteckt),
@@ -31,25 +31,6 @@ Parameter:
   exit
 fi
 
-if [ "$1" == "-clean" ]
-then
-  (
-   shopt -s nullglob
-   echo "Aufräumen ..."
-   echo "wird gleich gelöcht" > cleanup.dummy
-   rm cleanup.dummy *.aux *.glo *.gls *.ind *.idx *.ilg *.log *.toc *.filelist
-  )
-  exit
-fi
-
-if [ "$1" == "-PDF" ]
-then
-  PDFKREILO="dvipdf"
-  shift
-else
-  PDFKREILO="true"
-fi
-
 if [ "$1" == "-w" ]
 then
   WORKDIR="$2"
@@ -71,6 +52,27 @@ then
 fi
 
 
+if [ "$1" == "-clean" ]
+then
+  (
+   shopt -s nullglob
+   echo "Aufräumen ..."
+   echo "wird gleich gelöcht" > cleanup.dummy
+   rm cleanup.dummy *.aux *.glo *.gls *.ind *.idx *.ilg *.log *.toc *.filelist
+  )
+  exit
+fi
+
+if [ "$1" == "-PDF" ]
+then
+  PDFKREILO="dvipdf"
+  shift
+else
+  PDFKREILO="true"
+fi
+
+
+
 	# Falls $DVIVIEWER nicht auf etwas anderes gesetzt wurde,
 	# nehmen wir Yap (von MikTeX).
 
@@ -89,6 +91,11 @@ then
 fi
 
 echo "Ich verwende $LATEX."
+
+if [ -z "$INSTALLTEX" ]
+then
+   INSTALLTEX='TEXMFCNF="$HOME/texmf" $LATEX'
+fi
 
 
 	# Wenn kein Package-Dir angegeben wurde, generieren wir
@@ -118,7 +125,7 @@ if [ -e "${packagedir}/${packagename}.ins" ]
 then
 	cp "${packagedir}/${packagename}.ins" $WORKDIR/ &&
 	pushd $WORKDIR &&
-	$LATEX ${packagename}.ins
+	eval $INSTALLTEX ${packagename}.ins
 else
 	pushd $WORKDIR
 fi &&
@@ -154,7 +161,7 @@ $LATEX "${packagename}.dtx" &&
 #
 ## Previewer aufrufen
 #
-$DVIVIEWER "${packagename}.dvi" &&
+{ eval $DVIVIEWER ${packagename}.dvi & } &&
 #
 #
 ## PDF erstellen
