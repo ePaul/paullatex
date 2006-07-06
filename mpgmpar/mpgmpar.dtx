@@ -146,6 +146,16 @@
 %       \ref{sec:minipagewithmarginpars} im Implementations-Teil}{in der
 %         Implementations"=Beschreibung des Paketes}  nachzulesen.
 %
+%     \item Befinden sich die '\marginpar'-Befehle innerhalb einer der 
+%       AMS-Mathe-Umgebungen (wie etwa 'align', 'gather' und ihre '*'-Varianten),
+%       so kann es vorkommen, dass die Marginalien doppelt auftauchen.
+%       Dies liegt daran, dass diese Umgebungen ihren Inhalt mehrfach auswerten --
+%       und jedesmal wird dann der Inhalt gespeichert.
+%       Dieses Problem betrifft auch andere Makros, die ähnlich vorgehen.
+%
+%       Ich halte dies für einen Bug (in \pack{mgmpar}), habe aber noch keine Idee,
+%       was ich dagegen tun könnte.
+%
 %  \end{itemize}
 %
 % \StopEventually{\PrintChanges\PrintIndex}
