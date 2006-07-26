@@ -24,7 +24,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{mpgmpar}
-%<package> [2006/05/23 v0.1 Randnotizen auch in Minipages (PE)]
+%<package> [2006/05/23 v0.2 Randnotizen auch in Minipages (PE)]
 %
 %<*driver>
 \documentclass[draft,ngerman]{ltxdoc}
@@ -36,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{44}
+% \CheckSum{47}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -153,7 +153,7 @@
 %       und jedesmal wird dann der Inhalt gespeichert.
 %       Dieses Problem betrifft auch andere Makros, die ähnlich vorgehen.
 %
-%       Ich halte dies für einen Bug (in \pack{mgmpar}), habe aber noch keine Idee,
+%       Ich halte dies für einen Bug (in \pack{mpgmpar}), habe aber noch keine Idee,
 %       was ich dagegen tun könnte.
 %
 %  \end{itemize}
@@ -168,12 +168,7 @@
 %    \end{macrocode}
 %
 %  \subsection{Vorbereitungen}
-%
-%  Wir benötigen das Package \pack{ifthen}, um den optionalen
-%  Parameter von seinem Vorgabewert unterscheiden zu können.
-%    \begin{macrocode}
-\RequirePackage{ifthen}[2001/05/21]%
-%    \end{macrocode}
+%  \changes{v0.2}{2006/07/27}{\pack{ifthen} wird nicht mehr benötigt.}
 %
 %  \begin{macro}{\mpgmpar@savedmargins}
 %  Dieses Makro ist einfach nur ein "`Behälter"' für die aufgesparten
@@ -193,6 +188,7 @@
 \let \mpgmpar@dummy = \relax
 %    \end{macrocode}
 %  \end{macro}
+%
 %
 %  \subsection{Interne Kommandos}
 %
@@ -217,28 +213,44 @@
 %    \begin{macrocode}
    \renewcommand*{\marginpar}[2][\mpgmpar@dummy]%
    {%
+%    \end{macrocode}
+%    Das '\@bsphack' und das dazugehörige '\@esphack' am Ende
+%    sind Kernel"=Kommandos, welche (zusammen) dafür sorgen, dass
+%    an der Stelle der Verwendung keine Spur des
+%    '\marginpar'-Aufrufs bleibt.
+%    \begin{macrocode}
       \@bsphack
-      \ifthenelse{\equal{\mpgmpar@dummy}{##1}}%
+%    \end{macrocode}
+%   \changes{v0.2}{2006/07/26}{Vergleich jetzt mit \cs{ifx} statt \cs{ifthenelse}.}
+%   Jetzt der Vergleich \ldots{} bis zu Version 0.1 hatte ich
+%   den mit
+%\begin{verbatim}
+%        \ifthenelse{\equal{\mpgmpar@dummy}{##1}}{...
+%\end{verbatim}
+%   aus \pack{ifthen} gemacht, aber das hatte Nebenwirkungen (da für
+%   den Vergleich '##1' expandiert wurde). Daher direkt mit '\ifx'.
+%    \begin{macrocode}
+      \def\temp@a{##1}%
+      \ifx\mpgmpar@dummy\temp@a%
 %    \end{macrocode}
 %   Dann kopieren wir (global) einfach den '\marginpar'-Aufruf an das Ende unseres
 %   "`Speicher-Makros"' '\mpgmpar@savedmargins'.
 %    \begin{macrocode}
-      {%
          \g@addto@macro{\mpgmpar@savedmargins}{%
             \marginpar{##2}}%
-      }{%
+      \else%
          \g@addto@macro{\mpgmpar@savedmargins}{%
-            \marginpar[##1]{##2}}%
-      }%
+            \marginpar[{##1}]{##2}}%
+      \fi%
       \@ignorefalse
       \@esphack
    }%
 }%
 %    \end{macrocode}
-%  \end{macro}
 %  Das '\@bsphack'-'\@esphack'-Paar ist hier vorhanden, damit sich unser
 %  modifiziertes '\marginpar' bezüglich umrundender Leerzeichen o.ä.
 %  genauso verhält wie das Original-'\marginpar'.
+%  \end{macro}
 %  \end{macro}
 %
 %  \begin{macro}{\mpgmpar@restoremarginpars}
@@ -256,7 +268,7 @@
 %    \end{macrocode}
 %   Die eben kopierte Liste führen wir nun aus (falls wir
 %   jetzt noch in einer äußeren Umgebung mit unserem
-%   Spezial-'\marginpar' sind wird die Liste dadurch neu angelegt,
+%   Spezial-'\marginpar' sind, wird die Liste dadurch neu angelegt,
 %   andernfalls werden die Randnotizen ausgegeben), und
 %   löschen dann die Kopie.
 %    \begin{macrocode}
@@ -284,12 +296,13 @@
 %  \let \marginpar = \savedmarginpar
 %  \mpgmpar@restoremarginpars
 %\end{verbatim}
-%    Das ist aber nicht von mir getestet, also ohne Garantie ':-)'
+%    Das ist aber nicht von mir getestet, also ohne Garantie. Und es ist eher nicht
+%    robust gegenüber Verschachtelungen derartiger Konstrukte.
 %  \end{quotation}
 %
 %  \begin{environment}{minipagewithmarginpars}
 %  Hier nun unserer neue Minipage-Umgebung. Sie hat einen optionalen
-%  (Default 't'~-- vertikale Ausrichtung) und einen verpflichtenden (Breite) Parameter.
+%  (vertikale Ausrichtung~-- Default ist 't') und einen verpflichtenden (Breite) Parameter.
 %    \begin{macrocode}
 \newenvironment*{minipagewithmarginpars}[2][t]{%
 %    \end{macrocode}
