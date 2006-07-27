@@ -50,7 +50,7 @@ Try this:
        \mpgmpar@savemarginpars
   }{%
        \end{minipage}%
-     \end{lrbox}
+     \end{lrbox}%
      \mpgmpar@restoremarginpars
   }%
   \makeatother
@@ -149,7 +149,7 @@ Jen ekzemplo (minipage kun kadro:)
        \mpgmpar@savemarginpars
   }{%
        \end{minipage}%
-     \end{lrbox}
+     \end{lrbox}%
      \mpgmpar@restoremarginpars
   }%
   \makeatother
