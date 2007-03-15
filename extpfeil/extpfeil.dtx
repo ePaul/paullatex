@@ -40,7 +40,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{79}
+% \CheckSum{0}
 %
 % \changes{v0.0}{2006/01/18}{Anfang der Fassung als DTX}
 %
@@ -300,11 +300,74 @@
    \settoheight{\dimen@}{=}%
    \advance\dimen@ by 1pt\relax
    \mathrel{%
-      \hphantom{\vbox{\hbox{$#1$}\hbox{$#2$}}}%
-      \mathllap{\raisebox{0.22\dimen@}[0pt][0pt]{$#1$}}%
-      \mathllap{\raisebox{-0.22\dimen@}[0pt][0pt]{$#2$}}%
+      \hphantom{\vbox{\hbox{$\m@th #1 $}\hbox{$\m@th #2 $}}}%
+      \mathllap{\raisebox{0.22\dimen@}[0pt][0pt]{$\m@th #1 $}}%
+      \mathllap{\raisebox{-0.22\dimen@}[0pt][0pt]{$\m@th #2 $}}%
    }%
 }%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  Da für einige Zwecke der durch '\Relbar' ($\Relbar$) vorgegebene Abstand
+%  doch etwas gering ist, hier noch zwei Makros, die genauso funktionieren,
+%  bei denen der Abstand größer (und mittels optionalem Argument
+%  konfigurierbar) ist. Danach folgt ein dazu passendes '\bigRelbar'.
+%
+%
+%  \begin{macro}{\bigtwoarrowsleft}\noindent\oarg{abstand}\marg{Pfeil1}\marg{Pfeil2}
+%
+%  ^^A \changes{v0.3}{2006/07/27}{Neu.}
+%  Setzt zwei Pfeile (oder Striche etc.) so zusammen, dass der erste
+%  zur oberen Linie, der zweite zur unteren Linie von $\bigRelbar$ ('\bigRelbar')
+%  passt. Die beiden Symbole sind am linken Ende ausgerichtet.
+%
+%\newextarrow{\xsurjtoInjfrom}{9999} {%
+%  {\bigtwoarrowsleft{\relbar}{\shortleftarrow}}%
+%  \bigRelbar%
+%  {\bigtwoarrowsright{\twoheadrightarrow}{\relbar\joinrel\rhook}}%
+%}
+%
+% Zum Ausprobieren: $A \xsurjtoInjfrom[unten]{oben} B$.
+%
+%
+%    \begin{macrocode}
+\newcommand*{\bigtwoarrowsleft}[3][5pt]{%
+   \setlength{\dimen@}{#1}%
+   \mathrel{%
+      \mathrlap{\raisebox{0.5\dimen@}{$\m@th #2 $}}%
+      \mathrlap{\raisebox{-0.5\dimen@}{$\m@th #3 $}}%
+      \hphantom{\vbox{\hbox{$\m@th #2 $}\hbox{$\m@th #3 $}}}%
+   }%
+}%
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\bigtwoarrowsright}
+%  \changes{v0.3}{2006/07/27}{Neu.}
+%   Das gleiche für die Rechtsausrichtung.
+%    \begin{macrocode}
+\newcommand*{\bigtwoarrowsright}[3][5pt]{%
+   \setlength{\dimen@}{#1}%
+   \mathrel{%
+      \hphantom{\vbox{\hbox{$\m@th #2 $}\hbox{$\m@th #3 $}}}%
+      \mathllap{\raisebox{0.5\dimen@}{$\m@th #2 $}}%
+      \mathllap{\raisebox{-0.5\dimen@}{$\m@th #3 $}}%
+   }%
+}%
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\bigRelbar}\noindent\oarg{abstand}
+%    \begin{macrocode}
+\newcommand*{\bigRelbar}[1][5pt]{
+   \setlength{\dimen@}{#1}%
+   \mathrel{%
+%     \vcenter{\offinterlineskip
+%       \hbox{$\m@th \relbar$}%
+%       \hbox{$\m@th \relbar$}%
+%       }%
+     \mathrlap{\raisebox{0.5\dimen@}{$\m@th \relbar $}}%
+     \raisebox{-0.5\dimen@}{$\m@th \relbar$}%
+   }%
+}
 %    \end{macrocode}
 %  \end{macro}
 %

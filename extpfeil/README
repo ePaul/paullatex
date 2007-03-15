@@ -27,7 +27,7 @@ Then you can use the extensible arrows
   \xtwoheadrightarrow  (----->>)
   \xtwoheadleftarrow   (<<-----)
   \xmapsto             (|----->)
-  \xequals             (=======)
+  \xlongequal          (=======)
   \xtofrom             (------>
                         <----- )
 They work the same way as the extensible arrows in 'amsmath',
@@ -35,7 +35,7 @@ They work the same way as the extensible arrows in 'amsmath',
 (superscript) and one optional argument (subscript), and the
 length of the arrow is adapted from the width of the arguments.
 
-    \xequals[sub]{super}
+    \xlongequal[sub]{super}
 
 
 But - and here is the difference, apart from other set of arrows -
@@ -134,7 +134,7 @@ sagojn
   \xtwoheadrightarrow  (----->>)
   \xtwoheadleftarrow   (<<-----)
   \xmapsto             (|----->)
-  \xequals             (=======)
+  \xlongequal          (=======)
   \xtofrom             (------>
                         <----- )
 Ili funkcias same kiel la plilongigeblaj sagoj en
@@ -144,7 +144,7 @@ aperos super la sago, kiel opcia argumento ajhon
 (formulon)kiu aperos sub la sago. La longeco de
 la sago adaptighas lau la largheco de la argumentoj.
 
-	\xequals[sub]{super}
+	\xlongequal[sub]{super}
 
 
 Sed - kaj jen la diferenco al la menciitaj pakajhoj,
