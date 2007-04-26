@@ -36,7 +36,7 @@
 \end{filecontents}
 \errorcontextlines=20
 \listfiles
-\input{test_datei}
+%\input{test_datei}
 \begin{document}
    \DocInput{dateiliste.dtx}
 \end{document}
@@ -96,7 +96,7 @@ useful.
   version number for the version string in \listfiles.
   Use
 
-    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.2 2006-09-19 17:00:43 epaul Exp $}
+    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.3 2007-04-26 14:55:45 epaul Exp $}
                      {short description}
 
   in your file, and do a CVS commit.
@@ -237,7 +237,7 @@ utile.
   (kaj la listo de (3).)
   Uzu
 
-    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.2 2006-09-19 17:00:43 epaul Exp $}
+    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.3 2007-04-26 14:55:45 epaul Exp $}
                      {mallonga priskribo}
 
   en via dosiero, kaj faru 'cvs commit'. (CVS enmetos
@@ -365,7 +365,7 @@ utile.
 %  Ändert die Informationen für die Datei, in der es aufgerufen wurde.
 %  \meta{id-string} sollte ein String sein, der wie
 %\begin{verbatim}
-%   $Id: dateiliste.dtx,v 2.2 2006-09-19 17:00:43 epaul Exp $
+%   $Id: dateiliste.dtx,v 2.3 2007-04-26 14:55:45 epaul Exp $
 %\end{verbatim}
 % (Beispiel für diese Datei) aussieht.
 %  Diesen lässt man am besten von seinem CVS produzieren, schreibt also etwas wie
@@ -816,10 +816,11 @@ utile.
 %  Zunächst der Dateiname, \ldots
 %    \begin{macrocode}
             \edef\dateiliste@zeile{%
-              \expandafter\dateiliste@general@escape\expandafter
-              {%
-                \dateiliste@filename}%
-              {_}{\string\_}%
+              %\expandafter\dateiliste@general@escape\expandafter
+              %{%
+                \dateiliste@filename
+              %}%
+              %{_}{\string\_}%
               \space& %
 %    \end{macrocode}
 %  \ldots\ dann entweder ein "`---"' (falls kein Versions-String gegeben wurde), \dots
@@ -861,7 +862,10 @@ utile.
 %  wird noch escapet, damit '\bla' kein Problem bildet.
 %    \begin{macrocode}
       \def\dateiliste@parse@ver##1 ##2 ##3\relax{%
-        ##1 & ##2 & \dateiliste@general@escape{##3}{\@backslashchar}{\string\textbackslash{}}\relax}%
+        ##1 & ##2 & %\dateiliste@general@escape{##3}{\@backslashchar}{\string\textbackslash{}}%
+        ##3%
+        \relax
+      }%
 %    \end{macrocode}
 %  \end{macro}
 %  Damit ist der else-Teil und auch das ganze Makro '\printFileList' zu Ende.
