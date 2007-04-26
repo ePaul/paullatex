@@ -99,8 +99,11 @@
 %\end{verbatim}
 %
 % \DescribeEnv{randbildbasis}
+% \DescribeEnv{randbild*}
 %  Die Umgebung 'randbildbasis' funktioniert genauso wie 'randbild', nur
-%  wird kein Achsenkreuz gezeichnet.
+%  wird kein Achsenkreuz gezeichnet. Ein alternativer Name dafür ist
+%  'randbild*' (weil ich jetzt schon mindestens zum fünften Mal diesen Namen
+%  verwendet habe, als ich 'randbildbasis' haben wollte).
 %
 % \DescribeMacro{\showgrid}
 %  Mit dem Makro '\showgrid' kann man seinem Bild ein
@@ -246,6 +249,13 @@
    }%
    \@Esphack%
 }%
+%    \end{macrocode}
+%  \end{environment}
+%  \begin{environment}{randbild*}
+%  Jetzt definieren wir uns noch einen Alias für 'randbildbasis':
+%    \begin{macrocode}
+  \expandafter\let\csname randbild*\endcsname\randbildbasis
+  \expandafter\let\csname endrandbild*\endcsname\endrandbildbasis
 %    \end{macrocode}
 %  \end{environment}
 %  \begin{macro}{\showgrid}
