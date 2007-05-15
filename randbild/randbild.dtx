@@ -214,6 +214,7 @@
 %  hier kann man also nach Herzenslust pstricks-Befehle nutzen.
 %    \begin{macrocode}
       \begin{pspicture}(#2)(#3)%
+         \ignorespaces
 }{%
 %    \end{macrocode}
 %  Am Ende der 'randbildbasis'-Umgebung beenden wir zunächst die 'pspicture'-Umgebung
@@ -236,7 +237,11 @@
 %   am Rand rundum abgeschnitten wird (0.1 cm Abstand), und einen Rahmen
 %   bekommt.
 %    \begin{macrocode}
-      \fbox{\clipbox[0.2]{\usebox{\randbild@box}}}%
+      \fbox{%
+        \clipbox[0.2]{%
+          \usebox{\randbild@box}%
+        }%
+      }%
 %    \end{macrocode}
 %   Auf einer weiteren Zeile (mit wenig Abstand) \dots
 %    \begin{macrocode}

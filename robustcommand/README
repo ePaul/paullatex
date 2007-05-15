@@ -1,0 +1,98 @@
+[en]
+LaTeX-package 'robustcommand' - a variation of \DeclareRobustCommand,
+which checks that the command is not yet definded.
+
+Author:  Paul Ebermann <Paul-Ebermann@gmx.de>
+License: LPPL 1.3b or later, author-maintained
+         (see http://www.latex-project.org/lppl/).
+
+All Documentation (other than this file) is in german.
+
+The typesetting of the documentation needs 'pauldoc' (from the
+same author).
+
+The package comes as .dtx + .ins.
+Run "latex robustcommand.ins" to create the style file (and maybe put
+it to texmf/tex/latex/paul/, if your docstrip is configured
+accordingly), run (after that and maybe updating your TeX hash)
+"latex robustcommand.dtx" to create the documentation.
+
+ Usage
+-------
+Use the package in your own package or class files.
+
+   \RequirePackage{robustcommand}
+
+and later you can use
+
+   \robust@new@command
+
+like \DeclareRobustCommand from the LaTeX kernel.
+This command works like \DeclareRobustCommand*, but
+it gives an error message, if the defined command
+is already defined.
+
+----------------
+[de]
+LaTeX-Paket 'robustcommand' - eine Variante von
+\DeclareRobustCommand, welche vorher überprüft,
+ob der Befehl schon existiert.
+
+Autor:  Paul Ebermann (Paul-Ebermann@gmx.de).
+Lizenz: LPPL 1.3b oder später, mit Maintenance-Status
+        "author-maintained". Siehe http://www.latex-project.org/lppl/.
+
+Geschrieben für den eigenen Gebrauch
+(-> http://www.math.hu-berlin.de/~ebermann/alg-script/),
+aber  vielleicht ist es auch für andere von Nutzen.
+
+Zum Setzen der Dokumentation wird das Paket 'pauldoc'
+(vom selben Autor) benötigt.
+
+Das Paket kommt als .dtx + .ins.
+Mit "latex robustcommand.ins" wird die .sty-Datei erstellt (und
+eventuell gleich nach texmf/tex/latex/paul/ installiert,
+wenn docstrip entsprechend eingerichtet ist), mit
+latex robustcommand.dtx kann (danach und eventuell nach einer
+Aktualisierung der TeX-Dateidatenbank) die Dokumentation neu
+erstellt werden.
+
+Zur Verwendung siehe robustcommand.pdf.
+----------------
+[eo-h]
+LaTeX-pakajho 'robustcommand' - Variajho de \DeclareRobustCommand,
+kiu antaue elprovas, chu la nomo jam ekzistas.
+
+Autoro:  Paulo Ebermann (Paul-Ebermann@gmx.de).
+Licenzo: LPPL 1.3, 'author-maintained'
+         (-> http://www.latex-project.org/lppl/).
+
+Kreitaj por propra uzo, sed eble iom de ghi ankau
+uzeblas por aliaj.
+
+La dokumentaro (escepte tiu chi dosiero) estas nur en la germana
+lingvo.
+
+Por krei la dokumentadon vi bezonas 'pauldoc' (de la sama autoro).
+
+La pakajho venas en .dtx + .ins.
+Voku "latex robustcommand.ins" por krei la .sty-dosieron (kaj
+eble meti ghin al texmf/tex/latex/paul/, se via docstrip estis
+konfigurita laue), voku "latex robustcommand.dtx" por rekrei
+la dokumentaron.
+
+ Uzado
+-------
+
+Uzu la pakajhon en propraj pakajhoj (au klasoj):
+
+   \RequirePackage{robustcommand}
+
+Poste vi povas uzi
+
+   \robust@new@command
+
+anstatau \DeclareRobustCommand* from the LaTeX kernel.
+La komando laboras kiel \DeclareRobustCommand*, sed
+ghi donas erarmesaghon, se la difinenda komando jam
+antaue estas difinita.

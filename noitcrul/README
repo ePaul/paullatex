@@ -1,0 +1,116 @@
+[en]
+The LaTeX package 'noitcrul' provides an
+\underline-variant without italics correction at
+the end, for math.
+
+Author:  Paul Ebermann <Paul-Ebermann@gmx.de>
+License: LPPL 1.3b or later, author-maintained
+         (see http://www.latex-project.org/lppl/).
+
+All Documentation (other than this file) is in german.
+
+The package also needs the package 'robustcommand' from the
+same author.
+The typesetting of the documentation needs 'pauldoc' (from the
+same author).
+
+The package comes as .dtx + .ins.
+Run "latex noitcrul.ins" to create the style file (and maybe put
+it to texmf/tex/latex/paul/, if your docstrip is configured
+accordingly), run (after that and maybe updating your TeX hash)
+"latex noitcrul.dtx" to create the documentation.
+
+ Usage:
+--------
+
+Add
+
+    \usepackage{noitcrul}
+
+to the preamble.
+In the text, use (for example)
+
+    $\noitUnderline{M}_k$
+
+instead of
+
+    $\underline{M}_k$
+
+and look whether you like the
+result more. (The distance between
+'M' and 'k' is less with \noitUnderline.)
+
+----------------
+[de]
+LaTeX-Package 'noitcrul' - Eine Variante von \underline
+ohne Italics-Correction im Mathe-Modus.
+
+
+Autor:  Paul Ebermann (Paul-Ebermann@gmx.de).
+Lizenz: LPPL 1.3b oder später, mit Maintenance-Status
+        "author-maintained". Siehe http://www.latex-project.org/lppl/.
+
+Geschrieben für den eigenen Gebrauch
+(-> http://www.math.hu-berlin.de/~ebermann/alg-script/),
+aber  vielleicht ist es auch für andere von Nutzen.
+
+
+'noitcrul' benötigt 'robustcommand' vom selben Autor.
+Zum Setzen der Dokumentation wird das Paket 'pauldoc'
+(vom selben Autor) benötigt.
+
+Das Paket kommt als .dtx + .ins.
+Mit "latex noitcrul.ins" wird die .sty-Datei erstellt (und
+eventuell gleich nach texmf/tex/latex/paul/ installiert,
+wenn docstrip entsprechend eingerichtet ist), mit
+latex noitcrul.dtx kann (danach und eventuell nach einer
+Aktualisierung der TeX-Dateidatenbank) die Dokumentation neu
+erstellt werden.
+
+Zur Verwendung siehe noitcrul.pdf.
+
+----------------
+[eo-h]
+LaTeX-pakajho 'noitcrul' - Variajho de \underline sen korekto por
+oblikvaj/kursivaj literoj je la fino, ene de matematika moduso.
+
+
+Autoro:  Paulo Ebermann (Paul-Ebermann@gmx.de).
+Licenzo: LPPL 1.3, 'author-maintained'
+         (-> http://www.latex-project.org/lppl/).
+
+Kreitaj por propra uzo, sed eble iom de ghi ankau
+uzeblas por aliaj.
+
+La dokumentaro (escepte tiu chi dosiero) estas nur en la germana
+lingvo.
+
+La pakajho 'noitcrul' bezonas 'robustcommand' (de la sama autoro).
+
+Por krei la dokumentadon vi bezonas 'pauldoc' (ankau de la sama
+autoro).
+
+La pakajho venas en .dtx + .ins.
+Voku "latex noitcrul.ins" por krei la .sty-dosieron (kaj eble meti
+ghin al texmf/tex/latex/paul/, se via docstrip estis konfigurita
+laue), voku "latex noitcrul.dtx" por rekrei la dokumentaron.
+
+ Uzado
+-------
+
+Metu
+
+    \usepackage{noitcrul}
+
+en la difinan sekcion (inter \documentclass kaj \begin{document}.
+En la teksto, uzu (ekzemple)
+
+    $\noitUnderline{M}_k$
+
+anstatau
+
+    $\underline{M}_k$
+
+kaj rigardu, kiu el ambau pli plachas al vi.
+(La distanco inter 'M' kaj 'k' estas malpli
+ granda per \noitUnderline).
