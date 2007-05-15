@@ -24,7 +24,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{randbild}
-%<package> [2006/04/04 v0.1b Bild am Seitenrand (PE)]
+%<package> [2007/05/15 v0.2 Bild am Seitenrand (PE)]
 %
 %<*driver>
 \documentclass[draft]{ltxdoc}
@@ -36,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{0}
+% \CheckSum{49}
 %
 %
 % \changes{v0.0}{2005/12/11}{Anfang der Fassung als DTX}
@@ -161,10 +161,21 @@
 %  \end{macro}
 %  \end{macro}
 %
+% \changes{v0.2}{2006/09/19}{Verwendung von \cs{@bsphack}
+%     und \cs{@Esphack} (bei 'randbild' und 'randbildbasis'),
+%      um die Umgebungen an der Verwendungsstelle
+%      unbemerkbar zu machen.
+%      Außerdem wurden einige überflüssige Leerzeichen (bzw. Zeilenenden)
+%      entfernt.}
 %  \begin{environment}{randbild}
 %  Die wichtigste (und namensgebende) Umgebung dieses Paketes.
 %    \begin{macrocode}
 \newenvironment*{randbild}[3][\ ]{%
+%    \end{macrocode}
+%   Mit '\@bsphack' (und dem '\@Esphack' am Ende) sorgen wir dafür, dass
+%   die Umgebung an der Stelle, wo sie verwendet wird, keine Spuren in der
+%   Ausgabe hinterlässt -- auch keine doppelten Leerzeichen o.ä.
+%    \begin{macrocode}
   \@bsphack%
 %    \end{macrocode}
 %  Wir rufen hier einfach die Umgebung 'randbildbasis' mit unseren drei Parametern auf.
@@ -214,6 +225,24 @@
 %  hier kann man also nach Herzenslust pstricks-Befehle nutzen.
 %    \begin{macrocode}
       \begin{pspicture}(#2)(#3)%
+%    \end{macrocode}
+%   \changes{v0.2}{2007/05/15}{Bugfix mit Leerzeichen: \cs{ignorespaces}.}
+%    Ich habe noch nicht ganz verstanden, warum das folgende '\ignorespaces'
+%    notwendig ist, wo doch eigentlich schon 'pspicture' dafür sorgt, dass
+%    Leerzeichen (und Zeilenenden) ignoriert werden -- aber leider nicht in
+%    Zusammenarbeit mit '\multips'.
+%    Jedenfalls habe ich danach etwa zwei Stunden gesucht, bei
+%    einem Beispiel wie im Rand\footnote{Für die Darstellung
+%     des Beispiels hier (nach Behebung des Bugs) habe ich ein
+%     explizites Leerzeichen ({\tt\char`\\\char`\ }) verwendet,
+%     im Original war das nur ein ungeschützer Zeilenumbruch.}.
+%      \begin{randbild*}[Beispiel]{-2,-2}{2,2}\ %
+%         \psset{linewidth=0.2pt}
+%         \multips(-2,0)(4,0){2}{\psline(0,-2)(0,2)}
+%         \multips(0,-2)(0,4){2}{\psline(-2,0)(2,0)}
+%      \end{randbild*}
+%   Dieses '\ignorespaces' behebt das Problem.
+%    \begin{macrocode}
          \ignorespaces
 }{%
 %    \end{macrocode}
@@ -257,6 +286,8 @@
 %    \end{macrocode}
 %  \end{environment}
 %  \begin{environment}{randbild*}
+%   \changes{v0.2}{2007/04/26}{Neue Umgebung 'randbild*' als
+%          Alias für 'randbildbasis'.}
 %  Jetzt definieren wir uns noch einen Alias für 'randbildbasis':
 %    \begin{macrocode}
   \expandafter\let\csname randbild*\endcsname\randbildbasis

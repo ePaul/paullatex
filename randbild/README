@@ -37,8 +37,8 @@ puts a coordinate system, from x1 to x2
 and y1 to y2 (all units are half centimeters),
 with a box around it, and a title, on the
 margin.
- randbildbasis works the same way, but does not
-show the axes.
+ randbildbasis (or randbild*) works the same way,
+but does not show the axes.
  \showgrid adds a grid (dotted) - should be called
 inside of one of the environments.
 
@@ -81,7 +81,7 @@ erstellt werden.
 Zur Verwendung siehe randbild.pdf.
 ----------------
 [eo-h]
-LaTeX-pakajho 'randbild' - Kvocientaj (au randbildaj) strukturoj
+LaTeX-pakajho 'randbild' - etaj bildoj che la pagh-margheno
       en LaTeX.
 
 Autoro:  Paulo Ebermann (Paul-Ebermann@gmx.de).
@@ -114,8 +114,8 @@ Metu
 en la komencon de la dokumento (antau \begin{document}).
 
 Poste vi povas uzi la "chirkauojn" 'randbild' kaj
-"randbildbasis", la komandon \showgrid kaj chiujn
-komandojn el 'pst-plot'.
+"randbildbasis" (au "randbild*"), la komandon
+\showgrid kaj chiujn komandojn el 'pst-plot'.
 
   \begin{randbild}[titolo]{x1,y1}{x2,y2}
     ...
@@ -124,10 +124,10 @@ kreas koordinatan sistemon de x1 ghis x2 kaj
 de y1 ghis y2 (chiuj unuoj estas duonaj centimetroj),
 kun kadro chirkau ghi kaj titolo sub ghi, en la
 rando de la pagho.
- randbildbasis funkcias same, sed ne montras la
-aksojn de la koordinata sistemo.
+ randbildbasis (= randbild*) funkcias same, sed ne
+montras la aksojn de la koordinata sistemo.
 
- \showgrid montras kradon (el punktoj) - estu uzata
+ \showgrid montras kradon (el punktoj) - ghi estu uzata
 ene de la "chirkauoj".
 Tie vi ankau povas uzu la plot-komandojn el pst-plot,
 kiel \psplot kaj \parametricplot.
