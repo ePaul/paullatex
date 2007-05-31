@@ -28,7 +28,7 @@
    ]
   {ltxdoc}
 \usepackage{pauldoc}[2006/04/03]
-\usepackage{dateiliste}
+\usepackage[showpages]{dateiliste}
 \usepackage{enumerate}
 \begin{filecontents}{test_datei}
 %% Dies ist nur ein Test.
@@ -96,7 +96,7 @@ useful.
   version number for the version string in \listfiles.
   Use
 
-    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.3 2007-04-26 14:55:45 epaul Exp $}
+    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.4 2007-05-31 14:47:35 epaul Exp $}
                      {short description}
 
   in your file, and do a CVS commit.
@@ -237,7 +237,7 @@ utile.
   (kaj la listo de (3).)
   Uzu
 
-    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.3 2007-04-26 14:55:45 epaul Exp $}
+    \ProvideFileInfos{$Id: dateiliste.dtx,v 2.4 2007-05-31 14:47:35 epaul Exp $}
                      {mallonga priskribo}
 
   en via dosiero, kaj faru 'cvs commit'. (CVS enmetos
@@ -365,7 +365,7 @@ utile.
 %  Ändert die Informationen für die Datei, in der es aufgerufen wurde.
 %  \meta{id-string} sollte ein String sein, der wie
 %\begin{verbatim}
-%   $Id: dateiliste.dtx,v 2.3 2007-04-26 14:55:45 epaul Exp $
+%   $Id: dateiliste.dtx,v 2.4 2007-05-31 14:47:35 epaul Exp $
 %\end{verbatim}
 % (Beispiel für diese Datei) aussieht.
 %  Diesen lässt man am besten von seinem CVS produzieren, schreibt also etwas wie
@@ -527,12 +527,42 @@ utile.
    \@dateiliste@nocatxiitrue
 }
 %    \end{macrocode}
-%  Die Standard-Option ist 'addmain'.
+%  Eine weiteres Optionspaar betrifft die Seitennummern.
+%    \begin{macrocode}
+\newif\if@dateiliste@showpages \@dateiliste@showpagesfalse
+\DeclareOption{showpages} {%
+  \@dateiliste@showpagestrue
+}
+\DeclareOption{noshowpages} {%
+  \@dateiliste@showpagesfalse
+}
+%    \end{macrocode}
+%  Die Standard-Optionen sind 'addmain' und 'showpages'.
 %    \begin{macrocode}
 \ExecuteOptions{addmain}
+\ExecuteOptions{showpages}
 \ProcessOptions
 %    \end{macrocode}
 %
+%  \subsection{Seitenzahlen in die Dateiliste}
+%  \begin{macro}{\@addtofilelist}
+%    Falls nicht die Option 'noshowpages' angegeben wurde,
+%    merken wir uns die Seitennummern aller eingebundenen
+%    Dateien. Dazu definieren wir '\@addtofilelist' neu, um
+%    neben dem Hinzufügen des Namens zur Dateiliste auch die
+%    jeweilige Seitennummer in einem eigenen Makro zu merken.
+%    \begin{macrocode}
+   \if@dateiliste@showpages
+     \CheckCommand*{\@addtofilelist}[1]{\xdef\@filelist{\@filelist,#1}}
+     \renewcommand*{\@addtofilelist}[1]{%
+       \expandafter\xdef%
+       \csname dateiliste@page@#1\endcsname%
+       {\thepage}%
+       \xdef\@filelist{\@filelist,#1}%
+   }
+   \fi
+%    \end{macrocode}
+%  \end{macro}
 %
 % \subsection{Aktuelle Versionsnummern in der Dateiliste}
 %
@@ -584,6 +614,9 @@ utile.
 %  '\ProvidesFile' definiert jetzt ein Makro ('\ver@'\meta{dateiname}) mit
 %   diesem Text als Inhalt, welches später von '\@dofilelist' (und
 %   unserem '\@writefilelist') verwendet wird.
+%   Außer dem Versionsstring wollen wir uns (falls dies per Package-Option
+%   eingeschaltet wurde) noch die Seitennummer
+%   merken, bei der die Datei anfing.
 %    \begin{macrocode}
 }
 %    \end{macrocode}
@@ -780,15 +813,23 @@ utile.
 %  \changes{v0.3}{2006/05/10}{jetzt auch die letzte Spalte linksbündig -- das sieht
 %   besser aus.}
 %    \begin{macrocode}
+         \if@dateiliste@showpages
+         \def\@tempa{lrll}
+         \else
+         \def\@tempa{lll}
+         \fi
          \immediate\write\dateiliste@file{%
             \string\LTleft=0pt%
             \string\LTright=0pt%
-            \string\begin{longtable}{lll>{\string\raggedright\string\arraybackslash}X}%
+            \string\begin{longtable}{\@tempa>{\string\raggedright\string\arraybackslash}X}%
 %    \end{macrocode}
 %  Die Überschrift -- aus übersetzbaren Textteilen, siehe unten, bestehend --
 % wiederholt sich auf jeder Seite (deswegen '\endhead' anstatt '\\').
 %    \begin{macrocode}
-               \string\textbf{\fileNameName} &
+               \string\textbf{\fileNameName} \expandafter&%
+               \if@dateiliste@showpages
+               \string\textbf{\pageName} &
+               \fi
                \string\textbf{\dateName} &
                \string\textbf{\verName} &
                \string\textbf{\descriptionName}
@@ -812,6 +853,21 @@ utile.
             \expandafter\let\expandafter\dateiliste@fileversion
             \csname ver@\dateiliste@filename\endcsname
 %    \end{macrocode}
+%  Das Makro '\dateiliste@page@'\meta{name} enthält die Seitennummer
+%  der Datei \meta{name}. Falls es nicht definiert ist, wurde sie
+%  vor dem \pack{dateiliste}-Package geladen, also auf Seite 1.
+%  Wir merken uns das Ergebnis in '\dateiliste@filepage'.
+%    \begin{macrocode}
+            \if@dateiliste@showpages
+            \@ifundefined{dateiliste@page@\@currname}
+            {%
+              \def\dateiliste@filepage{1}%
+            }{%
+              \expandafter\let\expandafter\dateiliste@filepage%
+              \csname dateiliste@page@\@currname\endcsname%
+            }%
+            \fi
+%    \end{macrocode}
 %  Jetzt schreiben wir, durch '&' getrennt, die einzelnen Felder raus.
 %  Zunächst der Dateiname, \ldots
 %    \begin{macrocode}
@@ -822,6 +878,14 @@ utile.
               %}%
               %{_}{\string\_}%
               \space& %
+%    \end{macrocode}
+%  \ldots\ dann die Seitennummer (falls vorhanden, ansonsten wird das '\@empty',
+%      also ignoriert)
+%    \begin{macrocode}
+              \if@dateiliste@showpages
+              \dateiliste@filepage
+              \space& %
+              \fi
 %    \end{macrocode}
 %  \ldots\ dann entweder ein "`---"' (falls kein Versions-String gegeben wurde), \dots
 %    \begin{macrocode}
@@ -860,6 +924,12 @@ utile.
 %  Dieses Makro nimmt zwei durch Leerzeichen getrennte Parameter, und
 %  gibt sie, mit zusätzlichen '&', wieder zurück. Das letzte Stück
 %  wird noch escapet, damit '\bla' kein Problem bildet.
+%
+%   Gelegentlich fehlt die Versionsnummer. Damit dann nicht der Anfang
+%   des folgenden Textes (wie 'hyperref' bei hyperref.cfg oder 'package'
+%   bei pst-node.sty) erscheint, sollte noch eine Abfrage hinein, ob '##2'
+%   mit 'v' oder einer Ziffer beginnt. Andernfalls sollte alles in der
+%   dritten Spalte angezeigt werden. (TODO: Leider noch nicht implementiert.)
 %    \begin{macrocode}
       \def\dateiliste@parse@ver##1 ##2 ##3\relax{%
         ##1 & ##2 & %\dateiliste@general@escape{##3}{\@backslashchar}{\string\textbackslash{}}%
@@ -1034,6 +1104,7 @@ utile.
 }
 \newcommand*\fileListName{List of Files}
 \newcommand*\fileNameName{file name}
+\newcommand*\pageName{page}
 \newcommand*\dateName{release date}
 \newcommand*\verName{version}
 \newcommand*\descriptionName{description}
@@ -1059,6 +1130,7 @@ utile.
       }
       \renewcommand*\fileListName{List of Files}%
       \renewcommand*\fileNameName{file name}
+      \renewcommand*\pageName{page}
       \renewcommand*\dateName{release date}
       \renewcommand*\verName{ver.}
       \renewcommand*\descriptionName{description}
@@ -1076,6 +1148,7 @@ utile.
       }
       \renewcommand*\fileListName{Liste der Dateinamen}%
       \renewcommand*\fileNameName{Dateiname}
+      \renewcommand*\pageName{\llap{Se}ite}
       \renewcommand*\dateName{Datum}
       \renewcommand*\verName{Ver.}
       \renewcommand*\descriptionName{Beschreibung}
@@ -1094,6 +1167,7 @@ utile.
       }
       \renewcommand*\fileListName{Liste der Dateinamen}%
       \renewcommand*\fileNameName{Dateiname}
+      \renewcommand*\pageName{Seite}
       \renewcommand*\dateName{Datum}
       \renewcommand*\verName{Ver.}
       \renewcommand*\descriptionName{Beschreibung}
@@ -1112,6 +1186,7 @@ utile.
       }
       \renewcommand*\fileListName{Listo de dosieroj}%
       \renewcommand*\fileNameName{dosiernomo}
+      \renewcommand*\pageName{pa\^go}
       \renewcommand*\dateName{dato}
       \renewcommand*\verName{versio}
       \renewcommand*\descriptionName{priskribo}
