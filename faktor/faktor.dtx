@@ -29,6 +29,7 @@
 \documentclass[draft,ngerman]{ltxdoc}
 \usepackage{faktor}
 \usepackage{amssymb}
+\usepackage{amsopn}
 \usepackage{pauldoc}
 \begin{document}
    \DocInput{faktor.dtx}
@@ -89,29 +90,50 @@
 % \DescribeMacro{\lfaktor}
 %  Das Makro '\lfaktor' arbeitet genauso wie '\faktor', allerdings für eine
 %  Linksfaktorisierung (statt Rechtsfaktorisierung).
+%  \DescribeMacro{\ffaktor}
+%  Schließlich gibt es noch einen Befehl für den \emph{kategoriellen
+%  Quotienten} (z.B. von algebraischen Varietäten nach algebraischen
+%   Gruppen). Dabei wird ein doppelter Schrägstrich verwendet, symbolisiert
+%  durch das doppelte 'f' im Namen.
 %
-%  Falls \meta{stylecmd} angegeben wurde, wird es auf \meta{zähler} und \meta{nenner} jeweils
-%  bei der Ausgabe angewandt -- dies könnte also etwa ein Kommando sein,
-%  um Schriftart o.ä. zu ändern.
+%  Falls \meta{stylecmd} angegeben wurde, wird es auf \meta{zähler} und
+%  \meta{nenner} jeweils bei der Ausgabe angewandt -- dies könnte also
+%  etwa ein Kommando sein, um Schriftart o.ä. zu ändern.
 %
-%  \subsubsection{Beispiel}
+%  \DescribeMacro{\dfaktor}
+%  Hier noch ein Makro für eine doppelte Faktorisierung (links und rechts):
+%\begin{quote}
+%   '\dfaktor'\oarg{stylecmd}\marg{zähler}\marg{nennerlinks}\marg{nennerrechts}
+%\end{quote}
+%
+%
+%  \subsubsection{Beispiele}
 %\begin{verbatim}
 %  $$\faktor{\sum_{i=1}^n k[X]}{\sum_{i=1}^n k[X] \cdot \theta_i}$$
 %\end{verbatim}
-%  ergibt:
 %  $$\faktor{\sum_{i=1}^n k[X]}{\sum_{i=1}^n k[X] \cdot \theta_i}$$
 %
 %\begin{verbatim}
 %  $$\lfaktor{\sum_{i=1}^n k[X]}{\sum_{i=1}^n k[X] \cdot \theta_i}$$
 %\end{verbatim}
-%  ergibt:
 %  $$\lfaktor{\sum_{i=1}^n k[X]}{\sum_{i=1}^n k[X] \cdot \theta_i}$$
-%  
+%
+%\begin{verbatim}
+%  $$\ffaktor{\sum_{i=1}^n k[X]}{\sum_{i=1}^n k[X] \cdot \theta_i}$$
+%\end{verbatim}
+%  $$\ffaktor{\sum_{i=1}^n k[X]}{\sum_{i=1}^n k[X] \cdot \theta_i}$$
+%
+%\begin{verbatim}
+% $$ \dfaktor{\operatorname{Per}_{\mathbb C}(g)}{\operatorname{GL}_{\mathbb Z}(2g)}{\operatorname{GL}_{\mathbb C}(g)} $$
+%\end{verbatim}
+% $$ \dfaktor{\operatorname{Per}_{\mathbb C}(g)}{\operatorname{GL}_{\mathbb Z}(2g)}{\operatorname{GL}_{\mathbb C}(g)} $$
 %  
 % \subsection{Abhängigkeiten}
 % \DescribeMacro{\diagup}
-%  Dieses Package verwendet das Zeichen '\diagup' ($\diagup$) aus dem
-%  \pack{amssymb}-Paket -- wenn dieses nicht definiert ist, gibt es also
+%  Dieses Package verwendet das Zeichen '\diagup' ($\diagup$) bzw.
+%  '\diagdown' ($\diagdown$) aus dem
+%  \pack{amssymb}-Paket (ohne dieses Paket explizit zu laden) -- wenn
+%   dieses nicht definiert ist, gibt es also
 %  einen Fehler, sobald '\faktor' verwendet wird. Daher sollte dieses Paket
 %  nur gemeinsam mit \pack{amssymb} oder einem anderen Paket, welches ein
 %  gleich benanntes und ähnlich funktionierendes Zeichen zur Verfügung
@@ -191,12 +213,24 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\lfaktor}
-%   '\lfaktor' geht genauso wie '\faktor'.
+% \begin{macro}{\ffaktor}
+%   '\ffaktor' geht genauso wie '\faktor'.
 %    \begin{macrocode}
 \robust@new@command{\ffaktor}[3][]
 {
    { \mathpalette{\ffaktor@impl@}{{#1}{#2}{#3}} }
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\dfaktor}
+%   '\dfaktor'
+%   ist etwas spezieller -- es soll einen doppelten
+%   Quotienten malen, d.h. gleichzeitig rechts- und Linksfaktorisierung.
+%   Entsprechend gibt es ein Argument mehr.
+%    \begin{macrocode}
+\robust@new@command{\dfaktor}[4][]
+{
+   { \mathpalette{\dfaktor@impl@}{{#1}{#2}{#3}{#4}} }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -206,11 +240,12 @@
 %   Diese Hilfsmakros entsorgen einfach nur die
 %   zusätzlichen Klammern, welche von '\mathpalette' um '#2'
 %   eingefügt wurden, damit '\faktor@impl' bzw. '\lfaktor@impl' vier Argumente
-%   und nicht nur zwei bekommt.
+%   und nicht nur zwei bekommt. Analog 
 %    \begin{macrocode}
 \newcommand*{\faktor@impl@}[2]{\faktor@impl#1#2}
 \newcommand*{\lfaktor@impl@}[2]{\lfaktor@impl#1#2}
 \newcommand*{\ffaktor@impl@}[2]{\ffaktor@impl#1#2}
+\newcommand*{\dfaktor@impl@}[2]{\dfaktor@impl#1#2}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -243,7 +278,7 @@
 }
 %    \end{macrocode}
 %  \end{macro}
-% \begin{macro}{\faktor@impl}\noindent\marg{modeCmd}\marg{zusatz}\marg{zähler}\marg{nenner}
+% \begin{macro}{\ffaktor@impl}\noindent\marg{modeCmd}\marg{zusatz}\marg{zähler}\marg{nenner}
 %
 %   '\ffaktor@impl' macht die eigentliche Arbeit.
 %   Es ermittelt zunächst Höhen von \meta{zähler} und \meta{nenner}
@@ -278,15 +313,15 @@
 %   (abhängig von \meta{modeCmd} und \meta{zusatz}).
 %    \begin{macrocode}
 \newcommand*{\lfaktor@impl}[4]{
-   \savebox{\faktor@zaehlerbox}{\ensuremath{#1#2{#3}}}
-   \savebox{\faktor@nennerbox}{\ensuremath{#1#2{#4}}}
-   \settoheight{\faktor@zaehlerhoehe}{\ensuremath{#1#2{#3}}}%
-   \settodepth{\faktor@zaehlertiefe}{\ensuremath{#1#2{#3}}}%
+%   \savebox{\faktor@zaehlerbox}{\ensuremath{#1#2{#3}}}
+%   \savebox{\faktor@nennerbox}{\ensuremath{#1#2{#4}}}
+%   \settoheight{\faktor@zaehlerhoehe}{\ensuremath{#1#2{#3}}}%
+%   \settodepth{\faktor@zaehlertiefe}{\ensuremath{#1#2{#3}}}%
    \settoheight{\faktor@nennerhoehe}{\ensuremath{#1#2{#4}}}%
    \settodepth{\faktor@nennertiefe}{\ensuremath{#1#2{#4}}}%
 %    \end{macrocode}
-%   Dann wird, um die Hälfte seiner Höhe nach oben geschoben,
-%   \emph{zähler} gesetzt.
+%   Dann wird, um die Hälfte seiner Höhe nach unten geschoben,
+%   \emph{nenner} gesetzt.
 %    \begin{macrocode}
       \raisebox{-0.5\faktor@nennerhoehe}{\ensuremath{#1#2{#4}}}%
 %    \end{macrocode}
@@ -296,9 +331,52 @@
 %    \begin{macrocode}
       \mkern-4mu\diagdown\mkern-2mu%
 %    \end{macrocode}
-%   Schließlich kommt \meta{nenner}, um die Hälfte seiner Höhe nach unten geschoben.
+%   Schließlich kommt \meta{zähler}, um die Hälfte seiner Höhe nach oben
+%   geschoben.
 %    \begin{macrocode}
       \raisebox{0.5\faktor@zaehlerhoehe}{\ensuremath{#1#2{#3}}}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+% \begin{macro}{\dfaktor@impl}\noindent\marg{modeCmd}\marg{zusatz}\marg{zähler}\marg{nennerlinks}\marg{nennerrechts}
+%
+%   '\dfaktor@impl' macht die eigentliche Arbeit.
+%    \begin{macrocode}
+\newcommand*{\dfaktor@impl}[5]{
+%
+%    \end{macrocode}
+%   Es ermittelt die Höhe von \meta{nennerlinks}
+%   (abhängig von \meta{modeCmd} und \meta{zusatz}).
+%   Dann wird, um die Hälfte seiner Höhe nach unten geschoben,
+%   \emph{nennerlinks} gesetzt.
+%    \begin{macrocode}
+  \settoheight{\faktor@nennerhoehe}{\ensuremath{#1#2{#4}}}%
+  \raisebox{-0.5\faktor@nennerhoehe}{\ensuremath{#1#2{#4}}}%
+%    \end{macrocode}
+%   Jetzt kommt eine negativer horizontaler Abstand, der diagonale
+%   Strich, dann noch ein negativer horizontaler Abstand, um das
+%   ganze etwas zusammenzurücken.
+%    \begin{macrocode}
+  \mkern-4mu\diagdown\mkern-2mu%
+%    \end{macrocode}
+%   Dann wird, um die Hälfte seiner Höhe nach oben geschoben,
+%   \emph{zähler} gesetzt (dessen Höhe wird zunächst berechnet).
+%    \begin{macrocode}
+   \settoheight{\faktor@zaehlerhoehe}{\ensuremath{#1#2{#3}}}%
+   \raisebox{0.5\faktor@zaehlerhoehe}{\ensuremath{#1#2{#3}}}%
+%    \end{macrocode}
+%   Jetzt kommt eine negativer horizontaler Abstand, der diagonale
+%   Strich, dann noch ein negativer horizontaler Abstand, um das
+%   ganze etwas zusammenzurücken.
+%    \begin{macrocode}
+      \mkern-5mu\diagup\mkern-4mu%
+%    \end{macrocode}
+%   Schließlich kommt \meta{nennerrechts}, um die Hälfte seiner
+%   Höhe nach unten geschoben.
+%    \begin{macrocode}
+      \settoheight{\faktor@nennerhoehe}{\ensuremath{#1#2{#5}}}%
+      \raisebox{-0.5\faktor@nennerhoehe}{\ensuremath{#1#2{#5}}}%
 }
 %    \end{macrocode}
 %  \end{macro}
