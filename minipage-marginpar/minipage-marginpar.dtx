@@ -2,11 +2,11 @@
 %
 %%  (C) 2006 Paul Ebermann
 %%
-%%   Package mpgmpar - Randnotizen auch in Minipages
+%%   Package minipage-marginpar - Randnotizen auch in Minipages
 %%
-%%   Die Datei mpgmpar.dtx sowie die dazugehörige
-%%   mpgmpar.ins sowie die damit generierte
-%%   mpgmpar.sty stehen unter der
+%%   Die Datei minipage-marginpar.dtx sowie die dazugehörige
+%%   minipage-marginpar.ins sowie die damit generierte
+%%   minipage-marginpar.sty stehen unter der
 %%   "LaTeX Project Public License" (LPPL, zu finden
 %%   unter http://www.latex-project.org/lppl/, sowie
 %%   auch in den meisten TeX-Distributionen in
@@ -18,25 +18,34 @@
 %%   Das heißt in etwa, die Dateien dürfen frei vertrieben
 %%   werden, bei Änderungen (durch andere Personen als Paul Ebermann)
 %%   ist aber der Name der Datei zu ändern.
+%%
 %
 % \fi
 %
 % \iffalse
-%<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
-%<package>\ProvidesPackage{mpgmpar}
-%<package> [2006/05/23 v0.2 Randnotizen auch in Minipages (PE)]
 %
+\NeedsTeXFormat{LaTeX2e}[2003/12/01]
+%<package>\ProvidesPackage{minipage-marginpar}
+%<mpgmpar>\ProvidesPackage{mpgmpar}
 %<*driver>
+\ProvidesFile{minipage-marginpar.dtx}
+%</driver>
+ [2008/04/07 v0.3
+%<package> Randnotizen auch in Minipages (PE)]
+%<mpgmpar> Kompatibilitaets-Datei fuer alte Dokumente (PE)]
+%<*driver>
+ Dokumentation fuer minipage-marginpar.]
 \documentclass[draft,ngerman]{ltxdoc}
-\usepackage{mpgmpar}
+\usepackage{minipage-marginpar}
+\usepackage[final, pdfpagemode=None, pdfstartview=FitH, pdfpagelayout=OneColumn]{hyperref}
 \usepackage{pauldoc}
 \begin{document}
-   \DocInput{mpgmpar.dtx}
+   \DocInput{minipage-marginpar.dtx}
 \end{document}
 %</driver>
 % \fi
 %
-% \CheckSum{47}
+% \CheckSum{51}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -60,12 +69,14 @@
 %
 % \changes{v0.0}{2006/05/20}{Erste Fassung}
 % \changes{v0.1}{2006/05/23}{Erste veröffentlichte Fassung}
+% \changes{v0.3}{2008/04/07}{Neuer Name des Packages: \pack{minipage-marginpar}
+%                            statt \pack{minipage-marginpar}.}
 %
-% \GetFileInfo{mpgmpar.sty}
+% \GetFileInfo{minipage-marginpar.sty}
 %
 %
-% \title{Das \pack{mpgmpar}-Package -- Randnotizen auch in Minipages\thanks{%
-% Dieses Dokument gehört zu \pack{mpgmpar}~\fileversion,
+% \title{Das \pack{minipage-marginpar}-Package -- Randnotizen auch in Minipages\thanks{%
+% Dieses Dokument gehört zu \pack{minipage-marginpar}~\fileversion,
 % vom~\filedate.}}
 % \author{Paul Ebermann\thanks{\texttt{Paul-Ebermann@gmx.de}}}
 %
@@ -147,20 +158,40 @@
 %         Implementations"=Beschreibung des Paketes}  nachzulesen.
 %
 %     \item Befinden sich die '\marginpar'-Befehle innerhalb einer der 
-%       AMS-Mathe-Umgebungen (wie etwa 'align', 'gather' und ihre '*'-Varianten),
-%       so kann es vorkommen, dass die Marginalien doppelt auftauchen.
-%       Dies liegt daran, dass diese Umgebungen ihren Inhalt mehrfach auswerten --
-%       und jedesmal wird dann der Inhalt gespeichert.
+%       AMS-Mathe-Umgebungen (wie etwa 'align', 'gather' und ihre
+%       '*'-Varianten), so kann es vorkommen, dass die Marginalien doppelt
+%        auftauchen.
+%       Dies liegt daran, dass diese Umgebungen ihren Inhalt mehrfach
+%       auswerten -- und jedesmal wird dann der Inhalt gespeichert.
 %       Dieses Problem betrifft auch andere Makros, die ähnlich vorgehen.
 %
-%       Ich halte dies für einen Bug (in \pack{mpgmpar}), habe aber noch keine Idee,
-%       was ich dagegen tun könnte.
+%       Ich halte dies für einen Bug (in \pack{minipage-marginpar}), habe
+%       aber noch keine Idee,  was ich dagegen tun könnte. Wer eine Idee hat,
+%       immer her damit.
 %
 %  \end{itemize}
 %
 % \StopEventually{\PrintChanges\PrintIndex}
 %
 % \section{Implementation}
+%
+% \subsection{Rückwärtskompatibilitäts-Datei}
+%  CTAN hat ja inzwischen seine 8-Buchstaben-pro-Dateiname-Regel aufgehoben.
+%  Genauer, sie wurde zwischen meinem ersten Versuch, ein (anderes) Paket
+%  mit zu langem Dateinamen hochzuladen, und dem ersten Hochladen dieses
+%  Paketes geändert, so dass ich dieses Package noch \pack{mpgmpar} genannt
+%  habe, es bei CTAN dann aber in einem Verzeichnis 'minipage-marginpar'
+%   gelandet ist, und auch unter diesem Namen im \href{http://tug.ctan.org/cgi-bin/ctanPackageInformation.py?id=minipage-marginpar}{CTAN-Katalog} zu finden
+%  ist. Für Version 0.3 habe ich mich daher entschieden, auch meine
+%  Package-Dateien entsprechend zu benennen. Hier aber noch für die
+%  Rückwärtskompatibilität eine passende 'mpgmpar.sty':
+%    \begin{macrocode}
+%<*mpgmpar>
+\RequirePackage{minipage-marginpar}
+%</mpgmpar>
+%    \end{macrocode}
+%
+% Und jetzt geht das eigentliche Package los.
 %
 %    \begin{macrocode}
 %<*package>
@@ -227,10 +258,15 @@
 %        \ifthenelse{\equal{\mpgmpar@dummy}{##1}}{...
 %\end{verbatim}
 %   aus \pack{ifthen} gemacht, aber das hatte Nebenwirkungen (da für
-%   den Vergleich '##1' expandiert wurde). Daher direkt mit '\ifx'.
+%   den Vergleich '##1' expandiert wurde). Daher direkt mit '\ifx'. In
+%   Version 0.2 war dieser '\ifx'-Vergleich kaputt (ergab immer false),
+%   wodurch '\marginpar{bla}' nur auf rechten Seiten gedruckt wurde.
+%   Jetzt (0.3) sollte es gehen.
+%   \changes{v0.3}{2008/04/07}{Fehler im Vergleich gefunden, jetzt korrigiert durch weitere Indirektion beim Vergleich.}
 %    \begin{macrocode}
       \def\temp@a{##1}%
-      \ifx\mpgmpar@dummy\temp@a%
+      \def\temp@b{\mpgmpar@dummy}%
+      \ifx\temp@b\temp@a%
 %    \end{macrocode}
 %   Dann kopieren wir (global) einfach den '\marginpar'-Aufruf an das Ende unseres
 %   "`Speicher-Makros"' '\mpgmpar@savedmargins'.

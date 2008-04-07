@@ -1,5 +1,6 @@
 %%
-%% (C) 2002-2006 Paul Ebermann  - Installationsdatei zu mpgmpar.dtx
+%% (C) 2002-2006, 2008  Paul Ebermann  -
+%%  Installationsdatei zu minipage-marginpar.dtx
 %%
 %% Der vollständige Urheberrechtshinweis befindet sich
 %% am Begin von mpgmpar.dtx.
@@ -23,13 +24,16 @@
  ,--------------------------------------------------.
  |  Das ist eine generierte Datei.                  |
  |                                                  |
- | (c) 2006 Paul Ebermann.                          |
+ | (c) 2002- 2008 Paul Ebermann.                    |
  '--------------------------------------------------'
+
 \endpreamble
 
 
-\generate{\file{mpgmpar.sty}{\from{mpgmpar.dtx}{package}}}
-%\generate{\file{mpgmpar.cls}{\from{mpgmpar.dtx}{class}}}
+\generate{%
+  \file{minipage-marginpar.sty}{\from{minipage-marginpar.dtx}{package}}%
+  \file{mpgmpar.sty}{\from{minipage-marginpar.dtx}{mpgmpar}}
+}
 
 \Msg{#######################}
 \Msg{#                                        }
@@ -37,12 +41,16 @@
 \Msg{# müssen Sie die folgenden Dateien       }
 \Msg{# in Ihrem TeX-Suchbaum unterbringen:    }
 \Msg{#                                        }
-\Msg{#     mpgmpar.sty                        }
+\Msg{#     minipage-marginpar.sty             }
+\Msg{#                                        }
+\Msg{# (Für Rückwärtskompatibilität mit       }
+\Msg{#  Versionen vor 0.3 zusätzlich:         }
+\Msg{#      mpgmpar.sty)                      }
 \Msg{#                                        }
 \Msg{# Um eine Dokumentation zu erzeugen,     }
 \Msg{# benutzen Sie                           }
 \Msg{#                                        }
-\Msg{#     latex mpgmpar.dtx                  }
+\Msg{#   latex minipage-marginpar.dtx         }
 \Msg{#                                        }
 \Msg{# Viel Spaß                              }
 \Msg{#              Paul Ebermann             }
