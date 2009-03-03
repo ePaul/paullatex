@@ -8,6 +8,11 @@ License: LPPL 1.3b or later, maintained
 
 All Documentation (other than this file) is in german.
 
+This package provides some enhancements for the gmdoc package:
+nicer formatting for multiple line inline comments,
+an ability to "comment out" some code, and a macro to input
+other files in "normal" LaTeX mode.
+
 The package is based on the package gmdoc (from
 Grzegorz `Natror' Murzynowski) and needs it and its
 required packages (gmutil, gmverb, gmiflink, hyperref,
@@ -32,6 +37,9 @@ accordingly), run (after that and maybe updating your TeX hash)
 (2) Put
     \usepackage[...]{gmdoc-enhance}
    in the preamble of the documentation driver.
+   (This package itself is calling gmdoc without
+    any options - if you need options, put
+     \usepackage[...]{gmdoc} before this line.)
 
 (3) Use options and/or user macros to change the look.
 
