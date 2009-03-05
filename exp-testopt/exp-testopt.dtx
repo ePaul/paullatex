@@ -25,7 +25,7 @@
 % ---------------------------------------------
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]%
 % ----------------------------________________-----------------
-%<package>\ProvidesPackage{exp-testopt}[2009/03/03 v0.2  (PE)]
+%<package>\ProvidesPackage{exp-testopt}[2009/03/05 v0.3  (PE)]
 % ----------------------------________________-----------------
 % \fi
 %
@@ -72,9 +72,9 @@
 %</driver>
 % \fi
 %
-% \CheckSum{90}
 % \chschange{v0.1}{2009/03/03}{37}
 % \chschange{v0.2}{2009/03/03}{90}
+% \chschange{v0.3}{2009/3/5}{139}
 % \changes{v0.1}{2009/03/03}{Unua versio}
 % \changes{v0.2}{2009/03/03}{Preta por publikigo, mi kredas.}
 %
@@ -172,6 +172,8 @@
 % Jen ekzemplo de la uzo por krei komandon '\beispiel' kun opcia
 % argumento.
 %
+% \changes{v0.3}{2009/03/05}{Testo ankaŭ por \cs{expnewcommand}}
+%
 %<*test>
 \makeatletter
 \errorcontextlines = 20
@@ -182,9 +184,32 @@
 \def\beispielImpl[#1]{%
   \fbox{#1}%
 }
+\makeatother
+
+\expnewcommand*{\ekzemplo}[1][Defa\u ulto]{%
+  \textbf{(#1)}%
+}
+
+\expnewcommand*{\ekzemploDu}[2][defa\u ulto]{%
+  \ensuremath{\frac{\mbox{#1}}{\mbox{#2}}}%
+}
 
   \beispiel{egal} \beispiel[bla]
   \beispiel$ e=m c^2$ \beispiel[$ e=m c^2$]
+
+  \ekzemplo\ekzemplo[Bla]
+  \expandafter\ekzemplo\space[bla]
+  \expandafter\expandafter\expandafter\ekzemplo\expandafter\space\space[dua bla]
+  \ekzemplo
+  [nova linio]
+  \ekzemplo
+
+  [du novaj linioj]
+  \ekzemplo[blub]
+
+  \ekzemploDu{testo}
+  \ekzemploDu[bla]{testo}
+
 %</test>
 %
 % Kontraŭe al kreado de tia komando per '\newcommand', la komando estas
@@ -195,7 +220,13 @@
 %
 % La supra kodo donas jenan rezulton:
 %
-% \normalInput{\jobname.test}
+% \begin{center}\StraightEOL
+%   \fbox{\
+%     \begin{minipage}{0.8\linewidth} \
+%      \normalInput{\jobname.test} \
+%     \end{minipage}\
+%   }
+% \end{center}
 %
 % \StopEventually{\PrintChanges\PrintIndex}
 %
@@ -203,6 +234,40 @@
 %
 %
 %<*package>
+
+
+%
+% \subsection{Ĉefaj makrooj}
+%
+% Niaj du ĉefaj makrooj nun aspektas tiom similaj, ke ni povas implementi
+% 'testopt' per 'ifopt'.
+%
+\newcommand*{\@expandable@testopt}[2]{%
+  \@expandable@ifopt{#1}{#1[#2]}%
+}
+
+% '\@expandable@ifopt' nun faras la laboron.
+%
+\newcommand{\@expandable@ifopt}[3]{%
+  \expandafter\ifx% '\ifx' komparas la difinojn de du makrooj, nome \dots
+     \csname exp-testopt@@\string#3@\endcsname% \dots makronomo kreita el la
+% tria argumento (= la signo poste).
+     \exp@testopt@opt@% \dots kaj tiu antaŭdifinita makroo.
+    \afterfi{#1#3}% En la jes-kazo, vokas la unuan argumenton
+% (kun la tria), \dots
+  \else% \dots en la ne-kazo la duan.
+%
+% Sed tiam ni ankoraŭ devos eltrovi, ĉu la tria konsistis el unu aŭ pluraj
+% tokenoj, por meti '{...}' ĉirkaŭ ĝin en la dua kazo. (Se ĝi nur estas
+% unu tokeno, meti '{...}' povas esti malhelpa, se ĝi fakte ne estas argumento
+% al '#2', sed ekzemple io kiel '$', aŭ sekva makroo.)
+    \@expandable@ifOneToken#3\@expandable@ifOneToken% Tiu
+% ĉi makroo provas eltrovi tion.
+    {\afterfi{#2#3}}%
+    {\afterfi{#2{#3}}}%
+  \fi%
+}%
+
 
 %  La ideo por tia ekspandebla kontrolo de la sekva »signo« estas, ke ni
 %  kreas el la »signo« makroonomon, kaj komparas la signifon de ĝi kun
@@ -218,29 +283,26 @@
 \@namedef{exp-testopt@@\string[@}{<<<[>>>}% Tio -- '\exp-testopt@@[@' -- estas
 % la makroo, kiu estos trovota en la \emph{jes}-kazo.
 
-%
-% \subsection{Ĉefaj makrooj}
-%
-% Niaj du ĉefaj makrooj nun aspektas tiom similaj, ke ni povas implementi
-% 'testopt' per 'ifopt'.
-%
-\newcommand*{\@expandable@testopt}[2]{%
-  \@expandable@ifopt{#1}{#1[#2]}%
+
+% Ni ankoraŭ devas eltrovi, ĉu la argumento estas
+% nur unu tokeno aŭ pluraj, por povi meti '{...}'
+% en la dua kazo. Ni uzas similan trukon por tio.
+\long\def\@expandable@ifOneToken#1#2\@expandable@ifOneToken#3#4{%
+  \expandafter\ifx%
+     \csname exp-testopt@@\string#2@\endcsname%
+     \exp@testopt@empty@%
+     \afterfi{#3}%
+  \else
+     \afterfi{#4}%
+  \fi
 }
 
-% '\@expandable@ifopt' nun faras la laboron.
-%
-\newcommand*{\@expandable@ifopt}[3]{%
-  \expandafter\ifx% '\ifx' komparas la difinojn de du makrooj, nome \dots
-     \csname exp-testopt@@\string#3@\endcsname% \dots makronomo kreita el la
-% tria argumento (= la signo poste).
-     \exp@testopt@opt@% \dots kaj tiu antaŭdifinita makroo.
-    \afterfi{#1#3}% En la jes-kazo, vokas la unuan argumenton
-% (kun la tria), \dots
-  \else
-    \afterfi{#2#3}% \dots en la ne-kazo la duan.
-  \fi%
-}
+\def\exp@testopt@empty@{<<<>>>}% tio
+% estas la nomo, kies valoron ni komparas kun aliaj kandidatoj. 
+\@namedef{exp-testopt@@@}{<<<>>>}% Tio --
+%  '\exp-testopt@@@' -- estas la makroo, kiu estos trovota en la kazo,
+%  ke '#2' estas malplena.
+
 
 
 % \subsection{Komando-difinoj}
@@ -251,22 +313,36 @@
 % nian ekspandeblan metodon por opciaj argumentoj, anstataŭ la robustan.
 %
 % Jen la originalo el latex.ltx (ltdefns.dtx, por esti preciza).
-% 
 %<*latex2e>
- \long\def\@xargdef#1[#2][#3]#4{%
-   \@ifdefinable#1{% { \color{red}
-      \expandafter\def\expandafter#1\expandafter{%
-           \expandafter%
-           \@protected@testopt%
-           \expandafter% 
-           #1%
-           \csname\string#1\endcsname%
-           {#3}}% }
-        \expandafter\@yargdef
-           \csname\string#1\endcsname
-            \tw@
-            {#2}%
-            {#4}}}
+% \begin{otherlanguage*}{english}
+%    \MakeShortVerb\|\DeleteShortVerb\'
+%    Handle the second optional argument.
+\long\def\@xargdef#1[#2][#3]#4{%
+  \@ifdefinable#1{%
+%    Define the actual command to be:\\
+%    |\def\foo{\@protected@testopt\foo\\foo{default}}|\\
+%    where |\\foo| is a csname generated from applying |\csname| and
+%    |\string| to |\foo|, ie the actual name contains a backslash and
+%    therefore can't clash easily with exisiting command names.
+%    ``Default'' is the contents of the second optional argument of
+%    |(re)newcommand|.
+%    { \color{red}
+     \expandafter\def\expandafter#1\expandafter{%
+          \expandafter
+          \@protected@testopt
+          \expandafter
+          #1%
+          \csname\string#1\endcsname
+          {#3}}%  }
+%    Now we define the internal macro ie |\\foo| which is supposed to
+%    pick up all arguments (optional and mandatory).
+       \expandafter\@yargdef
+          \csname\string#1\endcsname
+           \tw@
+           {#2}%
+           {#4}}}
+%    \MakeShortVerb\'\DeleteShortVerb\|
+%  \end{otherlanguage*}
 %</latex2e>
 %
 % Kaj ni nun devas ŝanĝi la markitan parton
@@ -297,14 +373,16 @@
 % Kaj nun kelkaj paralelaj difinoj al '\newcommand', '\new@command' kaj
 %  '\@newcommand'.
 %
+% \changes{v0.3}{2009/03/03}{Cim-korekto: \cs{exp@new@command} renomita al \cs{expnew@command}}
+%
 \def\expnewcommand{%
   \@star@or@long\expnew@command%
 }
-\def\exp@new@command#1{%
+\def\expnew@command#1{%
   \@testopt{\exp@newcommand#1}0%
 }
 \def\exp@newcommand#1[#2]{%
-  \ifnextchar [{\@exp@xargdef#1[#2]}% Ĉi tie ni vokas nian varianton
+  \@ifnextchar [{\@exp@xargdef#1[#2]}% Ĉi tie ni vokas nian varianton
 % anstataŭ '\@xargdef'. ^^A ]
                {\@argdef#1[#2]}% Tiu estas la originalo.
 }
