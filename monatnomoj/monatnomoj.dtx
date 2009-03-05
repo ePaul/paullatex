@@ -1,0 +1,345 @@
+% \iffalse meta-comment
+%
+%%  (C) 2008 Paul Ebermann
+%%
+%%   Package monatnomoj - monatnomoj en diversaj lingvoj.
+%%
+%%   Die Datei monatnomoj.dtx sowie die dazugehörige
+%%   monatnomoj.ins sowie die damit generierte
+%%   monatnomoj.sty stehen unter der
+%%   "LaTeX Project Public License" (LPPL, zu finden
+%%   unter http://www.latex-project.org/lppl/, sowie
+%%   auch in den meisten TeX-Distributionen in
+%%   texmf/docs/latex/base/lppl*.txt), Version 1.3b oder
+%%   später (nach Wahl des Verwenders).
+%%
+%%   Der 'maintenance-status' ist (zur Zeit) 'author-maintained'.
+%%   
+%%   Das heißt u.a., die Dateien dürfen frei vertrieben werden,
+%%   bei Änderungen (durch andere Personen als Paul Ebermann)
+%%   ist aber der Name der Datei zu ändern.
+%
+% \fi
+%
+% \iffalse
+% ---------------------------------------------
+%<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]%
+% ----------------------------________________-----------------
+%<package>\ProvidesPackage{monatnomoj}[2008/11/21 v0.1 Monatnomoj (PE)]
+% ----------------------------________________-----------------
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass{scrartcl}
+\let\oldshow\show
+%
+% Esperantajn tekstojn oni prefere entajpu per unikodaj literoj.
+\usepackage[utf8x]{inputenc}
+\usepackage[esperanto]{babel}
+\usepackage{monatnomoj}
+\addto{\extrasesperanto}{%
+  \renewcommand*{\generalname}{\^Generale}%
+  \GlossaryPrologue{%
+    \section{\^San\^goj}%
+  }%
+  \GlossaryMin=3\baselineskip
+  \IndexPrologue{%
+    \section{Indekso}
+    Kurzivaj nombroj indikas la lokojn, kie la indeks-ero estas priskribita,
+    substrekitaj nombroj indikas la lokon de la difino, la aliaj estas uzoj.
+  }
+  \IndexMin=5\baselineskip
+}
+\usepackage[bookmarks=false]{hyperref}
+\usepackage[countalllines, withmarginpar]{gmdoc}
+\usepackage[inline, visible]{gmdoc-enhance}
+
+
+\let\pack\textrm%
+\onecolumn
+\typearea{7}
+\renewcommand*{\EOFMark}{}
+
+\RecordChanges
+\setcounter{IndexColumns}{2}
+% \AtBeginDocument{\let\show\old@show}
+% \makeatother
+\begin{document}
+   % ^ ne taŭgas kiel specialsigno, ĉar ni
+   % bezonas ĝin por ^^B, ^^M ktp.
+   \catcode`\^=7%
+   \MakeShortVerb\'
+   \DocInput{monatnomoj.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+% \changes{v0.1}{2008/11/21}{Unua versio}
+%
+% \GetFileInfo{monatnomoj.sty}
+%
+%
+% \title{La \pack{monatnomoj}-Pakaĵo -- monatnomoj en diversaj lingvoj. \
+%   \thanks{ Tiu dokumento rilatas al \
+%    \pack{kantoj}~\fileversion, de~\filedate.}}
+% \author{Paul Ebermann\thanks{\texttt{Paul-Ebermann@gmx.de}}}
+%
+% \maketitle
+% 
+%  \begin{abstract}
+%     Tiu pakaĵo donas diversajn komandojn por eltrovi nomojn
+%     de monatoj en diversaj lingvoj.
+%  \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Uzanta dokumentaĵo}
+%
+% \errorcontextlines=20
+%
+% \TextUsage{\monatnomo}\arg[lingvo]\arg{kalkulilo}
+% donas la nomon de monato, kies numero (inter 1 kaj 12) estas
+% en la LaTeX-kalkulilo kun nomo \meta{kalkulilo}, en \meta{lingvo},
+% kiu estu \pack{babel}-lingvonomo.
+% Defaŭlto por \meta{lingvo} estas la aktuala lingvo (difinita per
+% '\languagename' de \pack{babel}).
+% 
+% Ekzemple \arabic{section} (la numero de la aktuala sekcio) en
+%  Esperanto (la aktuala lingvo) estas \monatnomo{section}, en
+% la germana \monatnomo[ngerman]{section}.
+%
+% '\monatnomo' do estas uzebla kiel '\arabic', '\roman' ktp. por
+% formati numerojn (sed nur inter 1 kaj 12).
+%
+% \TextUsage{\nunaMonatnomo}\arg[lingvo] donas la nomon de la
+%  aktuala monato.
+%  Ekzemple nun estas \nunaMonatnomo.
+%
+% \TextUsage{\monatnomoElNombro}\arg[lingvo]\arg{nombro}
+%  donas la nomon de monato laŭ la donita numero, ankaŭ
+% depende de la lingvo.
+% Ekzemple la kvina monato estas \monatnomoElNombro{5}.
+%
+% \TextUsage{\tabelumonatnomojn}\marg{lingvolisto}
+% kreas tabelon de monatnomoj en kelkaj lingvoj.
+% La lingvolisto enhavu la \pack{babel}-nomojn de la
+% dezirataj lingvoj, disigitaj per komoj.
+%
+% Jen tabelo de la monatnomoj en kelkaj lingvoj (kun la babel-nomoj):
+%
+% \tabelumonatnomojn{esperanto,slovak,ngerman,naustrian}
+%
+% \TextUsage{\listumonatnomojn}\marg{lingvo}
+% kreas simplan liston de la monatnomoj en unu lingvo. Jen ekzempla
+% listo de la monatnomoj en Esperanto:
+% \listumonatnomojn{esperanto}
+%
+%
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+% \section{Implementado}
+
+%<*package>
+
+% \subsection{Bezonataj pakaĵoj}
+%
+% Ni bezonas la babel-pakaĵon por povi ŝalti lingvojn.
+% Tamen indas aŭ voki ĝin antaŭe kun la necesaj parametroj
+% aŭ doni la parametrojn en '\documentclass'.
+\RequirePackage{babel}
+
+% Tiun pakaĵon (de sama aŭtoro) ni uzas por ekhavi ekspandeblajn
+% opciajn argumentojn, anstataŭ fari tion mem.
+%
+% \changes{v0.2}{2009/03/05}{Uzo de \pk{exp-testopt} anstataŭ fari la samajn aferojn mem}
+%
+\RequirePackage{exp-testopt}
+
+% \subsection{Ĝenerala Meĥanismo}
+%
+%
+% \TextUsage{\monatnomo}\arg[lingvo]\arg{kalkulilo} -- konvertas la
+% valoron de \meta{kalkulilo} al nomo de la monato. 
+%
+\expnewcommand*{\monatnomo}[2][\languagename]{%
+  \@monatnomo@de@nombro@en{#1}{\value{#2}}%
+}
+
+
+% Tiu cxi komando rekte prenas numeron.
+% 
+\expnewcommand*{\monatnomoElNombro}[2]%
+                 [\languagename]{% La
+% defauxlto por la unua parametro estas la aktuala \pk{babel}-lingvo.
+  \@monatnomo@de@nombro@en{#1}{#2}% (voko de nia interna makroo.)
+}
+%! \def\@monatnomo@de@nombro@en@deflingvo{%
+%!   \@monatnomo@de@nombro@en[\languagename]%
+%! }%
+
+
+% La funkcio por eltrovi la nunan monatnomon.
+\expnewcommand*{\nunaMonatnomo}[2][\languagename]{%
+  \@monatnomo@de@nombro@en{#1}{\month}%
+}
+
+% Tiu makroo faras la laboron, post kiam la
+% aliaj traktis la opciajn argumentojn:
+\def\@monatnomo@de@nombro@en#1{%
+  \@ifundefined{monato@#1}{%
+    \monato@default%
+  }{%
+    \@nameuse{monato@#1}%
+  }%
+}
+
+
+
+% La defaŭlta formatilo.
+% Tio estas tre simpla implementado, uzenda, kiam
+% tute nenio estas difinita en la lingvo.
+% La plej multaj lingvoj havos alian difinion.
+\newcommand*{\monato@default}[1]{%
+  \number #1\relax%
+}
+
+% \subsection{Listo}
+%
+%
+%
+% Simpla listo de la monatnomoj de unu lingvo.
+%
+\newcommand*{\listumonatnomojn}[1]{%
+  \begin{enumerate}%
+     \@whilenum\value{enumi}<12\do {%
+       \item \monatnomo[#1]{enumi}
+       }
+  \end{enumerate}%
+}
+
+% Tabelo de ĉiuj monatnomoj de kelkaj lingvoj.
+%
+%
+%  (La komando skribas la tabelon al dosieron kaj tuj poste
+%   relegas tiun -- se iu trovas pli bonan manieron fari tion,
+%   kontaktu min.)
+%
+%
+\newcommand*{\tabelumonatnomojn}[1]{%
+  \toksdef\@tmptok=0\relax%
+  \@tmptok={l}%
+  \@for\lingvo:=#1\do{%
+    \expandafter\@tmptok\expandafter=\expandafter{\the\@tmptok l}%
+  }%
+  \edef\@preambulo{\the\@tmptok}%
+  \@ifundefined{@monattabdosiero}{%
+    \newwrite\@monattabdosiero
+    \newcounter{monato}%
+  }%
+  \relax
+  \immediate\openout\@monattabdosiero = \jobname.monatotabelo\relax
+  \providecommand*{\skributab}[1]{%
+    \begingroup
+    \let\protect\@unexpandable@protect
+    \immediate\write\@monattabdosiero{##1}%
+    \endgroup
+  }%
+  \setcounter{monato}{0}\relax%
+  \skributab{\string \p ar\string\noindent\string\begin{tabular}{\@preambulo}}%
+       \@for\lingvo:=#1\do{%
+         \skributab{& \protect\textbf{\lingvo}}%
+       }%
+     \@whilenum\value{monato}<12\do {%
+       \skributab{\protect\\}%
+       \stepcounter{monato}%
+       \skributab{\arabic{monato}}%
+       \@for\lingvo:=#1\do{%
+         \skributab{& \monatnomo[\lingvo]{monato}}%
+       }%
+     }%
+     \skributab{\string\end{tabular}}%
+  \immediate\closeout\@monattabdosiero
+  \begingroup
+    \csname StraightEOL\endcsname
+    \input{\jobname.monatotabelo}%
+  \endgroup
+ }
+
+% \subsection{Esperanto}
+%
+% 
+%
+\newcommand*{\monato@esperanto}[1]{%
+  \ifcase#1%
+  \or januaro%     1
+  \or februaro%    2
+  \or marto%       3
+  \or aprilo%      4
+  \or majo%        5
+  \or junio%       6
+  \or julio%       7
+  \or a\u{u}gusto% 8
+  \or septembro%   9
+  \or oktobro%    10
+  \or novembro%   11
+  \or decembro%   12
+  \fi
+}%
+%
+
+%
+% \subsection{Germana}
+%
+\newcommand*{\monato@german}[1]{%
+  \ifcase#1%
+  \or Januar\or Februar\or M\"arz\or
+  April\or Mai\or Juni\or Juli\or
+  August\or September\or Oktober\or
+  November\or Dezember\fi
+}%
+\let\monato@ngerman\monato@german
+%
+% La aŭstra havas iom alian vorton por la januaro.
+% 
+\newcommand*{\monato@austrian}[1]{%
+  \ifcase#1%
+  \or J\"anner\or Februar\or M\"arz\or
+  April\or Mai\or Juni\or Juli\or
+  August\or September\or Oktober\or
+  November\or Dezember\fi
+}%
+\let\monato@naustrian\monato@austrian
+
+% \subsection{Slovaka}
+%
+%   \def\ekzemplo{\item\monthnameinlang{slovak}{enumi}}
+%
+\newcommand*{\monato@slovak}[1]{%
+  \ifcase#1\or
+  janu\'ar\or febru\'ar\or marec\or apr\'{\i}l%
+  \or m\'aj\or j\'un\or j\'ul\or august\or
+  september\or okt\'ober\or november\or december%
+  \fi
+}
+
+
+
+%
+% Jam fino :-)
+\endinput
+%</package>
+% (Jes, vere fino.)
+%
+% \Finale
+%\endinput
+
+
+%%% Folgendes ist nur für meinen Editor.
+%%%
+%%% Local Variables:
+%%% mode: docTeX
+%%% TeX-master: t
+%%% End:
