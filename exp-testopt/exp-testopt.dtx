@@ -23,14 +23,15 @@
 %
 % \iffalse
 % ---------------------------------------------
-%<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]%
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]%
 % ----------------------------________________-----------------
-%<package>\ProvidesPackage{exp-testopt}[2009/03/05 v0.3  (PE)]
+%<package>\ProvidesPackage{exp-testopt}[2009/03/06 v0.3  (PE)]
 % ----------------------------________________-----------------
 % \fi
 %
 % \iffalse
 %<*driver>
+\PassOptionsToClass{draft}{scrartcl}
 \documentclass{scrartcl}
 %
 % Esperantajn tekstojn oni prefere entajpu per unikodaj literoj.
@@ -51,6 +52,7 @@
   \IndexMin=5\baselineskip
 }
 
+
 \usepackage[svgnames]{xcolor}
 
 \usepackage{exp-testopt}
@@ -60,6 +62,37 @@
 \usepackage[inline, visible]{gmdoc-enhance}
 \let\pack\textrm%
 \renewcommand*{\EOFMark}{}
+
+
+
+\newenvironment{kodo-citajho}[1][english]{%
+  \par
+  \addtolength{\CodeIndent}{1cm}
+  \addtolength{\TextIndent}{1cm}
+  \addtolength{\rightskip}{1cm}
+  \renewcommand*{\printlinenumber}{%
+    \leavevmode
+      \llap{\rlap{%
+          \hspace*{1cm}%
+          \LineNumFont$\phantom{999}$\llap{%
+          $(\thecodelinenum)$}}%
+      \hskip\leftskip%
+      %
+    }%
+  }
+%!  \addmargin{5em}
+  \csname otherlanguage*\endcsname{#1}%
+  \slshape%
+  \expandafter\addtomacro\csname ttverbatim@hook\endcsname{\slshape}%
+  \MakeShortVerb\|\DeleteShortVerb\'%
+}{
+  \MakeShortVerb\'\DeleteShortVerb\|%
+  \csname endotherlanguage*\endcsname%
+  \endaddmargin
+}
+
+\addtomacro\LineNumFont{\normalcolor}
+
 
 \RecordChanges
 \begin{document}
@@ -74,9 +107,11 @@
 %
 % \chschange{v0.1}{2009/03/03}{37}
 % \chschange{v0.2}{2009/03/03}{90}
-% \chschange{v0.3}{2009/3/5}{139}
+% \chschange{v0.3}{2009/03/06}{139}
 % \changes{v0.1}{2009/03/03}{Unua versio}
 % \changes{v0.2}{2009/03/03}{Preta por publikigo, mi kredas.}
+% \changes{v0.3}{2009/03/06}{Post pluraj cimkorektoj nun vere\
+%   preta \dots}
 %
 % \GetFileInfo{exp-testopt.sty}
 %
@@ -111,7 +146,7 @@
 %  \TextUsage{\expnewcommand}'*'\arg{nomo}\arg[paramnum]\
 %   \arg[defaŭlto]\arg{kodo} 
 %   --
-%   funkcias kiel '\newcommand': Kreas komandon kun \meta{num} parametroj
+%   funkcias simile kiel '\newcommand': Kreas komandon kun \meta{num} parametroj
 %   (ĝis 9), kaj se \meta{defaŭlto} estas donita, la unua parametro estos
 %   opcia kun \meta{defaŭlto} kiel defaŭlta valoro.
 %   Diferenco al '\newcommand' nur ekzistas, se \meta{defaŭlto} estas
@@ -309,13 +344,14 @@
 %
 % \changes{v0.2}{2009/03/03}{Aldono de \cs{expnewcommand}.}
 %
-% Ni volas krei variantojn de '\newcommand' kaj '\renewcommand', kiuj uzas
-% nian ekspandeblan metodon por opciaj argumentoj, anstataŭ la robustan.
+% Ni volas krei varianton de '\newcommand', kiu uzas
+% nian ekspandeblan metodon por opciaj argumentoj, anstataŭ
+% la robustan.
 %
-% Jen la originalo el latex.ltx (ltdefns.dtx, por esti preciza).
+% Jen la originalo el latex.ltx (ltdefns.dtx, por esti
+%  preciza, CTAN-versio de 2006-05-21).
+% \begin{kodo-citajho} 
 %<*latex2e>
-% \begin{otherlanguage*}{english}
-%    \MakeShortVerb\|\DeleteShortVerb\'
 %    Handle the second optional argument.
 \long\def\@xargdef#1[#2][#3]#4{%
   \@ifdefinable#1{%
@@ -325,35 +361,35 @@
 %    |\string| to |\foo|, ie the actual name contains a backslash and
 %    therefore can't clash easily with exisiting command names.
 %    ``Default'' is the contents of the second optional argument of
-%    |(re)newcommand|.
-%    { \color{red}
+%    |(re)newcommand|.  {\color{red}
      \expandafter\def\expandafter#1\expandafter{%
           \expandafter
           \@protected@testopt
           \expandafter
           #1%
           \csname\string#1\endcsname
-          {#3}}%  }
-%    Now we define the internal macro ie |\\foo| which is supposed to
+          {#3}}%
+% }   Now we define the internal macro ie |\\foo| which is supposed to
 %    pick up all arguments (optional and mandatory).
        \expandafter\@yargdef
           \csname\string#1\endcsname
            \tw@
            {#2}%
            {#4}}}
-%    \MakeShortVerb\'\DeleteShortVerb\|
-%  \end{otherlanguage*}
 %</latex2e>
+%  \end{kodo-citajho}
 %
 % Kaj ni nun devas ŝanĝi la markitan parton
-% por anstataŭe uzi nian metodon. Tio signifas, ke \meta{nomo} nun estas
-% difinita kiel
+% por anstataŭe uzi nian metodon. Tio signifas, ke \meta{nomo} nun
+% estas difinita kiel
 % {\color{Green}'\@expandable@testopt\'\meta{nomo}\marg{defaŭlto}},
 % anstataŭ
 % {\color{red}^^A
 % '\@protected@testopt'\meta{nomo}'\'\meta{nomo}\marg{defaŭlto}}.
 %
-% 
+% (Kompreneble ni ne redifinas '\@xargdef', sed difinas nian
+%  propran varianton, por uzi anstataŭe -- ni ja ne volas ŝanĝi
+%  la bazan funkcion de '\newcommand'.)
 \long\def\@exp@xargdef#1[#2][#3]#4{%
   \@ifdefinable#1{% { \color{Green}
     \expandafter\def\expandafter#1\expandafter{% 
@@ -375,6 +411,7 @@
 %
 % \changes{v0.3}{2009/03/03}{Cim-korekto: \cs{exp@new@command} renomita al \cs{expnew@command}}
 %
+% '\expnewcommand' estas la ĉefa komando.
 \def\expnewcommand{%
   \@star@or@long\expnew@command%
 }
@@ -382,14 +419,11 @@
   \@testopt{\exp@newcommand#1}0%
 }
 \def\exp@newcommand#1[#2]{%
-  \@ifnextchar [{\@exp@xargdef#1[#2]}% Ĉi tie ni vokas nian varianton
-% anstataŭ '\@xargdef'. ^^A ]
+  \@ifnextchar [{\@exp@xargdef#1[#2]}% Ĉi
+% tie ni vokas nian varianton anstataŭ '\@xargdef'.
+%                                                             ^^A ]
                {\@argdef#1[#2]}% Tiu estas la originalo.
 }
-
-
-
-
 
 %
 % \subsection{Helpaj makrooj}

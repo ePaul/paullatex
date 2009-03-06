@@ -5,6 +5,7 @@ LaTeX-package 'exp-testopt' - expandable variant of \@testopt
 Author:  Paul Ebermann <Paul-Ebermann@gmx.de>
 License: LPPL 1.3b or later, maintained
          (see http://www.latex-project.org/lppl/).
+Version: 0.3
 
 All Documentation (other than this file) is in Esperanto.
 
@@ -176,6 +177,7 @@ LaTeX-Paket 'exp-testopt' - Expandierbare Variante von \@testopt.
 Autor:  Paul Ebermann (Paul-Ebermann@gmx.de).
 Lizenz: LPPL 1.3b oder später, mit Maintenance-Status
         "author-maintained". Siehe http://www.latex-project.org/lppl/.
+Version 0.3
 
 Geschrieben für eigenen Gebrauch
 (d.h. für Nutzung in anderen LaTeX-Paketen von Paul Ebermann), aber
@@ -367,6 +369,7 @@ LaTeX-pakaĵo 'exp-testopt' - plibonigoj por gmdoc.
 Aŭtoro:  Paŭlo Ebermann (Paul-Ebermann@gmx.de).
 Licenzo: LPPL 1.3, 'maintained'
          (-> http://www.latex-project.org/lppl/).
+Versio   0.3
 
 Kreitaj por propra uzo, sed eble iom de ĝi ankaŭ
 uzeblas por aliaj.
