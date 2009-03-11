@@ -4,6 +4,17 @@
 
 td, th { border: solid thin; padding: 0.5ex;}
 
+div.inhalt {
+  max-width: 50em;
+  margin-left: 3em;
+  margin-right:auto;
+}
+
+h1 sup, h1 sub, acronym sub, acronym sup {
+  margin-left: -0.3em;
+  margin-right: -0.1em;
+}
+
 .disclaimer { border: solid thin;
   margin-left: auto;
   margin-right: auto;
@@ -34,13 +45,14 @@ li ul li ul li { display: inline; }
 /*	position: relative;
 	top: -2em;
  */
-	margin-top: -2em;
-	font-size: 80%;
-	background-color: #50D0D0;
-	color: black;
-	float:right;
-	border: solid thin black;
-	caption-side: bottom;
+/*	margin-top: -2em; */
+  margin: 1ex;
+  font-size: 80%;
+  background-color: #A0E0E0;
+  color: black;
+  float:right;
+  border: solid thin #008080;
+  caption-side: bottom;
 }
 
 .linkbox caption {
@@ -62,6 +74,6 @@ li ul li ul li { display: inline; }
 	content: ": ";
 }
 
-h1, h2, h3, h4 {
+div[id] {
 	clear: right;
 }
