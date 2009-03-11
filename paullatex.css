@@ -29,3 +29,39 @@ li ul li ul li { display: inline; }
 #neues dt:after{ content: ": " }
 #neues dd { margin-left:1em;
   text-indent: -1em; } 
+
+.linkbox {
+/*	position: relative;
+	top: -2em;
+ */
+	margin-top: -2em;
+	font-size: 80%;
+	background-color: #50D0D0;
+	color: black;
+	float:right;
+	border: solid thin black;
+	caption-side: bottom;
+}
+
+.linkbox caption {
+/*
+	color: inherit;
+	background-color: inherit;
+*/
+}
+
+.linkbox td, .linkbox th {
+	border: none;
+	padding: 0ex;
+}
+.linkbox th {
+	text-align: right;
+	font-weight: normal;
+}
+.linkbox th:after {
+	content: ": ";
+}
+
+h1, h2, h3, h4 {
+	clear: right;
+}
