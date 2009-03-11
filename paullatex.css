@@ -25,14 +25,14 @@ h1 sup, h1 sub, acronym sub, acronym sup {
 }
 li:first-child ul li,
 /* li ul li ul, */
-li ul li ul li { display: inline; }
+li ul li { display: inline; }
 #neues { float:right;
   width: 35ex;
-  max-height: 12em;
+/*  max-height: 12em; */
   border:solid thin;
   padding: 0.5ex 1ex 0.5ex 1ex;
   overflow: auto;
-  margin: 2em 0.3em 1em 1em;
+  margin: 2em -10em 1em 1em;
 }
 #neues dt { display: run-in;
   font-weight: bold;

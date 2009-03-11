@@ -1,8 +1,103 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+<?php
+
+function linkto($adreso, $teksto) {
+    return "<a href='"
+        . htmlspecialchars($adreso,
+                           ENT_QUOTES)
+        . "' >"
+        . htmlspecialchars($teksto) . "</a>";
+}
+
+function linkline($kategorio, $ligo, $teksto="") {
+    $rez = "    <tr><th>";
+    $rez .= htmlspecialchars($kategorio);
+    $rez .= "</th><td>";
+    if ("" == $teksto) {
+        $teksto = rtrim($ligo, '/');
+        $teksto = strrchr($teksto, '/');
+        $teksto = substr($teksto, 1);
+    }
+    $rez .= linkto($ligo, $teksto);
+    $rez .= "</td></tr>\n";
+    return $rez;
+}
+
+function linkSVN($packagename) {
+
+    $rez .= "    <tr><th>Subversion</th><td>";
+    $rez .=
+        linkto("http://svn.berlios.de/wsvn/paullatex/trunk/src/"
+               . $packagename . "/#_trunk_src_" . $packagename .
+               "_", "WebSVN");
+    $rez .= " ";
+    $rez .=
+        linkto("http://svn.berlios.de/viewvc/paullatex/trunk/src/"
+               .  $packagename . "/",
+               "ViewCV");
+    $rez .= " ";
+    $rez .=
+        linkto("http://svn.berlios.de/svnroot/repos/" .
+               "paullatex/trunk/src/" . $packagename . '/',
+               "HTTP");
+    $rez .= " ";
+    $rez .=
+        linkto("svn://svn.berlios.de/paullatex/trunk/src/" . $packagename . "/",
+               "svn:");
+
+    return $rez;
+
+}
+
+
+function linkbox($packagename, $dokusprache, $depend=null) {
+    $rez = "";
+
+    $rez .= "  <table class='linkbox'>\n";
+    $rez .= "    <caption>Links f&uuml;r " .$packagename . "</caption>\n";
+    $rez .=
+        linkline("CTAN-Verzeichnis",
+                 "http://www.ctan.org/tex-archive/macros/latex/contrib/" .
+                 $packagename . '/', 
+                 "macros/latex/contrib/" . $packagename);
+    $rez .=
+        linkline("CTAN-Package",
+                 "http://www.ctan.org/cgi-bin/ctanPackageInformation.py?id=" . $packagename,
+                 $packagename);
+    $rez .=
+        linkline("TeX Catalogue",
+                 "http://texcatalogue.sarovar.org/entries/"
+                 . $packagename . ".html");
+
+    // CVS/SVN-link
+    $rez .= linkSVN($packagename);
+
+    $rez .= "    <tr><th>Doku-Sprache</th><td>" . $dokusprache .
+        "</td></tr>\n";
+
+    if ($depend) {
+        // TODO
+    }
+
+
+    $rez .= "  </table>\n";
+    return $rez;
+
+}
+
+
+function pack_intro($packagename, $dokusprache, $depend=null)
+{
+    echo "<div id='" . $packagename . "'>\n";
+    echo linkbox($packagename, $dokusprache, $depend);
+    echo "  <h3>" . $packagename . "</h3>\n";
+}
+
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Pauls LaTeX-Packages</title>
 <link rel="stylesheet" type="text/css" href="paullatex.css" />
   </head>
@@ -10,22 +105,28 @@
   <body>
 
 	<div class="disclaimer">
-	<h3>Disclaimer</h3>
+	<h3>Werbung</h3>
 	<p>
-	Ich habe gerade eben erst dieses Projekt begonnen und daher noch keine ordentliche
-	Homepage ... bisher ist das eine (etwas zusammengestrichende) Kopie meiner
-	<a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Algebra-Skript</a>-Seite.
-	Einige Links funktionieren noch nicht.
-	</p>
-	<p>
-	<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt="BerliOS Developer"> Berlios Developer</a> stellt uns CVS, Webseite und Entwicklungstools zur Verf¸gung - danke!  Dort gibt es auch eine <a href="http://developer.berlios.de/projects/paullatex/">Projektseite</a>.
+<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt="">Berlios Developer</a> stellt uns <del>CVS</del><ins>Subversion</ins>, Webseite und Entwicklungstools zur Verf√ºgung ‚Äì danke!
 	</p>
 	</div>
 
-
+<div class='inhalt'>
 	<div id='neues'>
-	  <h2>ƒnderungen</h2>
+	  <h2>√Ñnderungen</h2>
 	  <dl>
+<dt>2009-03-11</dt>
+<dd>
+Die Pakete sind jetzt in einem Subversion-Repository, das CVS wird
+    nicht mehr benutzt.
+</dd>
+<dt>2009-03-10</dt>
+<dd>
+Nach fast drei Jahren dachte ich mir, ich k√∂nnte die Homepage
+    mal √ºberarbeiten. Jetzt funktionieren die Links, scheint mir.
+    Au√üerdem sind jetzt alle Pakete dabei, die zwischendurch
+    dazugekommen sind.
+</dd>
 <dt>2006-05-31</dt>
 <dd>Kleine Aktualisierungen der Homepage</dd>
 	<dt>2006-05-25</dt>
@@ -36,206 +137,291 @@
 	<h1>Pauls L<sup>A</sup>T<sub>E</sub>X-Packages</h1>
 
 	<ul id='menu'>
-      <li><a href="#einf¸hrung">Einf¸hrung</a>
-	  <li><a href='#pakete'>Pakete</a>
-		<ul>
+      <li><a href="#einfuehrung">Einf√ºhrung</a>
 		  <li><a href='#installation'>Installation</a></li>
-		  <li><a href='#download'>Download</a>
+		  <li><a href='#download'>Pakete f√ºr Endnutzer</a>
 			<ul>
-			  <li><a href='#alg-script'>alg-script</a></li>
-			  <li><a href='#extpfeil'>extpfeil</a></li>
-			  <li><a href='#faktor'>faktor</a></li>
-			  <li><a href='#pauldoc'>pauldoc</a></li>
 			  <li><a href='#randbild'>randbild</a></li>
+<li><a href='#dateiliste'>dateiliste</a></li>
+			  <li><a href='#faktor'>faktor</a></li>
+			  <li><a href='#noitcrul'>noitcrul</a></li>
 			</ul>
+</li>
+		  <li><a href='#download'>Pakete f√ºr Paketautoren</a>
+			<ul>
+			  <li><a href='#exp-testopt'>exp-testopt</a></li>
+			  <li><a href='#robustcommand'>robustcommand</a></li>
+			  <li><a href='#pauldoc'>pauldoc</a></li>
+			  <li><a href='#gmdoc-enhance'>gmdoc-enhance</a></li>
+</ul></li>
+		  <li><a href='#download'>Pakete f√ºr beide</a>
+			<ul>
+			  <li><a href='#minipage-marginpar'>minipage-marginpar</a></li>
+			  <li><a href='#extpfeil'>extpfeil</a></li>
+</ul>
 		  </li>
-		  <li><a href='#makedvi'>Makedvi + makepackage</a></li>
-		</ul>
-	  </li>
-	  <li><a href="#abhang">Abh‰ngigkeitsgraph</a></li>
-	  <li><a href="#bugs">Entdeckte LaTeX-Bugs</a></li>
+<li><a href='#makedvi'>Makedvi + makepackage</a></li>
+<li><a href="#abhang">Abh√§ngigkeitsgraph</a></li>
 	</ul>
 
 
-    <h2 id="einf¸hrung">Einf¸hrung</h2>
+    <h2 id="einfuehrung">Einf√ºhrung</h2>
 
 <p>
 Ich habe im Laufe der Zeit eine Reihe LaTeX-Pakete geschrieben,
-um einige Sachen umzusetzen, f¸r die ich bisher keine Lˆsungen
+um einige Sachen umzusetzen, f√ºr die ich bisher keine L√∂sungen
 gefunden habe.
 </p>
+
 <p>
-Die hier vorhandenen Pakete sind durch die Arbeit an meinem
+Einige der hier vorhandenen Pakete sind durch die Arbeit an meinem
 aktuellen Projekt, einer
- <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Digitalisierung
-einer Vorlesungs-Mitschrift</a>, entstanden. Einige fr¸here
-LaTeX-Pakete, allerdings schlechter dokumentiert und nicht
-mehr gepflegt, gibt es auf meine
- <a href="http://www.math.hu-berlin.de/~ebermann/packages/latex.html">LaTeX-Seite
-am Mathe-Institut</a>. (Wenn ich mal viel Zeit habe und/oder es jemanden interessiert,
-						werde ich einiges davon hierher migrieren.)
+ <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">
+     Digitalisierung einer Vorlesungs-Mitschrift</a>, entstanden.
+     Einige fr√ºhere LaTeX-Pakete, allerdings schlechter
+     dokumentiert und nicht mehr gepflegt, gibt es auf meiner
+     <a href="http://www.math.hu-berlin.de/~ebermann/packages/latex.html">
+     LaTeX-Seite am Mathe-Institut</a>.
+(Wenn ich mal viel Zeit habe und/oder es jemanden interessiert,
+ werde ich einiges davon hierher migrieren.)
+    </p>
+
+
+<div id='installation'>
+<h2>Installation</h2>
+
+<p>Die LaTeX-Pakete sind alle auf <a href='www.ctan.org/'>CTAN</a>
+zu finden (den Link gibt es jeweils im blauen Kasten).
+</p>
+<p>
+Einige davon sind in MikTeX und/oder TeXLive schon enthalten,
+    dann ist keine Installation notwendig
+    (oder sie geht ‚Äì zumindest bei MikTeX ‚Äì  automatisch).
+</p>
+<p>
+Ansonsten braucht m√ºsst ihr die jeweilige .sty-Datei
+in ein Verzeichnis packen, in dem TeX es findet ‚Äî es
+    geht das Verzeichnis, in dem das Dokument liegt,
+    oder etwa "texmf/tex/latex/paul/".
 </p>
 
-
-	<h2 id='pakete'>LaTeX-Pakete</h2>
-	
-
-	<h3 id='installation'>Installation</h3>
 	<p>
-	  Die Pakete sind als jeweils ein <code>DTX</code>-Archiv vorhanden, welches
-	  den dokumentierten Quelltext sowie die Benutzerdokumentation enth‰lt. Dazu
-	  gibt es eine Installationsdatei (<code>.ins</code>).
+	  Die Pakete sind als jeweils ein <abbr>DTX</abbr>-Archiv
+      vorhanden, welches den dokumentierten Quelltext sowie
+     die Benutzerdokumentation enth√§lt.
+     Dazu gibt es eine Installationsdatei (<code>.ins</code>).
 	</p>
 	<p>
-	  Mit <kbd>latex <var>paketname</var>.ins</kbd> kann man aus dem DTX-Archiv
-	  das fertige Package oder die Klasse kreieren, mit
-	  <kbd>latex <var>paketname</var>.dtx</kbd> erstellt man die Dokumentation.
-	  (Um auch einen Index, ƒnderungsliste sowie korrekte Querreferenzen zu erhalten,
-	  sollte man mehrfach LaTeX und makeindex laufen lassen &mdash; mein
-	  <a href='#makepackage'>Makepackage-Skript</a> kann einem das abnehmen.)
-	  (F¸r die Dokumentationserstellung wird <code>pauldoc.sty</code> benˆtigt &mdash;
-	  also entweder damit anfangen, oder die Datei extra runterladen.)
-	</p>
-	<p>
-	  Wem das zu m¸hselig ist, der kann jeweils das fertige Paket als Klassen- oder
-	  Package-Datei und die Dokumentation als PDF oder PostScript herunterladen.
+	  Mit <kbd>latex <var>paketname</var>.ins</kbd> kann man aus
+      dem DTX-Archiv das fertige Package oder die Klasse kreieren,
+     mit
+	  <kbd>latex <var>paketname</var>.dtx</kbd> erstellt man die
+Dokumentation. (Um auch Inhaltsverzeichnis, Index, √Ñnderungsliste
+                sowie korrekte Querreferenzen zu erhalten,
+                sollte man mehrfach LaTeX und makeindex laufen
+                lassen &mdash; mein
+                <a href='#makepackage'>Makepackage-Skript</a>
+                kann einem das abnehmen.)
+    (F√ºr die Dokumentationserstellung wird je nach Paket
+     <code>pauldoc.sty</code> oder <code>gmdoc-enhance</code>
+     ben√∂tigt &mdash; also entweder damit anfangen, oder die
+     Datei extra herunterladen.)
 	</p>
 
-    
-	<h3 id='download'>Download:</h3>
+</div>
 
-<p class="disclaimer">
-Die Download-Links funktionieren hier noch nicht.
-Bei <a href="http://www.dante.de/cgi-bin/ctan-index">CTAN</a> gibt
-es die aktuellste verˆffentlichte Version (jeweils nach dem Package-Namen
-										   suchen),
- auf meiner
- <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">Algebra-Skript</a>-Seite
-eine ‰ltere Version. Im <a href="http://developer.berlios.de/cvs/?group_id=6747">CVS</a> gibt es die aktuelle Arbeits-Version (oft mit falscher Versions-Nummer).
-Ich muss hier noch einen Automatismus f¸r den Verweis auf
-die jeweils aktuellste Version bei Berlios einbauen ...
+<div id='endnutzer'>
+<h2>Pakete f√ºr End-Nutzer</h2>
+
+<?php
+pack_intro("randbild", "Deutsch");
+?>
+
+<p>
+Dieses Package hilft dabei, kleine pstricks-Diagramme auf dem
+Rand der Seite unterzubringen.
+</p>
+</div>
+
+<?php pack_intro("dateiliste", "Deutsch"); ?>
+<p>
+Dieses Package erstellt eine Liste aller geladenen Dateien
+und nimmt sie auch noch in die Ausgabedatei auf.
 </p>
 
-	<table>
-	  <thead>
-		<tr>
-		  <th>Paketname</th>
-		  <th>Kurzbeschreibung</th>
-		  <th>Quelltext</th>
-		  <th>Paket</th>
-		  <th>Doku</th>
-		  <th>Version</th>
-		  <th>Datum</th>
-		</tr>
-	  </thead>
-	  <tbody>
-		<tr>
-		  <td>dateiliste</td>
-		  <td id='dateiliste'>
-			Dieses Package erstellt eine Liste aller geladenen Dateien und nimmt sie
-			auch noch in die Ausgabedatei auf.
-		  </td>
-		  <td><a href='packages/dateiliste.dtx'>DTX</a>, <a href='packages/dateiliste.ins'>INS</a></td>
-		  <td><a href='packages/dateiliste.sty'>STY</a></td>
-		  <td><a href='packages/dateiliste.ps'>PS</a>, <a href='packages/dateiliste.pdf'>PDF</a></td>
-		  <td><strong>v0.1</strong></td>
-		  <td><strong>2006/04/03</strong></td>
-		</tr>
-		<tr>
-		  <td>extpfeil</td>
-		  <td id='extpfeil'>
-			Dieses Package erstellt verl‰ngerbare Pfeile im Mathe-Modus
-			mit Super- und Subskript.
-		  </td>
-		  <td><a href='packages/extpfeil.dtx'>DTX</a>, <a href='packages/extpfeil.ins'>INS</a></td>
-		  <td><a href='packages/extpfeil.sty'>STY</a></td>
-		  <td><a href='packages/extpfeil.ps'>PS</a>, <a href='packages/extpfeil.pdf'>PDF</a></td>
-		  <td>v0.2</td>
-		  <td>2006/03/23</td>
-		</tr>
-		<tr>
-		  <td>faktor</td>
-		  <td id='faktor'>
-			Dieses Package hilft beim Setzen von Faktorstrukturen (Faktormengen,
-			Faktorringe, ...).
-		  </td>
-		  <td><a href='packages/faktor.dtx'>DTX</a>, <a href='packages/faktor.ins'>INS</a></td>
-		  <td><a href='packages/faktor.sty'>STY</a></td>
-		  <td><a href='packages/faktor.ps'>PS</a>, <a href='packages/faktor.pdf'>PDF</a></td>
-		  <td>v0.1a</td>
-		  <td>2006/03/23</td>
-		</tr>
-		<tr>
-		  <td id='pauldoc'>pauldoc</td>
-		  <td>
-			Dieses Package hilft bei der Dokumentation meiner Packages.
-			Es wird nur von den Dokumentationen meiner Pakete verwendet.
-		  </td>
-		  <td><a href='packages/pauldoc.dtx'>DTX</a>, <a href='packages/pauldoc.ins'>INS</a></td>
-		  <td><a href='packages/pauldoc.sty'>STY</a></td>
-		  <td><a href='packages/pauldoc.ps'>PS</a>, <a href='packages/pauldoc.pdf'>PDF</a></td>
-		  <td><strong>v0.4</strong></td>
-		  <td><strong>2006/04/03</strong></td>
-		</tr>
-		<tr>
-		  <td id='randbild'>randbild</td>
-		  <td>
-			Dieses Package hilft dabei, kleine Diagramme auf dem Rand der
-			Seite unterzubringen.
-		  </td>
-		  <td><a href='packages/randbild.dtx'>DTX</a>, <a href='packages/randbild.ins'>INS</a></td>
-		  <td><a href='packages/randbild.sty'>STY</a></td>
-		  <td><a href='packages/randbild.ps'>PS</a>, <a href='packages/randbild.pdf'>PDF</a></td>
-		  <td>v0.1a</td>
-		  <td>2006/03/23</td>
-		</tr>
-		<tr>
-		  <td id='robustcommand'>robustcommand</td>
-		  <td>
-			Dieses Package definiert ein Kommando, welches beim Definieren
-			von anderen Kommandos hilft. 
-		  </td>
-		  <td><a href='packages/robustcommand.dtx'>DTX</a>, <a href='packages/robustcommand.ins'>INS</a></td>
-		  <td><a href='packages/robustcommand.sty'>STY</a></td>
-		  <td><a href='packages/robustcommand.ps'>PS</a>, <a href='packages/robustcommand.pdf'>PDF</a></td>
-		  <td>v0.1</td>
-		  <td>2006/03/23</td>
-		</tr>
-		<tr>
-		  <td id='noitcrul'>noitcrul</td>
-		  <td>
-			Dieses Package ermˆglicht schˆnere Unterstreichungen.
-		  </td>
-		  <td><a href='packages/underline.dtx'>DTX</a>, <a href='packages/underline.ins'>INS</a></td>
-		  <td><a href='packages/underline.sty'>STY</a></td>
-		  <td><a href='packages/underline.ps'>PS</a>, <a href='packages/underline.pdf'>PDF</a></td>
-		  <td>v0.1</td>
-		  <td>2006/03/23</td>
-		</tr>
-	  </tbody>
-	</table>
+</div>
 
-	<h3 id='makedvi'><a id='makepackage'></a>Makedvi- und Makepackage-Skripte</h3>
-	<p>
-	  Um aus <code>.ins</code>- und <code>.dtx</code> das Package
-	  und die Dokumentation zu erstellen, ist das Bash-Skript
-	  <a href='packages/makepackage.sh'>makepackage.sh</a>
-	  von Nutzen. Es installiert ein Package und erstellt die
-	  Dokumentation.</p>
-	<p>
-	  F¸r beide Skripte gilt: Falls das System kein Windows mit MikTeX ist,
-	  muss eventuell die letzte Zeile angepasst werden, um einen
-	  anderen (oder gar keinen) DVI-Viewer zu starten.
-	</p>
 
-	<h2 id="abhang">Abh‰ngigkeitsgraph</h2>
-	<div style="float:left; margin: 1ex;">
+<?php pack_intro("faktor", "Deutsch"); ?>
+
+<p>
+Dieses Package hilft beim Setzen von Faktorstrukturen
+(Faktormengen, Faktorringe, Faktormoduln etc.).
+</p>
+<p>
+  Das sind so Sachen wie <sup>Z</sup>/<sub>2Z</sub>.
+</p>
+
+</div>
+
+<?php pack_intro("noitcrul", "Deutsch"); ?>
+
+<p>
+Dieses Package erm√∂glicht sch√∂nere Unterstreichungen im
+Mathe-Modus (z.B. f√ºr Kategoriennamen).
+</p>
+<p>
+Der Name steht f√ºr <em>no italics correction underline</em>.
+</p>
+
+</div>
+
+
+
+</div>
+
+<div id='autoren'>
+<h2>Pakete f√ºr Package-Autoren</h2>
+
+<p>
+  Die hier genannten Pakete sind vor allem f√ºr Autoren anderer
+Pakete interessant ‚Äì insbesondere werden sie teilweise von meinen
+eigenen Paketen verwendet.
+Endnutzer brauchen sie nur, wennn das sie ein
+    Paket verwenden, welches diese als Abh√§ngigkeit hat.
+</p>
+
+<?php pack_intro('exp-testopt', "Esperanto"); ?>
+
+<p>Das Paket <abbr>exp-testopt</abbr> hilft dabei, Kommandos mit
+     optionalen Argumenten so zu definieren, dass das Kommando
+     expandibel bleibt.
+</p>
+</div>
+
+</div>
+
+<?php pack_intro("robustcommand", "Deutsch"); ?>
+
+<p>
+Dieses Package definiert ein Kommando, welches beim Definieren
+    von anderen Kommandos hilft.
+</p>
+
+</div>
+
+<?php pack_intro("pauldoc", "Deutsch"); ?>
+
+<p>
+Ein Paket, um LaTeX-Pakete nach meinem Geschmack zu dokumentieren.
+    Basiert auf doc und einigen anderen Standard-Paketen.
+</p>
+
+</div>
+
+
+<?php pack_intro("gmdoc-enhance", "Deutsch"); ?>
+
+<p>
+  Eine Alternative zu doc ist gmdoc. Dieses Paket f√ºgt zu
+den Features von gmdoc noch drei weitere hinzu.
+(Nicht kompatibel zu pauldoc).
+</p>
+
+</div>
+
+<div id='gemischt'>
+<h2>Gemischte Pakete</h2>
+<p>
+Diese Pakete stellen sowohl Benutzerbefehle als auch
+zus√§tzliche Funktionalit√§t f√ºr Package-Autoren zur Verf√ºgung.
+</p>
+
+<?php pack_intro("minipage-marginpar", "Deutsch"); ?>
+
+<p>
+Erm√∂glicht es, <code>\marginpar</code>-Befehle innerhalb von Boxen
+    (wie minipages) anzuwenden ‚Äì die Befehle werden
+    gesammelt und dann nach der Box abgesetzt.
+</p>
+<p>
+    F√ºr Nutzer gibt es die Umgebung
+<code>minipagewithmarginpars</code>, und
+    die internen Befehle k√∂nnen von Package-Autoren genutzt
+    werden, die √§hnliche Funktionalit√§t f√ºr ihre Makros/Umgebungen
+    bereitstellen wollen.
+    </p>
+
+</div>
+
+<?php pack_intro("extpfeil", "Deutsch"); ?>
+
+<p>
+Dieses Package erstellt verl√§ngerbare Pfeile im Mathe-Modus
+mit Super- und Subskript.
+</p>
+
+<p>
+F√ºr Paket-Autoren (oder fortgeschrittene Benutzer) gibt es auch
+Kommandos, um selbst solche Pfeile zu erstellen.
+</p>
+
+</div>
+
+</div> <!-- gemischte -->
+
+
+<div id='skripte'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r die Skripte</caption>
+<?php
+    echo linkline("CVS", 'http://cvs.berlios.de/cgi-bin/viewvc.cgi/paullatex/src/scripts/');
+?>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+<h2>Hilfs-Skripte</h2>
+
+<p>Ich habe mir zwei Bash-Skripte geschrieben, um beim Erstellen
+    der Pakete zu helfen.
+</p>
+
+<div id='makepackage'>
+    <h3>makepackage.sh</h3>
+<p>makepackage erstellt (in einem neuen Arbeitsverzeichnis) aus
+der DTX-Datei die Paketdatei und danach die Dokumentation, mit
+    mehreren LaTeX-Durchl√§ufen.
+    Bei Bedarf kann auch eine PDF-Datei sowie eine ZIP-Datei
+    f√ºr den CTAN-Upload erstellt werden.
+</p>
+<p>
+    makepackage.sh sollte aus dem Verzeichnis oberhalb des
+Quelltextverzeichnisses aufgerufen werden. Mit <code>--help</code>
+gibt es eine Kommandozeilenhilfe.
+</p>
+</div>
+
+<div id='makepackages'>
+<h3>makepackages.sh</h3>
+<p>
+  makepackages ruft einfach nur makepackage f√ºr alle Pakete
+nacheinander auf (in einer Reihenfolge, die Abh√§ngigkeiten
+                  ber√ºcksichtigt).
+</p>
+</div>
+</div>
+
+<div id='abhang'>
+
+	<h2>Abh√§ngigkeitsgraph</h2>
+	<div style="float:right; margin: 1ex;">
 	  <a href="abhang.png"><img  src="abhang-klein2.png" alt=""></a>
 	</div>
 	<p>
-	  Ich habe einen <a href="abhang.png">Abh‰ngigkeitsgraphen</a> gemalt
-	  (bzw. von <a href="http://www.graphviz.org/">dot</a> malen lassen).
-	  Eingezeichnet sind alle f¸r die Dokumentation der Packages
+	  Ich habe einen <a href="abhang.png">Abh√§ngigkeitsgraphen</a>
+    gemalt (bzw. von <a href="http://www.graphviz.org/">dot</a>
+            malen lassen).
+	  Eingezeichnet sind alle f√ºr die Dokumentation
+    der (im April 2006 vorhandenen) Packages
 	  verwendeten TeX/LaTeX-Quelltexte, inklusive der bei meinem
 	  <acronym title="LaTeX">L<sup>A</sup>T<sub>E</sub>X</acronym>-System
 	  (MikTeX) mitgelieferten Pakete, aber ohne Fontdeskriptoren und
@@ -243,32 +429,19 @@ die jeweils aktuellste Version bei Berlios einbauen ...
 	</p>
 	<p>
 	  Eine Legende habe ich nicht gemalt, aber es scheint mir gerade
-	  ziemlich selbsterkl‰rend, wenn man sich diese Seite hier angesehen
-	  hat. (In dem Bereich der Pakete, die nicht von mir sind, fehlen
-	  wahrscheinlich noch einige Quer-Abh‰ngigkeiten.)
+	  ziemlich selbsterkl√§ren, wenn man sich diese Seite hier
+                              angesehen
+	  hat. (In dem Bereich der Pakete, die nicht von mir sind,
+            fehlen wahrscheinlich noch einige Quer-Abh√§ngigkeiten.)
 	</p>
-	<p>Stand ist der 4.4.2006, daher heiﬂt auf dem Bild das <a href="#noitcrul">noitcrul-Paket</a> noch <em>underline</em>. (Ich werde den Graphen wohl nicht so h‰ufig
+	<p>Stand ist der 4.4.2006, daher hei√üt auf dem Bild das
+     <a href="#noitcrul">noitcrul-Paket</a> noch
+    <em>underline</em>. (Ich werde den Graphen wohl nicht so h√§ufig
 	  aktualisieren wie die Pakete.)</p>
 	  
+</div>
 
-	<h2 id='bugs' style="clear:left;">Entdeckte LaTeX-Bugs</h2>
-	<p>
-	  W‰hrend der Arbeit an den Skripten und den Packages habe ich
-	  <a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?category=anything&amp;keyword=Ebermann'>folgende Bugs in LaTeX</a>
-	  gefunden und gemeldet (umgekehrt chronologisch).
-	</p>
-	<ul>
-<li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3860'>latex/3860: documentation error in ltmath.dtx: \(, \), \[, \]</a>
-(da gab es bisher keine Reaktion)</li>
-	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3840'>latex/3840*: doc: \DoNotIndex{\ } doesn't work</a></li>
-	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3839'>latex/3839: License: LaTeX-version too unflexible</a></li>
-	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3835'>latex/3835: doc: documentation-code-inconsistency for \changes</a></li>
-	  <li><a href='http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=tools/3834'>tools/3834*: Wrong index entry produced by \DescribeEnv (in doc)</a></li>
-	</ul>
-	<p>
-	  Die mit * markierten waren schon bekannt, ohne dass ich
-	  das rechtzeitig gemerkt habe ...
-	</p>
+</div>
 
   </body>
 </html>
