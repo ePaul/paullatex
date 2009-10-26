@@ -1,6 +1,6 @@
 % \iffalse meta-comment   -*- coding: iso-8859-1 -*-
 %<*package|driver>
-%%  (C) 2006 Paul Ebermann (Hauptautor)
+%%  (C) 2006, 2009 Paul Ebermann (Hauptautor)
 %%  (C) 2006 Rolf Niepraschk (einiges an Code gespendet)
 %%
 %%   Package dateiliste - Zur Ausgabe der Liste der Dateien im Dokument.
@@ -49,7 +49,7 @@
 %<package>\ProvidesPackage{dateiliste}[%
 %
 %
-%<package|readme|en|de|eo>      2006/07/27 v0.3 %
+%<package|readme|en|de|eo>      2009/10/26 v0.4 %
 %
 %
 %<package>      Ausgabe der Dateiliste (PE)]
@@ -1137,14 +1137,18 @@ utile.
    }%
 %    \end{macrocode}
 %  Deutsch mit neuer Rechtschreibung.
+% \changes{v0.4}{2009/10/26}{Kodierung der deutschen Umlaute
+%        in der \cs{fileListPreamble} per \cs{"}, damit das
+%        Paket auch mit utf8-kodierten Dateien funktioniert.
+%        Dank an Michael Niedermair für den Bugreport.}
 %    \begin{macrocode}
    \addto{\extrasgerman}{%
       \renewcommand*\fileListPreamble{%
-         Hier die Liste aller Dateien, die während des \LaTeX-Laufes,
+         Hier die Liste aller Dateien, die w\"ahrend des \LaTeX-Laufes,
          welcher dieses Dokument erzeugte, verwendet wurden.
          \footnote{genauer: Es ist die Liste aller Dokumente, die 
-            einen \LaTeX-Lauf früher verwendet wurden. Aber nach
-            einigen Läufen sollte sich die Liste stabilisieren.}
+            einen \LaTeX-Lauf fr\"uher verwendet wurden. Aber nach
+            einigen L\"aufen sollte sich die Liste stabilisieren.}
       }
       \renewcommand*\fileListName{Liste der Dateinamen}%
       \renewcommand*\fileNameName{Dateiname}
@@ -1159,11 +1163,11 @@ utile.
 %    \begin{macrocode}
    \addto{\extrasngerman}{%
       \renewcommand*\fileListPreamble{%
-         Hier die Liste aller Dateien, die während des \LaTeX-Laufes,
+         Hier die Liste aller Dateien, die w\"ahrend des \LaTeX-Laufes,
          welcher dieses Dokument erzeugte, verwendet wurden.
          \footnote{genauer: Es ist die Liste aller Dokumente, die 
-            einen \LaTeX-Lauf früher verwendet wurden. Aber nach
-            einigen Läufen sollte sich die Liste stabilisieren.}
+            einen \LaTeX-Lauf fr\"uher verwendet wurden. Aber nach
+            einigen L\"aufen sollte sich die Liste stabilisieren.}
       }
       \renewcommand*\fileListName{Liste der Dateinamen}%
       \renewcommand*\fileNameName{Dateiname}
