@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" == "-help" ]
+if [[ "$1" == "-help" || "$1" == "--help" ]]
 then
 echo 'makepackage  -  installiert ein LaTeX-Package und erstellt die
                 Dokumentation als .dvi
@@ -54,7 +54,7 @@ then
 fi
 
 
-if [ "$1" == "-clean" ]
+if [[ "$1" == "-clean" || "$1" == "--clean" ]]
 then
   (
    shopt -s nullglob
@@ -65,7 +65,7 @@ then
   exit
 fi
 
-if [ "$1" == "-pdf" ]
+if [[ "$1" == "-pdf" || "$1" == "--pdf" ]]
 then
   PDFKREILO="dvipdf"
   shift
@@ -93,7 +93,7 @@ fi
 
 echo "Ich verwende $LATEX."
 
-if [ "$1" == "-zip" ]
+if [[ "$1" == "-zip" || "$1" == "--zip" ]]
 then
    ZIPKREILO="zip"
    shift
