@@ -71,9 +71,8 @@ also some description about how it works.
 
 ----------------
 [de]
-LaTeX-Paket 'extpfeil' - eine Variante von
-\DeclareExtpfeil, welche vorher überprüft,
-ob der Befehl schon existiert.
+LaTeX-Paket 'extpfeil' - verlängerbare Pfeile, und ein
+Befehl, um weitere soche zu definieren.
 
 Autor:  Paul Ebermann (Paul-Ebermann@gmx.de).
 Lizenz: LPPL 1.3b oder später, mit Maintenance-Status
@@ -98,8 +97,8 @@ erstellt werden.
 Zur Verwendung siehe extpfeil.pdf.
 ----------------
 [eo-h]
-LaTeX-pakajho 'extpfeil' - Variajho de \DeclareRobustCommand,
-kiu antaue elprovas, chu la nomo jam ekzistas.
+LaTeX-pakajho 'extpfeil' - plilarghigeblaj sagoj, kaj
+komando por krei pliajn tiajn.
 
 Autoro:  Paulo Ebermann (Paul-Ebermann@gmx.de).
 Licenzo: LPPL 1.3, 'author-maintained'
