@@ -24,6 +24,7 @@ function linkline($kategorio, $ligo, $teksto="") {
 
 function linkSVN($packagename) {
 
+	 $rez = "";
     $rez .= "    <tr><th>Subversion</th><td>";
     $rez .=
         linkto("http://svn.berlios.de/wsvn/paullatex/trunk/src/"
