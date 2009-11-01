@@ -12,14 +12,14 @@ Nutzung:
 Es wird das Package installiert (d.h. aus der .dtx-Datei eine .sty- oder
 .cls-Datei erstellt, und diese in das vorhergesehene Verzeichnis gesteckt),
 sofern eine Datei <dtxname>.ins  gefunden wird.
-Danach wird die Dokumentation erstellt, mittels mehrfacher Durchläufe von
-LaTeX, zwischendurch auch makeindex, um einen Index bzw. eine Änderungsliste
+Danach wird die Dokumentation erstellt, mittels mehrfacher DurchlÃ¤ufe von
+LaTeX, zwischendurch auch makeindex, um einen Index bzw. eine Ã„nderungsliste
 zu erstellen.
 Sollte es dabei zu einem Fehler kommen, wird abgebrochen.
 
 Optionen:
-   -clean   löscht Überbleibsel des Dokumentationserstellens, so dass nur die
-             Quelltexte und das Ergebnis übrigbleiben.
+   -clean   lÃ¶scht Ãœberbleibsel des Dokumentationserstellens, so dass nur die
+             Quelltexte und das Ergebnis Ã¼brigbleiben.
    -help    zeigt diese Hilfe an.
    -w <workdir> das Arbeitsverzeichnis, in das gewechelst wird, um
                 dort Dateien zu erstellen. Default ist "work".
@@ -58,8 +58,8 @@ if [[ "$1" == "-clean" || "$1" == "--clean" ]]
 then
   (
    shopt -s nullglob
-   echo "Aufräumen ..."
-   echo "wird gleich gelöcht" > cleanup.dummy
+   echo "AufrÃ¤umen ..."
+   echo "wird gleich gelÃ¶cht" > cleanup.dummy
    rm cleanup.dummy *.aux *.glo *.gls *.ind *.idx *.ilg *.log *.toc *.filelist
   )
   exit
@@ -103,11 +103,13 @@ fi
 
 
 # Hier wird der Paranoid-Modus abgeschaltet, um auch
-# (Über-)Schreiben von Dateien außerhalb des eigenen
-# Verzeichnisses zu erlauben.
+# (Ãœber-)Schreiben von Dateien auÃŸerhalb des eigenen
+# Verzeichnisses zu erlauben. Wir verwenden eTeX anstatt
+# TeX, damit die Umlaute in den generierten Dateien
+# erhalten bleiben.
 if [ -z "$INSTALLTEX" ]
 then
-  INSTALLTEX='openout_any=a tex'
+  INSTALLTEX='openout_any=a etex'
 fi
 
 
@@ -122,7 +124,22 @@ else
 	packagename="$1"
 fi
 
-echo Wir erzeugen Doku und Package für "${packagename}".
+echo Wir erzeugen Doku und Package fÃ¼r "${packagename}".
+
+#
+# function latex2normal() {
+#     sed -e "
+# s/\^\^c4\^\^b5/Äµ/g
+# s/\^\^c5\^\^ad/Å­/g
+# s/\^\^c4\^\^89/Ä‰/g
+# s/\^\^c4\^\^9d/Ä/g
+# s/\^\^c5\^\^9d/Å/g
+# s/\^\^c3\^\^a4/Ã¤/g
+# s/\^\^c3\^\^bc/Ã¼/g
+# s/\^\^c3\^\^b6/Ã¶/g
+# " $*
+# }
+# 
 
 #
 ## Jetzt geht es los!
@@ -144,13 +161,13 @@ then
 fi &&
 
 #
-## Wenn wir ein ZIP erstellen, sollten wir dafür sorgen, dass die 
+## Wenn wir ein ZIP erstellen, sollten wir dafÃ¼r sorgen, dass die 
 ## generierten Dateien im richtigen Verzeichnis landen. 
 ## Daher erstellen wir hier eine leere docstrip.cfg, weil die
 ##  original-docstrip.cfg (bei mir) die Dateien in das passende
 ##  Such-Verzeichnis von LaTeX legt (texmf/tex/latex/paul/).
 ##
-## Außerdem schalten wir gleichzeitig die DVI-Ansicht ab.
+## AuÃŸerdem schalten wir gleichzeitig die DVI-Ansicht ab.
 #
 if [ $ZIPKREILO != "true" ]
 then
@@ -178,9 +195,9 @@ fi &&
 if [ -e "${packagename}.README" ]
 then
     mv "${packagename}.README" "README" &&
-    mv "${packagename}.README-eo" "README-eo" &&
     mv "${packagename}.README-de" "README-de" &&
-    mv "${packagename}.README-en" "README-en"
+    mv "${packagename}.README-en" "README-en" &&
+    mv "${packagename}.README-eo" "README-eo"
 fi &&
 
 #
@@ -200,7 +217,7 @@ if egrep -q '\usepackage(\[.*?\])?\{gmdoc\}' "${packagename}.dtx"
  then
     echo "
 ------------------
-gmdoc gefunden 
+gmdoc gefunden => verwende gmglo.ist und -.
 ------------------"
     if [ -e "${packagename}.glo" ]
     then
@@ -213,7 +230,7 @@ gmdoc gefunden
 else
     echo "
 ----------------
-kein gmdoc
+kein gmdoc => verwende gglo.ist und gind.ist.
 ----------------"
     if [ -e "${packagename}.glo" ]
     then
@@ -251,6 +268,9 @@ $PDFKREILO "${packagename}" &&
 #
 # zip-Datei erstellen:
 #
-( shopt -s nullglob ; $ZIPKREILO "$packagename.zip" README $packagename.pdf $packagename.dtx *.sty $packagename.ins README-* ) &&
+(
+ shopt -s nullglob &&
+ $ZIPKREILO "$packagename.zip" README $packagename.pdf $packagename.dtx *.sty $packagename.ins README-*
+ ) &&
 #
 popd
