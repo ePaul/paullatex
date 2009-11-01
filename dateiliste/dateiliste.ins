@@ -8,6 +8,24 @@
 %%
 
 \input docstrip.tex
+
+\askonceonly
+
+
+% Die Readme-Dateien generieren wir vor dem Festlegen von \usedir,
+% damit sie nicht in das selbe Verzeichnis im texmf-Baum gesteckt
+% werden.
+\generate{%
+   \usepreamble\empty
+   \usepostamble\empty
+   \file{dateiliste.README}{\from{dateiliste.dtx}{readme}}%
+   \file{dateiliste.README-en}{\from{dateiliste.dtx}{en}}%
+   \file{dateiliste.README-de}{\from{dateiliste.dtx}{de}}%
+   \file{dateiliste.README-eo}{\from{dateiliste.dtx}{eo}}%
+      }
+
+
+
 \usedir{tex/latex/paul}
 
 \Msg{**********************************************************}
@@ -27,19 +45,10 @@
  '--------------------------------------------------'
 \endpreamble
 
-\askonceonly
 
 \generate{\file{dateiliste.sty}{\from{dateiliste.dtx}{package}}}
 
 
-\generate{%
-   \usepreamble\empty
-   \usepostamble\empty
-   \file{dateiliste.README}{\from{dateiliste.dtx}{readme}}%
-   \file{dateiliste.README-en}{\from{dateiliste.dtx}{en}}%
-   \file{dateiliste.README-de}{\from{dateiliste.dtx}{de}}%
-   \file{dateiliste.README-eo}{\from{dateiliste.dtx}{eo}}%
-      }
 
 \Msg{#######################}
 \Msg{#                                        }
