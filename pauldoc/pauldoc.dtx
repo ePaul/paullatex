@@ -23,7 +23,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{pauldoc}
-%<package> [2006/04/05 v0.4a Pauls Anpassungen fuer doc (PE)]
+%<package> [2009/11/01 v0.5 Pauls Anpassungen fuer doc (PE)]
 %
 % \changes{v0.2a}{2006/02/23}{'ue' statt 'ü' im Identifikations-String - gibt schönere
 %                             Ausgabe bei \cs{listfiles}.}
@@ -39,7 +39,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{127}
+% \CheckSum{129}
 %
 %
 % \changes{v0.0}{2006/01/31}{Erste Fassung}
@@ -85,16 +85,20 @@
 %
 %  \DescribeMacro{\ifReferenceExists}\marg{refName}\marg{then}\marg{else}
 %
-%  Mit diesem Makro kann man, abhängig davon, ob eine bestimmte Referenz mit
-%  '\label{}' gesetzt wurde, bestimmten Text ausgeben.
+%  Mit diesem Makro kann man, abhängig davon, ob eine bestimmte Referenz
+%  mit '\label{}' gesetzt wurde, bestimmten Text ausgeben.
 %
-%  Falls ein '\ref'\marg{refName} Erfolg hätte, wird \meta{then} ausgewertet,
-%  ansonsten \meta{else}.
-%  Dies ist nützlich, wenn man im Beschreibungsteil verschiedenen Text aufnehmen
-%  will, abhängig davon, ob auch der Implementationsteil mitgesetzt wird -- man
-%  kann dann etwa auf einen bestimmten Abschnitt darin verweisen, und andernfalls
-%  den Text im Konjunktiv formulieren ("`Wenn der Implementationsteil mit enthalten
+%  Falls ein '\ref'\marg{refName} Erfolg hätte, wird \meta{then}
+%  ausgewertet, ansonsten \meta{else}.
+%  Dies ist nützlich, wenn man im Beschreibungsteil verschiedenen Text
+%  aufnehmen will, abhängig davon, ob auch der Implementationsteil
+%  mitgesetzt wird -- man kann dann etwa auf einen bestimmten Abschnitt
+%  darin verweisen, und andernfalls den Text im Konjunktiv formulieren
+%  ("`Wenn der Implementationsteil mit enthalten
 %  wäre, könnte man dort jetzt \dots finden."').
+%
+%  Gegebenenfalls wird erst beim zweiten \LaTeX-Durchlauf der richtige
+%  Zweig ausgewertet.
 %
 %  \noindent\DescribeMacro{\pack}\marg{name}
 %
@@ -108,9 +112,9 @@
 %
 %  \DescribeMacro{\includeLicense}
 %  '\includeLicense' bindet die eventuell im \TeX-Suchpfad zu findende
-%  Lizenz ein. Dies ergibt -- je nach dem, ob 'section' oder 'chapter'
-%  als Option gegeben wurde -- ein neues Kapitel oder einen neuen
-%  Abschnitt. Durch Neudefinition von\DescribeMacro{\lpplfilename}
+%  Lizenz (LPPL) ein. Dies ergibt -- je nach dem, ob 'section' oder
+%  'chapter' als Option gegeben wurde -- ein neues Kapitel oder einen
+%  neuen Abschnitt. Durch Neudefinition von\DescribeMacro{\lpplfilename}
 %  '\lpplfilename' kann festgelegt werden, welche Datei zu verwenden
 %  ist -- als Vorbgabewert ist die bei \LaTeX{} mitgelieferte Datei
 %  \texttt{\lpplfilename} im Package festgelegt.
@@ -204,8 +208,8 @@
 %  \changes{v0.3}{2006/03/23}{Jetzt mit \cs{usepackage}\protect\linebreak[0]'[T1]{fontenc}'}
 %  \pack{fontenc} mit Option 'T1' lädt das T1-Fontencoding, in dem
 %  etwa Umlaute direkt aus der Schriftart genommen werden können,
-%  anstatt sie mit \"{ } und den Vokalen a, o und u zusammenzusetzen. Dies führt
-%  auch zu einer verbesserten Silbentrennung.
+%  anstatt sie mit \"{ } und den Vokalen a, o und u zusammenzusetzen.
+%  Dies führt auch zu einer verbesserten Silbentrennung.
 %    \begin{macrocode}
 \RequirePackage[T1]{fontenc}
 %    \end{macrocode}
@@ -222,15 +226,17 @@
 \CodelineIndex
 \AtBeginDocument{\MakeShortVerb{\'}\selectlanguage{ngerman}}
 %    \end{macrocode}
-%  Außerdem sollten Index und Änderungsliste auf deutsch beschriftet werden.
-% Wie benutzen hier '\@pauldoc@indexsec', was entweder '\section'
-% oder '\chapter' ist.
+%  Außerdem sollten Index und Änderungsliste auf deutsch beschriftet
+%  werden. Wie benutzen hier '\@pauldoc@indexsec', was entweder
+%  '\section' oder '\chapter' ist.
+%  \changes{0.5}{2009/11/01}{Ä $\Rightarrow$ '\"A' in
+%    "`Liste der Änderungen"', und entsprechend für "`Schräggedruckte"'}
 %    \begin{macrocode}
 \renewcommand{\generalname}{Allgemein}
-\GlossaryPrologue{\pauldoc@indexsec{Liste der Änderungen}}
+\GlossaryPrologue{\pauldoc@indexsec{Liste der \"Anderungen}}
 \IndexPrologue{\pauldoc@indexsec{Index}
    
-   Schräggedruckte Nummern verweisen auf die Seite, auf der der
+   Schr\"aggedruckte Nummern verweisen auf die Seite, auf der der
    Eintrag beschrieben ist, unterstrichene Nummern zeigen auf die
    Zeilennummer der Definition, sonstige Zahlen auf die Zeilennummer
    einer Verwendung.}
