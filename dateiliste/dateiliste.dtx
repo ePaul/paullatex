@@ -22,13 +22,16 @@
 %</package|driver>
 % \fi
 %
+% \ProvideFileInfos{$Id$}
+% {Dokumentation für dateiliste.sty}
+%
 % \iffalse
 %<*driver>
 \documentclass[draft%
-   ]
+   ]%
   {ltxdoc}
 \usepackage{pauldoc}[2006/04/03]
-\usepackage[showpages]{dateiliste}
+\usepackage[showpages, svn]{dateiliste}
 \usepackage{enumerate}
 \begin{filecontents}{test_datei}
 %% Dies ist nur ein Test.
@@ -343,45 +346,79 @@ utile.
 %
 % \section{Benutzerdokumentation der Befehle}
 %
-%  Die drei Teile \emph{automatische Versionsinfos} (mittels '\ProvideFileInfos'),
-%  \emph{Hauptdatei in der Dateiliste} (mittels '\mainFileToList' bzw. der Package-Option)
-%  und \emph{Dateilisten-Ausgabe} (mittels 'printFileList') sind unabhängig voneinander
-%  nutzbar, aber die ersten beiden Features werden durch das letzte erst richtig nützlich,
-%  und damit das letzte eine vernünftige Ausgabe hat, sind die ersten beiden hilfreich.
+%  Die drei Teile \emph{automatische Versionsinfos} (mittels
+%  '\ProvideFileInfos'), \emph{Hauptdatei in der Dateiliste}
+%  (mittels '\mainFileToList' bzw. der Package-Option)
+%  und \emph{Dateilisten-Ausgabe} (mittels 'printFileList')
+%  sind unabhängig voneinander nutzbar, aber die ersten beiden
+%  Features werden durch das letzte erst richtig nützlich,
+%  und damit das letzte eine vernünftige Ausgabe hat, sind
+%  die ersten beiden hilfreich.
 %  Daher also alles in einem Package.
 %
 % \subsection{README in Englisch, Deutsch und Esperanto}
 %
 %  Eine README-Datei mit einer Kurzübersicht des Paketes auf
-%  Englisch, Deutsch und Esperanto kann ebenfalls mit docstrip
+%  Englisch, Deutsch und Esperanto (sowie einzel-Dateien für
+%  die Sprachen) kann ebenfalls mit docstrip
 %  aus der dtx-Datei generiert werden, die beiliegende Datei
 %  'dateiliste.ins' tut dies neben der Generierung der
 % '.sty'-Datei.
 %
 % \subsection{Automatische Versionsinfos}
 %
+%
 %  \noindent\DescribeMacro{\ProvideFileInfos}\marg{id-string}\marg{kurzbeschreibung}
 %
 %  Ändert die Informationen für die Datei, in der es aufgerufen wurde.
-%  \meta{id-string} sollte ein String sein, der wie
-%\begin{verbatim}
-%   $Id: dateiliste.dtx,v 2.4 2007-05-31 14:47:35 epaul Exp $
-%\end{verbatim}
-% (Beispiel für diese Datei) aussieht.
-%  Diesen lässt man am besten von seinem CVS produzieren, schreibt also etwas wie
+%  \meta{id-string} sollte ein String sein, der (im RCS-Modus) wie
+%  \begin{quote}
+%  '$''Id: dateiliste.dtx,v 4.1 2009/10/31 19:58:13 epaul Exp $'
+%  \end{quote}
+%  oder (im Subversion-Modus) wie
+%  \begin{quote}
+%  '$Id$'
+%  \end{quote}
+%  aussieht. Diesen lässt man am besten von seinem Versionskontrollsystem
+%  produzieren -- dieses Paket unterstützt die Syntax von
+%  RCS und CVS (RCS-Modus) sowie die Syntax von Subversion (svn).
+%
+%  Der Modus kann durch Paket-Optionen ausgewählt werden:
+%  \begin{itemize}
+%  \item Die Option 'rcs' oder 'cvs' wählt den RCS-Modus aus, in dem
+%    das Datum mit '/' getrennt wird, der Dateiname von ',v' gefolgt
+%    wird, am Ende ein Status gezeigt wird (meist 'Exp'), und die
+%    Versionsnommer eine mit '.' getrennte Zahlenfolge ist. (Es kann
+%    außerdem noch der Nutzername desjenigen enthalten sein, der eine
+%    Sperre auf diese Datei hält.)
+%  \item Die Option 'svn' oder 'subversion' wählt den Subversion-Modus
+%    aus, in dem Datum und Uhrzeit im ISO-8601-Format mit
+%    Zeitzonenanzeiger 'Z' dargestellt werden, und die Versionsnummer
+%    nur eine Zahl ist.
+%  \end{itemize}
+% 
+%  Aus Kompatibilitätsgründen zu früheren Versionen
+%  dieses Paketes (vor 0.5) ist der Default-Modus (d.h. wenn keine
+%  dieser Optionen angegeben wurde) 'rcs'.
+%
+% Wir schreiben also etwas wie
 %\begin{quote}
 %  '\ProvideFileInfos{$''Id:$}{Algebraische Geometrie I}'
 %\end{quote}
-%  in seine Datei und macht dann ein 'cvs commit' -- dadurch werden von CVS die
-%  passenden Informationen eingefüllt.
+%  in seine Datei und macht dann ein 'cvs commit' bzw. 'svn commit'
+%  -- dadurch werden von CVS bzw. Subversion die passenden Informationen
+%  in unsere Arbeitskopie eingefüllt. (Bei Subversion muss außerdem
+%  die Keyword-Ersetzung eingeschaltet werden, etwa mit
+%  'svn propset svn:keywords Id '\meta{dateiname}.)
 %
 %  \meta{kurzbeschreibung} sollte eine kurze Beschreibung der Funktion/des
 %   Inhaltes der Datei sein, optimalerweise nur ASCII-Zeichen.
 %
 %  Das Makro sorgt dann dafür, dass in der durch '\listfiles' sowie
-%  auch der durch '\printFileList' (siehe Abschnitt \ref{describe:printfilelist})
+%  auch der durch '\printFileList' (siehe Abschnitt
+%   \ref{describe:printfilelist})
 %  erzeugten Liste die richtigen Daten (d.h. das Commit-Datum und die
-%  RCS/CVS-Versionsnummer) stehen.
+%  RCS/CVS/SVN-Versionsnummer) stehen.
 %
 %  \subsection{Hauptdatei in der Dateiliste, Package-Optionen}
 %  \DescribeMacro{\mainFileToList}
@@ -537,14 +574,38 @@ utile.
   \@dateiliste@showpagesfalse
 }
 %    \end{macrocode}
-%  Die Standard-Optionen sind 'addmain' und 'showpages'.
+%
+% \changes{v0.5}{2009/10/31}{Optionen für Subversion-Unterstützung}
+%  Das dritte Optionspaar: 'svn' (mit Alias 'subversion') für
+%  Subversion-'Id's, 'cvs' (mit Alias 'rcs') für CVS/RCS-'Id's.
+%  Diese unterscheiden sich vor allem im Format der Datumsangaben.
+%  (Hier merken wir uns nur die Optionen, die Arbeit geschieht in
+%   Abschnitt \ref{versionsnummern}.
+%    \begin{macrocode}
+\newif\if@dateiliste@subversion \@dateiliste@subversionfalse
+\DeclareOption{svn} {%
+  \@dateiliste@subversiontrue
+}
+\DeclareOption{subversion} {%
+  \@dateiliste@subversiontrue
+}
+\DeclareOption{cvs} {%
+  \@dateiliste@subversionfalse
+}
+\DeclareOption{rcs} {%
+  \@dateiliste@subversionfalse
+}
+%    \end{macrocode}
+%  Die Standard-Optionen sind 'addmain', 'showpages' und 'rcs'.
 %    \begin{macrocode}
 \ExecuteOptions{addmain}
 \ExecuteOptions{showpages}
+\ExecuteOptions{rcs}
 \ProcessOptions
 %    \end{macrocode}
 %
 %  \subsection{Seitenzahlen in die Dateiliste}
+%  \label{showpages}
 %  \begin{macro}{\@addtofilelist}
 %    Falls nicht die Option 'noshowpages' angegeben wurde,
 %    merken wir uns die Seitennummern aller eingebundenen
@@ -565,13 +626,98 @@ utile.
 %  \end{macro}
 %
 % \subsection{Aktuelle Versionsnummern in der Dateiliste}
+%  \label{versionsnummern}
+%  Wir wollen in der durch '\ProvideFileInfo'
+%  provozierten Ausgabe automatisch sinnvolle Infos haben, mit
+%  Daten, die von unserem Versionskontrollsystem eingefüllt
+%  werden. Zur Zeit unterstützen wir das Format von CVS und RCS
+%  (schon seit Version 0.0) und das Format von Subversion (seit
+%  Version 0.5).
 %
-%  Zunächst wollen wir in der durch '\listfiles'
-%  provozierten Ausgabe automatisch sinnvolle Infos haben. Dafür
-%  laden wir das Paket \pack{rcsinfo}.
+%  \subsubsection{Subversion-Modus}
+%  Die Fallunterscheidung funktioniert mit diesem '\if@...', welches
+%  durch Paket-Optionen initialisiert wurde.
+%    \begin{macrocode}
+\if@dateiliste@subversion
+%    \end{macrocode}
+% 
+%  Im Subversion-Modus laden wir  \pack{svninfo}.
+%
 %  Wir verwenden die Parameter 'nofancy', weil sonst die Fußzeile
-%  umgestellt wird, und 'notoday', weil sonst das aktuelle Datum umgestellt
-%  wird.
+%  umgestellt wird, und 'notoday', weil sonst das aktuelle Datum
+%  umgestellt wird. 'final' verhindert, dass die Fußzeile geändert
+%  wird (wir brauchen die Infos ja nur für unsere Dateiliste).
+%  \changes{v0.5}{2009/10/31}{\pack{svninfo} statt \pack{rcsinfo}, falls
+%     wir im Subversion-Modus sind.}
+%    \begin{macrocode}
+\RequirePackage[nofancy, notoday, final]{svninfo}
+%    \end{macrocode}
+%
+%  \begin{macro}{\ProvideFileInfos}\noindent\marg{id-string}\marg{kurzbeschreibung}
+%
+%
+%    \begin{macrocode}
+\newcommand*{\ProvideFileInfos}[2] {%  
+%    \end{macrocode}
+%  Zunächst lassen wir '\svnInfo' den \meta{id-string} analysieren. Dies definiert
+%  (unter anderem) die Makros '\rcsInfoFile' (der Dateiname), '\rcsInfoDate'
+%  (Datum, im 'YYYY/MM/DD'-Format) und '\rcsInfoRevision' (die Versionsnummer).
+%
+%  Das Leerzeichen nach dem '#1' ist notwendig, damit '\rcsInfo' erkennt, wo
+%  der \meta{id-string} aufhört - in der Definition steht da nämlich ein Leerzeichen
+%  am Ende der Parameterliste.
+%    \begin{macrocode}
+   \svnInfo #1 %
+%    \end{macrocode}
+%  
+%  Dann rufen wir '\ProvidesFile' aus dem \LaTeX-Kernel auf.
+%    \begin{macrocode}
+   \ProvidesFile%
+%    \end{macrocode}
+%  Als erster Parameter wird der Dateiname übergeben, der von '\svnInfo'
+%  ermittelt wurde.
+%  Mittels '\expandafter\@firstofone' entfernen wir dabei noch das von
+%  '\rcsInfo' (zumindest in meiner Version) eingebaute Leerzeichen am
+%  Anfang (welches ja einen anderen Namen ergibt und damit verhindern
+%  würde, dass die Information der
+%  richtigen Datei zugeschrieben wird).
+%    \begin{macrocode}
+   {\expandafter\@firstofone\svnInfoFile}%
+%    \end{macrocode}
+%  Dann das, wofür wir das ganze eigentlich machen: Das Datum (im
+%  YYYY/MM/DD-Format, weil das von diversen \LaTeX-Paketen
+%  so erwartet wird), ein Leerzeichen, dann die Versionsnummer
+%  (mit einem 'v' davor). Schließlich hängen wir noch
+%  \meta{kurzbeschreibung} an.
+%    \begin{macrocode}
+   [\svnInfoYear/\svnInfoMonth/\svnInfoDay\space
+     v\svnInfoRevision\space #2]%
+%    \end{macrocode}
+%  '\ProvidesFile' definiert jetzt ein Makro ('\ver@'\meta{dateiname}) mit
+%   diesem Text als Inhalt, welches später von '\@dofilelist' (und
+%   unserem '\@writefilelist') verwendet wird.
+%
+%   Außer dem Versionsstring wollen wir uns (falls dies per Package-Option
+%   eingeschaltet wurde) noch die Seitennummer
+%   merken, bei der die Datei anfing -- das macht '\addtofilelist',
+%   welches in Abschnitt \ref{showpages} definiert wurde, und von
+%   '\ProvidesFile' aufgerufen wird.
+%    \begin{macrocode}
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \subsubsection{RCS-Modus}
+%
+%    \begin{macrocode}
+\else%  \if@dateiliste@subversion
+%    \end{macrocode}
+%
+% Im RCS-Modus laden wir das Paket \pack{rcsinfo}.
+%
+%  Wir verwenden die Parameter 'nofancy', weil sonst die Fußzeile
+%  umgestellt wird, und 'notoday', weil sonst das aktuelle Datum
+%  umgestellt wird.
 %  \changes{v0.1}{2006/03/30}{\pack{rcsinfo} nun mit \texttt{notoday}-Parameter.}
 %    \begin{macrocode}
 \RequirePackage[nofancy, notoday]{rcsinfo}
@@ -619,6 +765,7 @@ utile.
 %   merken, bei der die Datei anfing.
 %    \begin{macrocode}
 }
+\fi%  \if@dateiliste@subversion
 %    \end{macrocode}
 %  \end{macro}
 %
