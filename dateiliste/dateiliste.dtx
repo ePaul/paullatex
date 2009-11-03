@@ -23,16 +23,15 @@
 % \fi
 %
 % \ProvideFileInfos{$Id$}
-% {Dokumentation fuer dateiliste.sty}
+% {Dokumentation fuer dateiliste.sty }
 %
 % \iffalse
 %<*driver>
 \documentclass[draft%
    ]%
   {ltxdoc}
-\PassOptionsToPackage{utf8}{inputenc}
-\usepackage{pauldoc}[2006/04/03]
-%\usepackage{ucs}
+%\PassOptionsToPackage{utf8}{inputenc}
+\usepackage[utf8]{pauldoc}[2009/11/03]
 
 % dox liefert uns die Möglichkeit, Package-Optionen als
 % solche zu dokumentieren.
@@ -42,15 +41,20 @@
 \usepackage[showpages, svn]{dateiliste}
 \usepackage{enumerate}
 \begin{filecontents}{test_datei}
-%% Dies ist nur ein Test.
-\ProvidesFile{test_datei.tex}[2006/09/19 v0.0 Eine Beispiel-Datei mit \string\bla]
+% Dies ist nur ein Test.
+\ProvidesFile{test_datei.tex}[2006/09/19 v0.0 Eine \csname @secondoftwo\expandafter\endcsname\string\%-$-Beis^p_iel-3-&-Datei ##$
+mit \string{Test\string} und noch einer Gruppe. ]
 \end{filecontents}
 \errorcontextlines=20
 \listfiles
 %\input{test_datei}
-\inputencoding{utf8}
+%\inputencoding{utf8}
 \begin{document}
+   \input{test_datei.tex}
    \DocInput{dateiliste.dtx}
+\errorcontextlines=20
+\tracingmacros=2
+\tracingcommands=2
 \end{document}
 %</driver>
 %
@@ -440,17 +444,26 @@ utile.
 %\begin{quote}
 %  '\ProvideFileInfos{$''Id$}{Algebraische Geometrie I}'
 %\end{quote}
-%  in seine Datei und rufen dann 'cvs commit' bzw. 'svn commit' auf
-%  -- dadurch werden von CVS bzw. Subversion die passenden Informationen
-%  in unsere Arbeitskopie eingefüllt. (Bei Subversion muss vorher
+%  in unsere Datei (üblicherweise ziemlich am Anfang) und rufen dann
+%  'cvs commit' bzw. 'svn commit' auf -- dadurch werden von CVS bzw.
+%  Subversion die passenden Informationen in unsere Arbeitskopie
+%  eingefüllt. (Bei Subversion muss vorher
 %  die Keyword-Ersetzung eingeschaltet werden, etwa mit
-%  'svn propset svn:keywords Id '\meta{dateiname}.)
+%  \begin{quote}
+%    'svn propset svn:keywords Id '\meta{dateiname},
+%  \end{quote}
+%  bei CVS muss man nur darauf achten, sie nicht abzuschalten.)
+%  Analoges geschieht auch beim Checkout.
 %
 %  Das Makro sorgt dann dafür, dass in der durch '\listfiles' sowie
 %  auch der durch '\printFileList' (siehe Abschnitt
 %   \ref{describe:printfilelist})
 %  erzeugten Liste die richtigen Daten (d.h. das Commit-Datum und die
 %  RCS/CVS/SVN-Versionsnummer) stehen.
+%
+%  Dies ist besonders nützlich, wenn man ein Dokument hat, welches
+%  sich aus mehreren Quelltextdateien zusammensetzt, welche üblicherweise
+%  dann auch nicht immer gleichzeitig bearbeitet werden.
 %
 %  \subsection{Hauptdatei in der Dateiliste}
 %
@@ -507,13 +520,19 @@ utile.
 %  Die Liste selbst ist erst ab dem zweiten \LaTeX-Lauf im Dokument zu
 %  sehen (und enthält ab dem dritten Lauf dann auch die Dateilisten-Datei).
 %
-%  Die Liste wird als 4-spaltige Tabelle gesetzt.
+%  \DescribeOption{showpages}\DescribeOption{noshowpages}
+%  Die Liste wird als 4- oder 5-spaltige Tabelle gesetzt: Falls die
+%  Option 'showpages' übergeben wurde, ist auch die Seitennummer, die
+%  zum Ladezeitpunkt der Datei aktuell war, enthalten ($0$ für alle
+%  Dateien, die in der Präambel geladen wurden), mit 'noshowpages'
+%  fehlt diese Spalte. ('showpages' ist der Vorgabewert.)
 %
 %
 %  Falls das Paket \pack{babel} vor oder nach diesem Paket geladen wird,
 %  sind die Spaltenüberschriften, die Gliederung sowie die Präambel auch
 %  übersetzbar -- zur Zeit werden von diesem Paket die Sprachoptionen
-%  'english', 'german', 'ngerman' und 'esperanto' unterstützt.
+%  'english', 'german', 'ngerman' und 'esperanto' unterstützt. Wer weitere
+%  Übersetzungen beisteuern will, melde sich bei mir.
 %
 %  Ansonsten \DescribeMacro{\fileListName}\DescribeMacro{\fileListPreamble}
 %  \DescribeMacro{\fileNameName}\DescribeMacro{\dateName}
@@ -554,6 +573,27 @@ utile.
 %  doppelte Auftauchen der Haupt-Datei) vorkommen. Details dazu bei
 %  der Diskussion der Optionen 'cat12' und 'nocat12', sowie im
 %  Implementations-Teil.
+%
+%  \subsection{Wunschliste}
+% 
+%  Ein paar Ideen, die ich gerne mal umsetzen möchte, aber noch nicht dazu
+%  gekommen bin:
+%
+%  \begin{itemize}
+%  \item eine Option, um die Datumsdarstellung in der Dateiliste auf
+%    das ISO-Format (YYYY-MM-DD) umzustellen.
+%  \item eine Option, um das 'v' in den Versionsnummern wegzulassen.
+%  \item eine Möglichkeit, doppelt geladene Dateien in der Liste nicht
+%    doppelt aufzuführen.  (Das kann etwa passieren, wenn man mitten im 
+%    Dokument die Eingabe-Kodierung wechselt.)
+%  \item eine Möglichkeit, die Liste zu filtern, und z.B. nur '.tex'-Dateien
+%    aufzunehmen. Das könnte z.B. nützlich sein, wenn man nur die
+%    "`Inhalts-Dateien"' eines zusammengesetzen Dokumentes aufführen will,
+%    nicht aber alle verwendeten Package-Dateien.
+%  \item Falls eine Versionsnummer fehlt, sollte das erkannt werden, und
+%    die Spalte leergelassen werden, anstatt den Beschreibungs-Text in die
+%    Versionsspalte zu setzen.
+%  \end{itemize}
 %
 % \StopEventually{\PrintChanges\PrintIndex}
 %
@@ -711,6 +751,14 @@ utile.
    }
    \fi
 %    \end{macrocode}
+%  \changes{v0.5}{2009/11/03}{Seitenzahlen für Präambel-Dateien jetzt 0}
+%  Damit die Seitennummern für in der Präambel geladene Pakete etc.
+%  alle 0 sind, setzen wir die Seitenzahl jetzt auf 0, und bei Beginn
+%  des Dokumentes wieder auf 1.
+%    \begin{macrocode}
+\setcounter{page}{0}
+\AtBeginDocument{\stepcounter{page}}
+%    \end{macrocode}
 %  \end{macro}
 %
 % \subsection{Aktuelle Versionsnummern in der Dateiliste}
@@ -767,25 +815,20 @@ utile.
 %    \end{macrocode}
 %  Als erster Parameter wird der Dateiname übergeben, der von '\svnInfo'
 %  ermittelt wurde.
-%  Mittels '\expandafter\@firstofone' entfernen wir dabei noch das von
-%  '\rcsInfo' (zumindest in meiner Version) eingebaute Leerzeichen am
-%  Anfang (welches ja einen anderen Namen ergibt und damit verhindern
-%  würde, dass die Information der richtigen Datei zugeschrieben wird).
 %    \begin{macrocode}
-   {%\expandafter\@firstofone
-     \svnInfoFile}%
+   {\svnInfoFile}%
 %    \end{macrocode}
 %  Dann das, wofür wir das ganze eigentlich machen: Das Datum (im
-%  YYYY/MM/DD-Format, weil das von diversen \LaTeX-Paketen
-%  so erwartet wird), ein Leerzeichen, dann die Versionsnummer
+%  Format YYYY/MM/DD, weil das von den \LaTeX-Paketen auch
+%  so gemacht wird), ein Leerzeichen, dann die Versionsnummer
 %  (mit einem 'v' davor). Schließlich hängen wir noch
 %  \meta{kurzbeschreibung} an.
 %    \begin{macrocode}
    [\svnInfoYear/\svnInfoMonth/\svnInfoDay\space
      v\svnInfoRevision\space #2]%
 %    \end{macrocode}
-%  '\ProvidesFile' definiert jetzt ein Makro ('\ver@'\meta{dateiname}) mit
-%   diesem Text als Inhalt, welches später von '\@dofilelist' (und
+%   '\ProvidesFile' definiert damit jetzt ein Makro ('\ver@'\meta{dateiname})
+%   mit diesem Text als Inhalt, welches später von '\@dofilelist' (und
 %   unserem '\@writefilelist') verwendet wird.
 %
 %   Außer dem Versionsstring wollen wir uns (falls dies per Package-Option
@@ -996,9 +1039,9 @@ utile.
 %    laufen lassen soll.
 %    \begin{macrocode}
       {%
-         \PackageWarning{dateiliste}{
+         \AtEndDocument{\PackageWarning{dateiliste}{
             Run LaTeX again to include the File list.
-         }%
+         }}%
       }%
 %    \end{macrocode}
 %
@@ -1059,7 +1102,8 @@ utile.
          \immediate\write\dateiliste@file{%
             \string\LTleft=0pt%
             \string\LTright=0pt%
-            \string\begin{longtable}{\@tempa>{\string\raggedright\string\arraybackslash}X}%
+            \string\begin{longtable}{\@tempa>{%
+                  \string\raggedright\string\arraybackslash}X}%
 %    \end{macrocode}
 %  Die Überschrift -- aus übersetzbaren Textteilen, siehe unten, bestehend --
 % wiederholt sich auf jeder Seite (deswegen '\endhead' anstatt '\\').
@@ -1081,25 +1125,27 @@ utile.
 %    \begin{macrocode}
          \@for\@currname:=\@filelist\do{%  \@for
 %    \end{macrocode}
-%  Zunächst bestimmen wir den genauen Dateinamen -- d.h. wir hängen, falls nötig,
-%  ein '.tex' an. Außerdem finden wir den zugehörigen Versions-String heraus.
+%  Zunächst bestimmen wir den genauen Dateinamen -- d.h. wir hängen,
+%  falls nötig, ein '.tex' an. Außerdem finden wir den zugehörigen
+%  Versions-String heraus.
 %    \begin{macrocode}
-            \filename@parse\@currname
+            \filename@parse\@currname%
             \edef\dateiliste@filename{%
                \filename@base.%
                \ifx\filename@ext\relax tex\else\filename@ext\fi}%
-            \expandafter\let\expandafter\dateiliste@fileversion
-            \csname ver@\dateiliste@filename\endcsname
+            \expandafter\let\expandafter\dateiliste@fileversion%
+            \csname ver@\dateiliste@filename\endcsname%
 %    \end{macrocode}
 %  Das Makro '\dateiliste@page@'\meta{name} enthält die Seitennummer
 %  der Datei \meta{name}. Falls es nicht definiert ist, wurde sie
-%  vor dem \pack{dateiliste}-Package geladen, also auf Seite 1.
+%  vor dem \pack{dateiliste}-Package geladen, also vor der ersten Seite.
 %  Wir merken uns das Ergebnis in '\dateiliste@filepage'.
+%  \changes{v0.5}{2009/11/03}{undefinierte Seitenzahlen auf 0 statt 1}
 %    \begin{macrocode}
             \if@dateiliste@showpages
             \@ifundefined{dateiliste@page@\@currname}
             {%
-              \def\dateiliste@filepage{1}%
+              \def\dateiliste@filepage{0}%
             }{%
               \expandafter\let\expandafter\dateiliste@filepage%
               \csname dateiliste@page@\@currname\endcsname%
@@ -1107,38 +1153,39 @@ utile.
             \fi
 %    \end{macrocode}
 %  Jetzt schreiben wir, durch '&' getrennt, die einzelnen Felder raus.
-%  Zunächst der Dateiname, \ldots
+%  Zunächst der Dateiname (dabei durch einen Filter geschickt, um z.B. '_'
+%  unschädlich zu machen), \ldots
+%  \changes{v0.5}{2009/11/03}{Dateinamen werden jetzt für die Liste escaped.}
 %    \begin{macrocode}
             \edef\dateiliste@zeile{%
-              %\expandafter\dateiliste@general@escape\expandafter
-              %{%
-                \dateiliste@filename
-              %}%
-              %{_}{\string\_}%
+                \expandafter\dateiliste@escapeii\expandafter{%
+                  \dateiliste@filename
+                }
               \space& %
 %    \end{macrocode}
-%  \ldots\ dann die Seitennummer (falls vorhanden, ansonsten wird das '\@empty',
-%      also ignoriert)
+%  \ldots\ dann die Seitennummer (falls wir diese überhaupt anzeigen wollen)
 %    \begin{macrocode}
               \if@dateiliste@showpages
               \dateiliste@filepage
               \space& %
               \fi
 %    \end{macrocode}
-%  \ldots\ dann entweder ein "`---"' (falls kein Versions-String gegeben wurde), \dots
+%  \ldots\ dann entweder ein "`---"' (falls kein Versions-String gegeben
+%  wurde), \dots
 %    \begin{macrocode}
                \ifx\dateiliste@fileversion\relax
                ---
                \else
 %    \end{macrocode}
-%  \ldots\ oder der Versionsstring selbst, an den ersten beiden Leerzeichen durch
-%  '&' getrennt. Dafür verfüttern wir das expandierte '\dateiliste@fileversion'
-%  an '\dateiliste@parse@ver'. (Für den Fall, dass da nicht genug Leerzeichen drin
-%  sind, sind am Ende noch ein paar '{}' mit Leerzeichen dazwischen -- die werden
-%  am Ende ja nicht ausgegeben.)
+%  \ldots\ oder der Versionsstring selbst, an den ersten beiden Leerzeichen
+%  durch '&' getrennt. Dafür verfüttern wir das expandierte
+%  '\dateiliste@fileversion' (also den Versionsstring)
+%  an '\dateiliste@parse@ver'. (Für den Fall, dass da nicht genug
+%  Leerzeichen drin sind, sind am Ende noch ein paar '{}' mit Leerzeichen
+%  dazwischen -- die werden ja später nicht ausgegeben.)
 %    \begin{macrocode}
                \expandafter\dateiliste@parse@ver
-               \dateiliste@fileversion{} {} {} \relax
+               \dateiliste@fileversion{} {} {} \dateiliste@parse@ver
                \fi
 %    \end{macrocode}
 %   Und jetzt noch ein '\\', um die Tabellenzeile zu beenden.
@@ -1157,22 +1204,28 @@ utile.
       }%
 %    \end{macrocode}
 %  \end{macro}
-%  \begin{macro}{\dateiliste@parse@ver}
+%
+%  \begin{macro}{\dateiliste@parse@ver}\meta{datum}\textvisiblespace\meta{version}\textvisiblespace\meta{rest}'\dateiliste@parse@ver'
+%
 %  \changes{v0.1}{2006/03/31}{Neu}
 %  Dieses Makro nimmt zwei durch Leerzeichen getrennte Parameter, und
 %  gibt sie, mit zusätzlichen '&', wieder zurück. Das letzte Stück
 %  wird noch escapet, damit '\bla' kein Problem bildet.
 %
-%   Gelegentlich fehlt die Versionsnummer. Damit dann nicht der Anfang
+%   TODO: Gelegentlich fehlt die Versionsnummer. Damit dann nicht der Anfang
 %   des folgenden Textes (wie 'hyperref' bei hyperref.cfg oder 'package'
 %   bei pst-node.sty) erscheint, sollte noch eine Abfrage hinein, ob '##2'
 %   mit 'v' oder einer Ziffer beginnt. Andernfalls sollte alles in der
-%   dritten Spalte angezeigt werden. (TODO: Leider noch nicht
+%   dritten Spalte angezeigt werden. (Leider noch nicht
 %   implementiert.)
+%   \changes{v0.5}{2009/11/03}{Escapen des Beschreibungs-Textes.}
+%
 %    \begin{macrocode}
-      \def\dateiliste@parse@ver##1 ##2 ##3\relax{%
-        ##1 & ##2 & %\dateiliste@general@escape{##3}{\@backslashchar}{\string\textbackslash{}}%
-        ##3%
+      \def\dateiliste@parse@ver##1 ##2 ##3\dateiliste@parse@ver{%
+        ##1 & ##2 &
+        % \dateiliste@general@escape{##3}{\@backslashchar}%
+        % {\string\textbackslash{}}%
+        \dateiliste@escapeii{##3}%
         \relax
       }%
 %    \end{macrocode}
@@ -1184,57 +1237,247 @@ utile.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \subsection{Escapen gefährlicher Makros und Zeichen}
+%  \subsubsection{Escapen gefährlicher Makros und Zeichen}
+%  \label{escape}
 %
 %   \emph{Work in progress!}
 %
-%  Ein Problem, welches mir durch Otto Schindler und Jens Goldhammer (unabhängig voneinander)
-%  mitgeteilt wurde: Enthält der Dateiname oder die Kurzbeschreibung nicht direkt von LaTeX
-%  verarbeitbare Zeichen (im Dateinamen sind z.B. '_', in der Kurzbeschreibung z.B.
+%  Ein Problem, welches mir durch Otto Schindler und Jens Goldhammer
+%  (unabhängig voneinander) mitgeteilt wurde: Enthält der Dateiname
+%  oder die Kurzbeschreibung nicht direkt von LaTeX verarbeitbare Zeichen
+%  (im Dateinamen sind z.B. '_', in der Kurzbeschreibung z.B.
 %  Makronamen üblich), gibt es Probleme.
 %
-%  \begin{macro}{\dateiliste@escape} 
-%    Hier ein Test: \csname dateiliste@escape\endcsname{Beis{pi}el\bla_fsd }.
-%    ^^A\write-1{Escape-Test\expandafter:\csname dateiliste@escape\endcsname{Beis{pi}el\bla_fsd}}
-%   Bla. 
+%  Ein (nicht fertiggestellter) Ansatz ist in Abschnitt \ref{alt-ersetzung}
+%  zu finden. Hier ein anderer Ansatz, der prinzipiell zu funktionieren
+%  scheint, hier.
 %
+%  
+%  \begin{macro}{\dateiliste@escapeii}\marg{text}
+%
+%    Geht \meta{text} Token-weise durch und maskiert alles, was gefährlich
+%    werden könnte.
+%
+%    Zunächst übergeben wir die ganze Zeichenkette an das nächste Makro,
+%    mit einigen im echten Text wohl nicht vorkommenden Begrenzern.
 %    \begin{macrocode}
-\newcommand*{\dateiliste@escape}[1]{% 
-  {%
-  \@tfor\dateiliste@token:=#1\do{%
-    %
-    \ifcat\noexpand\relax
-          \expandafter\noexpand\dateiliste@token%Token ist eine Kontrollsequenz o.ä.
-      \string\string\expandafter\string\dateiliste@token;%
-    \else
-    \ifcase \catcode\expandafter`\dateiliste@token 
-      \string\string\textbackslash% (sollte eigentlich nicht vorkommen)
-      \or(Kategorie 1)% dito {
-      \or(Kategorie 2)% dito }
-      \or\$% math shift (3) - $
-      \or\&% alignment tab (4) - &
-      \or(Kategorie 5)% end of line
-      \or(Kategorie 6)% parameter (6) - sollte nicht vorkommen
-      \or\^{ }% superscript (7)
-      \or\_% subscript (8)
-      \or(Kategorie 9)% ignored (9) - sollte nicht vorkommen
-      \or\dateiliste@token% space (10)
-      \or\dateiliste@token% letter (11)
-      \or\dateiliste@token% other (12)
-      \or\string\string\expandafter\string\dateiliste@token% active
-      \or\%% comment (14)
-      \or(Kategorie 15)
-      \or(Kategorie 16)
-      \else(andere Kategorie)%
-    \fi.%
-    \fi%
-  }% \@tfor
-  }%
-}%  \dateiliste@escape
+\newcommand*{\dateiliste@escapeii}[1]{%
+  \dateiliste@escape@@ii#1\@nil. \@@nil\@@
+}%
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\dateilste@general@escape}
+%  Da ein mit '#1#2' definiertes Makro
+%  Leerzeichen zwischen Makro-Parametern einfach verschluckt,
+%  müssen wir zunächst eine Trennung vornehmen -- dafür dieses Makro.
+%  \begin{macro}{\dateiliste@escape@@ii}
+%    \meta{wort}\textvisiblespace\meta{rest}'\@@'
+%    
+%    Wir geben das erste Wort \meta{wort} an das nächste Makro
+%    ('\dateiliste@escape@ii') weiter und arbeiten rekursiv
+%    auf \meta{rest}.
+%
+%    '#2' ist das erste Token von \meta{rest} -- ist
+%    das '\@@nil', so haben wir das letzte Wort erreicht, denn das
+%    Leerzeichen ist jenes, das von '\dateiliste@escapeii' hinter '\@nil.'
+%    eingefügt wurde. Das ist dann also unsere Abbruchbedingung, wir müssen
+%    nur noch \meta{wort} abarbeiten.
+%
+%    Ansonsten geben wir nach dem ersten Wort ein Leerzeichen aus
+%    (ein solches hatten wir ja zwischen \meta{wort} und \meta{rest}), und
+%    rufen uns selbst mit \meta{rest} auf.
+%    
+%    \begin{macrocode}
+\def\dateiliste@escape@@ii#1 #2#3\@@{%
+  \ifx\@@nil#2
+    % nur ein Wort, und das '\@nil' ist schon in '#1' drin.
+    \afterfi{%
+      \dateiliste@escape@ii#1\@@%
+    }%
+  \else
+    %Rekursion
+    \afterfi{%
+      \dateiliste@escape@ii#1\@nil\@@%
+      \space%
+      \dateiliste@escape@@ii#2#3\@@%
+    }%
+  \fi
+}%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\dateiliste@escapeii}\meta{token}\meta{rest}'\@@'
+%
+%    Maskiert \meta{token}, falls notwendig, und danach \meta{rest}
+%
+%    Irgendwo in \meta{rest} taucht ein '\@nil' auf -- dann sind wir
+%    fertig.
+%    
+%    Das '\@empty' ist notwendig, falls ein leerer Parameter (also '{}')
+%    als '#1' übergeben wurde, da ansonsten '\@nil' mit '\else' verglichen
+%    wird (und der '\else'-Teil also nicht ausgeführt wird). So wird in
+%    diesem Fall '\@nil' mit '\@empty' verglichen (falsch), und der
+%    else-Teil tritt ein.
+%    
+%    \begin{macrocode}
+\def\dateiliste@escape@ii#1#2\@@{%
+  \ifx#1\@nil
+    \@empty
+  \else
+    \afterfi{%
+      \dateiliste@escapetoken{#1}%
+      \dateiliste@escape@ii#2\@@
+    }%
+  \fi
+}%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\dateiliste@escapetokeni}
+%    \begin{macrocode}
+\newcommand*{\dateiliste@escapetokeni}[1]{%
+  \if_#1%
+    \string\_%
+  \else
+    #1%
+  \fi
+}%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\dateiliste@escapetoken}\marg{token}
+%    
+%    Dieses Makro escapet ein einzelnes Token für
+%    die Ausgabe in einer Datei und nachheriges
+%    Wiedereinlesen in die Tabelle.
+%    
+%    \begin{macrocode}
+\newcommand*{\dateiliste@escapetoken}[1] {%
+%    \end{macrocode}
+%      Zunächst der Test, ob \meta{token} zufälligerweise die leere
+%      Zeichenkette ist. Falls ja, vergleicht das '\ifx' nicht
+%      etwa '#1' mit '\@empty', sondern '\@empty' mit '\@empty' ':-)',
+%      und wir machen gar nichts (weil gleich danach das '\else' kommt).
+%    \begin{macrocode}
+    \ifx#1\@empty\@empty
+    \else
+%    \begin{macrocode}
+%      Ansonsten versuchen wir herauszufinden, ob \meta{token} eine
+%      Kontrollsequenz o.ä. ist -- dann verwendet '\ifcat' die Kategorie
+%      16 (das ist keine der normalen Kategorien).
+%
+%      In dem Fall geben wir '\string' und eine String-Darstellung der
+%      Kontrollsequenz aus, wodurch diese nach dem Einlesen angezeigt
+%      (und nicht interpretiert) wird.
+%    \end{macrocode}
+    \ifcat\noexpand\relax
+          \noexpand#1%
+      \string\string\string#1%
+    \else
+%    \end{macrocode}
+%    Ansonsten haben wir es mit einem normalen Zeichen zu tun.
+%
+%    Wir überprüfen, welchen '\catcode' das Zeichen hätte, wenn
+%    es jetzt eingelesen würde. Hoffentlich ist das der gleiche,
+%    der auch beim Einlesen der Dateiliste eingestellt ist, und zumindest
+%    für 0-9 und 14 auch die normalen Zeichen. Wenn nicht, dann hat jemand
+%    schon gewaltig die Catcodes verbogen, und ist selbst schuld.
+%
+%    (Es ist leider nicht wirklich möglich, die Fallunterscheidung
+%    direkt danach zu machen, welchen Catcode das Zeichen nun hat, außer
+%    durch Vergleiche mit anderen Zeichen -- und das setzt wieder vorraus,
+%    dass diese Zeichen noch ihre Original-Codes haben.)
+%
+%    \begin{macrocode}
+    \ifcase \catcode\expandafter`#1 %
+      \string\textbackslash\space% (kann nur mit Tricks vorkommen) - \
+      \or\string\{% dito - {
+      \or\string\}% dito - }
+      \or\string\$% math shift (3) - $
+      \or\string\&% alignment tab (4) - &
+      \or(Kategorie 5)% end of line
+      \or\string\#% parameter (6) - sollte nicht vorkommen
+      \or\string\^{ }% superscript (7)
+      \or\string\_% subscript (8)
+      \or(Kategorie 9 - ignored)%  (9) - sollte nicht vorkommen
+      \or#1% space (10)
+      \or#1% letter (11)
+      \or#1% other (12)
+      \or\string\string\string#1% active -- sollte auch normalerweise
+      %                          nicht vorkommen.
+      \or\%% comment (14) (dafür muss man auch etwas tricksen)
+      \or(Kategorie 15 - invalid)% (15 - sollte nicht vorkommen)
+      \else(andere Kategorie)%  (und da es eigentlich nur
+      %                          Kategorien 0-15 gibt, auch das nicht.)
+    \fi%  (\ifcase)
+    \fi%  (\ifcat)
+    \fi%  (\ifx)
+}%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  Hier noch ein paar Hilfs-Makros, geklaut aus \pack{gmutils}:
+%
+%  \begin{macro}\afterfi\marg{cmd}
+%     Führt \meta{cmd} nach dem nächsten '\fi' aus -- alles dazwischen
+%     wird übersprungen.
+%     Damit kann man zu tiefe '\if'-Verschachtelungen im Falle einer
+%     Rekursion vermeiden.
+%     
+%     Achtung: es geht hier wirklich um das lexikalisch nächste '\fi',
+%     auch wenn das eventuell zu einem dazwischen kommenden '\if' gehört.
+%     
+%    \begin{macrocode}
+\long\def\afterfi#1#2\fi{%
+  \fi#1%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\@@nil}
+%  \begin{macro}{\@nil}
+%  \begin{macro}{\@@}
+%  Damit die '\ifx'-Vergleiche bei den Escape-Funktionen funktionieren, müssen
+%  diese drei Makros unterschiedlich definiert sein. Der exakte Wert ist nicht
+%  wichtig, da sie ja nie wirklich expandiert werden (sollten).
+%    \begin{macrocode}
+\newcommand*\@@nil{\@@nil}%
+\newcommand*\@nil{\@nil}%
+\newcommand*\@@{\@@}%
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \subsubsection{Alternatives Escapen}
+%  \label{alt-ersetzung}
+%    \begin{macrocode}
+%<*escape-original>
+%    \end{macrocode}
+%
+%  Hier der Original-Code, durch einen '<*...>'-Block davor bewahrt,
+%  in der Package-Datei zu landen.
+%  \begin{macro}{\dateiliste@general@escape}\marg{text}\marg{suche}\marg{ersetze}
+%   Dieses Makro könnte (wenn es denn funktionieren würde) von
+%   '\@writefilelist' innerhalb eines '\edef' oder '\write' aufgerufen
+%   werden, um gefährliche Zeichen zu escapen, so dass sie nach dem Einlesen
+%   im Dokument anzeigbar sind. Da es innerhalb des '\edef' sitzt, muss
+%   es expandierbar sein, darf also kein '\def' etc. enthalten.
+%   (Aha, da ist das Problem.)  (TODO)
+%   
+%  Zwei Ansätze:
+%  \begin{enumerate}
+%  \item Wir versuchen, unser '\dateiliste@general@escape' expandierbar
+%    zu machen.
+%  \item Wir bauen die API um, so dass es nicht zu seinem Ergebnis expandiert,
+%    sondern dieses in einem (expandierbaren) Makro ablegt. Entsprechend muss
+%    es dann \emph{vor} dem '\write' aufgerufen werden, und das Ergebnis-Makro
+%    wird dann an das '\write' verfüttert.
+%  \end{enumerate}
+%  Der erste Ansatz wurde etwas abgewandelt als '\dateiliste@escapeii'
+%  in Abschnitt \ref{escape} umgesetzt, und ist auch der, welcher jetzt
+%  verwendet wird.
+%
 %    \begin{macrocode}
 \newcommand*{\dateiliste@general@escape}[3]{
   \relax
@@ -1266,56 +1509,7 @@ utile.
   \fi
 %  \fi
 }%
-%    \end{macrocode}
-%  \end{macro}
-%
-%  \begin{macro}{\dateiliste@escapeii}
-%    \begin{macrocode}
-\newcommand*{\dateiliste@escapeii}[1]{
-  \dateiliste@escape@ii#1\@nil\@@
-}%
-\def\dateiliste@escape@ii#1#2\@@{%
-  \ifx#1\@nil
-  \else
-  \dateiliste@escapetokeni{#1}%
-  \dateiliste@escape@ii#2\@@
-  \fi
-}%
-\newcommand*{\dateiliste@escapetokeni}[1]{%
-  \if_#1%
-    \string\_%
-  \else
-    #1%
-  \fi
-}%
-\newcommand*{\dateiliste@escapetoken}[1]{%
-    \ifcat\noexpand\relax
-          \noexpand#1%Token ist eine Kontrollsequenz o.ä.
-      \string\string\string#1;%
-%      \show#1%
-    \else
-    \ifcase \catcode\expandafter`#1%
-      \string\string\textbackslash% sollte nicht vorkommen (0) - \
-      \or(Kategorie 1)% dito - {
-      \or(Kategorie 2)% dito - }
-      \or\$% math shift (3) - $
-      \or\&% alignment tab (4) - &
-      \or(Kategorie 5)% end of line
-      \or(Kategorie 6)% parameter (6) - sollte nicht vorkommen
-      \or\^{ }% superscript (7)
-      \or\_% subscript (8)
-      \or(Kategorie 9)% ignored (9) - sollte nicht vorkommen
-      \or#1% space (10)
-      \or#1% letter (11)
-      \or#1% other (12)
-      \or\string\string\string#1% active
-      \or\%% comment (14)
-      \or(Kategorie 15)
-      \or(Kategorie 16)
-      \else(andere Kategorie)%
-    \fi.%
-    \fi%
-}%
+%</escape-original>
 %    \end{macrocode}
 %  \end{macro}
 %
