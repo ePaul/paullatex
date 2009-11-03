@@ -61,8 +61,9 @@ additional commands:
             are used with another document class.
 
 Additionally, 'pauldoc' loads babel with [ngerman],
-fontenc with [T1], inputenc with [latin1], defines
-"'" as verbatim character, enables indexing by
+fontenc with [T1], inputenc with [latin1] (or [utf8],
+if you gave this as package parameter to pauldoc),
+defines  "'" as verbatim character, enables indexing by
 codelines, recording of changes, and cross referencing.
 The change list title and the index prologue are
 translated to german, the index is typeset in two
@@ -91,6 +92,7 @@ Aktualisierung der TeX-Dateidatenbank) die Dokumentation neu
 erstellt werden.
 
 Zur Verwendung siehe pauldoc.pdf.
+
 ----------------
 [eo-h]
 LaTeX-pakajho 'pauldoc' - Kelkaj iloj por helpi la

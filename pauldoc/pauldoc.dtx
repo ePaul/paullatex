@@ -23,7 +23,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{pauldoc}
-%<package> [2009/11/01 v0.5 Pauls Anpassungen fuer doc (PE)]
+%<package> [2009/11/03 v0.5 Pauls Anpassungen fuer doc (PE)]
 %
 % \changes{v0.2a}{2006/02/23}{'ue' statt 'ü' im Identifikations-String - gibt schönere
 %                             Ausgabe bei \cs{listfiles}.}
@@ -32,6 +32,9 @@
 \nonstopmode
 \documentclass[draft,ngerman]{ltxdoc}
 \usepackage{pauldoc}
+\usepackage{dox}
+\doxitem{Option}{option}{Optionen}
+
 \setlength{\IndexMin}{2\IndexMin}
 \begin{document}
    \DocInput{pauldoc.dtx}
@@ -39,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{129}
+% \CheckSum{0}
 %
 %
 % \changes{v0.0}{2006/01/31}{Erste Fassung}
@@ -71,15 +74,24 @@
 %
 %  \subsection{Package-Optionen}
 %
-%  \DescribeMacro{chapter}
-%  Diese Option legt fest, dass Index und Liste der Änderungen
+%  \DescribeOption{chapter}
+%  Die Option 'chapter' legt fest, dass Index und Liste der Änderungen
 %  in einem eigenen Kapitel (anstatt in einem Abschnitt) beginnen.
 %  Dies ist nur in einer Dokumentenklasse sinnvoll, welche
 %  überhaupt '\chapter' definiert, etwa den 'book'-artigen Klassen.
 %
-%  \DescribeMacro{section}
-%  Legt fest, dass Index und Änderungsliste in einem Abschnitt beginnen.
-%  Dies ist der Vorgabewert.
+%  \DescribeOption{section}
+%  Die Option 'section' legt fest, dass Index und Änderungsliste in
+%  einem Abschnitt beginnen. Dies ist der Vorgabewert.
+%
+%  \DescribeOption{latin1}
+%  Die Option 'latin1' legt fest, dass das Dokument im ISO-8859-1-Format
+%  kodiert ist. Dies ist der Vorgabewert.
+%  (Die Option wird an das \pack{inputenc}-Paket weitergegeben.)
+%
+%  \DescribeOption{utf8}
+%  Die Option 'utf8' legt fest, dass das Dokument als UTF-8
+%  kodiert ist. (Die Option wird an das \pack{inputenc}-Paket weitergegeben.)
 %
 % \subsection{Neue Makros}
 %
@@ -137,7 +149,7 @@
 %   '\marg{text}' gibt \marg{text} aus. Die Abkürzung steht für
 %   "`mandatory argument"'.
 %    '\oarg{text}' ergibt \oarg{text} ("`optional argument"').
-%    '\parg{te,xt}' ergibt \parg{te,xt} ("`picture mode argument"').
+%    '\parg{text}' ergibt \parg{text} ("`picture mode argument"').
 %
 %
 % \StopEventually{\appendix\PrintChanges\PrintIndex}
@@ -166,23 +178,48 @@
 %
 %  \subsection{Package-Optionen}
 %
-%  \begin{macro}{chapter}
-%  '\chapter' als Trenner.
+%  \begin{option}{utf8}
+%  \changes{v0.5}{2009/11/03}{Parameter für die Kodierung, wird an
+%    \pack{inputenc} weitergegeben.}
+%  \begin{option}{latin1}
+%  \changes{v0.5}{2009/11/03}{Parameter für die Kodierung, wird an
+%    \pack{inputenc} weitergegeben.}
+%  \begin{macro}{\pauldoc@ienc}
+%  Mi der Option 'utf8' bzw. 'latin1' wähle ich die Kodierung der
+%  Dokumentation aus. 'latin1' ist der Default.
+%  Die Optionen selbst merken sich ihren Wert einfach in der Variable
+%  '\pauldoc@ienc'.
+%    \begin{macrocode}
+\newcommand*\pauldoc@ienc{}
+\DeclareOption{utf8}{
+  \def\pauldoc@ienc{utf8}
+}
+\DeclareOption{latin1}{
+  \def\pauldoc@ienc{latin1}
+}
+\ExecuteOptions{latin1}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{option}
+%  \end{option}
+%
+%  \begin{option}{chapter}
+%  '\chapter' für die Index-Überschrift.
 %    \begin{macrocode}
 \DeclareOption{chapter}{
    \let\pauldoc@indexsec=\chapter
 }
 %    \end{macrocode}
-%  \end{macro}
+%  \end{option}
 %
-%  \begin{macro}{section}
-%  '\section' als Trenner.
+%  \begin{option}{section}
+%  '\section' für die Index-Überschrift.
 %    \begin{macrocode}
 \DeclareOption{section}{
    \let\pauldoc@indexsec=\section
 }
 %    \end{macrocode}
-%  \end{macro}
+%  \end{option}
 %
 % \begin{macro}{\pauldoc@indexsec}
 %  Wir definieren noch '\pauldoc@indexsec', rufen dann
@@ -197,11 +234,12 @@
 %
 %  \subsection{geladene Pakete}
 %
-%  Wir laden das Paket \pack{inputenc} mit Option 'latin1', um
-%  Sonderzeichen auch so eingeben zu können. \pack{babel} sorgt
-%  für vernünftige deutsche Bezeichnungen.
+%  Wir laden das Paket \pack{inputenc} mit Option 'latin1' oder 'utf8' (je
+%  nach Paketoption), um Sonderzeichen auch direkt eingeben zu können.
+%
+% \pack{babel} sorgt für vernünftige deutsche Bezeichnungen.
 %    \begin{macrocode}
-\RequirePackage[latin1]{inputenc}
+\RequirePackage[\pauldoc@ienc]{inputenc}
 \RequirePackage[ngerman]{babel}
 %    \end{macrocode}
 %
@@ -229,17 +267,23 @@
 %  Außerdem sollten Index und Änderungsliste auf deutsch beschriftet
 %  werden. Wie benutzen hier '\@pauldoc@indexsec', was entweder
 %  '\section' oder '\chapter' ist.
-%  \changes{0.5}{2009/11/01}{Ä $\Rightarrow$ '\"A' in
+%  \changes{v0.5}{2009/11/01}{Ä $\Rightarrow$ '\"A' in
 %    "`Liste der Änderungen"', und entsprechend für "`Schräggedruckte"'}
 %    \begin{macrocode}
 \renewcommand{\generalname}{Allgemein}
+
 \GlossaryPrologue{\pauldoc@indexsec{Liste der \"Anderungen}}
-\IndexPrologue{\pauldoc@indexsec{Index}
+
+\IndexPrologue{
+
+  \pauldoc@indexsec{Index}
    
    Schr\"aggedruckte Nummern verweisen auf die Seite, auf der der
    Eintrag beschrieben ist, unterstrichene Nummern zeigen auf die
    Zeilennummer der Definition, sonstige Zahlen auf die Zeilennummer
-   einer Verwendung.}
+   einer Verwendung.
+
+ }
 %    \end{macrocode}
 % Der Index bekommt nur zwei Spalten (wir haben einige ziemlich lange
 % Makronamen).
@@ -475,7 +519,7 @@
 % \end{macro}
 %
 % \begin{macro}{\parg}
-%    |\parg{te,xt}| ergibt \parg{te,xt} ("`picture mode argument"').
+%    |\parg{text}| ergibt \parg{text} ("`picture mode argument"').
 %    \begin{macrocode}
 \providecommand\parg[1]{%
   {\ttfamily(}\meta{#1}{\ttfamily)}}
