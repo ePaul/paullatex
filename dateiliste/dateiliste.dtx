@@ -65,7 +65,7 @@ mit \string{Test\string} und noch einer Gruppe. ]
 %<package>\ProvidesPackage{dateiliste}[%
 %
 %
-%<package|readme|en|de|eo>      2009/10/26 v0.4 %
+%<package|readme|en|de|eo>      2009/11/04 v0.5 %
 %
 %
 %<package>      Ausgabe der Dateiliste (PE)]
@@ -699,7 +699,7 @@ utile.
 %  \begin{option}{rcs}
 %  \begin{option}{cvs}
 %  \begin{macro}{\if@dateiliste@subversion}
-%  Das dritte Optionspaar: 'svn' (mit Alias 'subversion') für
+%  Das vierte Optionspaar: 'svn' (mit Alias 'subversion') für
 %  Subversion-'Id's, 'rcs' (mit Alias 'cvs') für CVS/RCS-'Id's.
 %  Diese unterscheiden sich vor allem im Format der Datumsangaben.
 %  (Hier merken wir uns nur die Optionen, die Arbeit geschieht in
@@ -1089,7 +1089,7 @@ utile.
 %  eine mit einem Absatz ('X' -- mittels \pack{ltxtable} aus \pack{tabularx}
 %  importiert), welche den restlichen Platz ausfüllt, enthalten.
 %  Damit die letzte Spalte linksbündig (statt Blocksatz) wird, verwenden
-%  wir '>{\raggedright\arraybackslash}' als Modifikator \footnote{wie im \LaTeX-Begleiter,
+%  wir '>{\raggedright\arraybackslash}' als Modifikator.\footnote{wie im \LaTeX-Begleiter,
 %  zweite Auflage, Beispiel 5-3-2 vorgeschlagen.}
 %  \changes{v0.3}{2006/05/10}{jetzt auch die letzte Spalte linksbündig -- das sieht
 %   besser aus.}
@@ -1139,8 +1139,8 @@ utile.
 %  Das Makro '\dateiliste@page@'\meta{name} enthält die Seitennummer
 %  der Datei \meta{name}. Falls es nicht definiert ist, wurde sie
 %  vor dem \pack{dateiliste}-Package geladen, also vor der ersten Seite.
-%  Wir merken uns das Ergebnis in '\dateiliste@filepage'.
 %  \changes{v0.5}{2009/11/03}{undefinierte Seitenzahlen auf 0 statt 1}
+%  Wir merken uns das Ergebnis in '\dateiliste@filepage'.
 %    \begin{macrocode}
             \if@dateiliste@showpages
             \@ifundefined{dateiliste@page@\@currname}
@@ -1153,8 +1153,11 @@ utile.
             \fi
 %    \end{macrocode}
 %  Jetzt schreiben wir, durch '&' getrennt, die einzelnen Felder raus.
-%  Zunächst der Dateiname (dabei durch einen Filter geschickt, um z.B. '_'
-%  unschädlich zu machen), \ldots
+%  De facto merken wir uns zuerst alles mittels '\edef' in der Variable
+%  '\dateiliste@zeile'.
+%
+%  Zunächst der Dateiname (dabei durch den Filter '\dateiliste@escapeii'
+%  geschickt, um z.B. '_' unschädlich zu machen), \ldots
 %  \changes{v0.5}{2009/11/03}{Dateinamen werden jetzt für die Liste escaped.}
 %    \begin{macrocode}
             \edef\dateiliste@zeile{%
@@ -1190,10 +1193,14 @@ utile.
 %    \end{macrocode}
 %   Und jetzt noch ein '\\', um die Tabellenzeile zu beenden.
 %    \begin{macrocode}
-               \string\\}%
+               \string\\}%   \edef
+%    \end{macrocode}
+%    Jetzt haben wir alles in '\dateiliste@zeile' gesammelt, und können
+%    es gebündelt ausgeben:
+%    \begin{macrocode}
              \immediate\write\dateiliste@file{%
                \dateiliste@zeile
-             }%
+             }%  
          }%  \@for
 %    \end{macrocode}
 %   Nach der Schleife beenden wir die Tabelle und schließen
@@ -1207,18 +1214,18 @@ utile.
 %
 %  \begin{macro}{\dateiliste@parse@ver}\meta{datum}\textvisiblespace\meta{version}\textvisiblespace\meta{rest}'\dateiliste@parse@ver'
 %
-%  \changes{v0.1}{2006/03/31}{Neu}
-%  Dieses Makro nimmt zwei durch Leerzeichen getrennte Parameter, und
-%  gibt sie, mit zusätzlichen '&', wieder zurück. Das letzte Stück
-%  wird noch escapet, damit '\bla' kein Problem bildet.
+%    \changes{v0.1}{2006/03/31}{Neu}
+%    Dieses Makro nimmt zwei durch Leerzeichen getrennte Parameter, und
+%    gibt sie, mit zusätzlichen '&', wieder zurück. Das letzte Stück
+%    wird noch gefiltert, damit '\bla' kein Problem bildet.
 %
-%   TODO: Gelegentlich fehlt die Versionsnummer. Damit dann nicht der Anfang
-%   des folgenden Textes (wie 'hyperref' bei hyperref.cfg oder 'package'
-%   bei pst-node.sty) erscheint, sollte noch eine Abfrage hinein, ob '##2'
-%   mit 'v' oder einer Ziffer beginnt. Andernfalls sollte alles in der
-%   dritten Spalte angezeigt werden. (Leider noch nicht
-%   implementiert.)
-%   \changes{v0.5}{2009/11/03}{Escapen des Beschreibungs-Textes.}
+%    TODO: Gelegentlich fehlt die Versionsnummer. Damit dann nicht der Anfang
+%    des folgenden Textes (wie 'hyperref' bei hyperref.cfg oder 'package'
+%    bei pst-node.sty) erscheint, sollte noch eine Abfrage hinein, ob '##2'
+%    mit 'v' oder einer Ziffer beginnt. Andernfalls sollte alles in der
+%    dritten Spalte angezeigt werden. (Leider noch nicht
+%    implementiert.)
+%    \changes{v0.5}{2009/11/03}{Escapen des Beschreibungs-Textes.}
 %
 %    \begin{macrocode}
       \def\dateiliste@parse@ver##1 ##2 ##3\dateiliste@parse@ver{%
@@ -1240,22 +1247,24 @@ utile.
 %  \subsubsection{Escapen gefährlicher Makros und Zeichen}
 %  \label{escape}
 %
-%   \emph{Work in progress!}
-%
 %  Ein Problem, welches mir durch Otto Schindler und Jens Goldhammer
 %  (unabhängig voneinander) mitgeteilt wurde: Enthält der Dateiname
 %  oder die Kurzbeschreibung nicht direkt von LaTeX verarbeitbare Zeichen
 %  (im Dateinamen sind z.B. '_', in der Kurzbeschreibung z.B.
-%  Makronamen üblich), gibt es Probleme.
+%  Makronamen üblich), gibt es Probleme. (Offensichtlich muss man
+%  bei Makronamen sich etwas anstrengen, um sie da rein zu bekommen, aber
+%  es geht.)
+%
+%  Wir müssen also diese Zeichen vor dem Rausschreiben ersetzen.
 %
 %  Ein (nicht fertiggestellter) Ansatz ist in Abschnitt \ref{alt-ersetzung}
 %  zu finden. Hier ein anderer Ansatz, der prinzipiell zu funktionieren
-%  scheint, hier.
+%  scheint.
 %
 %  
 %  \begin{macro}{\dateiliste@escapeii}\marg{text}
 %
-%    Geht \meta{text} Token-weise durch und maskiert alles, was gefährlich
+%    Geht \meta{text} tokenweise durch und maskiert alles, was gefährlich
 %    werden könnte.
 %
 %    Zunächst übergeben wir die ganze Zeichenkette an das nächste Makro,
@@ -1267,14 +1276,14 @@ utile.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  Da ein mit '#1#2' definiertes Makro
+%  Da ein mit '#1#2' definiertes Makro (um einzelne Token abzutrennen)
 %  Leerzeichen zwischen Makro-Parametern einfach verschluckt,
-%  müssen wir zunächst eine Trennung vornehmen -- dafür dieses Makro.
+%  müssen wir zunächst eine Wort-Trennung vornehmen -- dafür dieses Makro.
 %  \begin{macro}{\dateiliste@escape@@ii}
 %    \meta{wort}\textvisiblespace\meta{rest}'\@@'
 %    
-%    Wir geben das erste Wort \meta{wort} an das nächste Makro
-%    ('\dateiliste@escape@ii') weiter und arbeiten rekursiv
+%    Wir geben das erste \meta{wort} an das nächste Makro
+%    ('\dateiliste@escape@ii') weiter und arbeiten dann rekursiv
 %    auf \meta{rest}.
 %
 %    '#2' ist das erste Token von \meta{rest} -- ist
@@ -1308,10 +1317,11 @@ utile.
 %
 %  \begin{macro}{\dateiliste@escapeii}\meta{token}\meta{rest}'\@@'
 %
-%    Maskiert \meta{token}, falls notwendig, und danach \meta{rest}
+%    Maskiert \meta{token} (per Übergabe an '\dateiliste@escapetoken'),
+%    und arbeitet danach rekursiv mit \meta{rest}.
 %
-%    Irgendwo in \meta{rest} taucht ein '\@nil' auf -- dann sind wir
-%    fertig.
+%    Irgendwo in \meta{rest} taucht ein '\@nil' auf -- wenn wir bei dem
+%    angekommen sind, sind wir fertig.
 %    
 %    Das '\@empty' ist notwendig, falls ein leerer Parameter (also '{}')
 %    als '#1' übergeben wurde, da ansonsten '\@nil' mit '\else' verglichen
@@ -1333,22 +1343,10 @@ utile.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\dateiliste@escapetokeni}
-%    \begin{macrocode}
-\newcommand*{\dateiliste@escapetokeni}[1]{%
-  \if_#1%
-    \string\_%
-  \else
-    #1%
-  \fi
-}%
-%    \end{macrocode}
-%  \end{macro}
-%
 %  \begin{macro}{\dateiliste@escapetoken}\marg{token}
 %    
-%    Dieses Makro escapet ein einzelnes Token für
-%    die Ausgabe in einer Datei und nachheriges
+%    Dieses Makro maskiert ein einzelnes Token für
+%    die Ausgabe in eine Datei und nachheriges
 %    Wiedereinlesen in die Tabelle.
 %    
 %    \begin{macrocode}
@@ -1356,26 +1354,26 @@ utile.
 %    \end{macrocode}
 %      Zunächst der Test, ob \meta{token} zufälligerweise die leere
 %      Zeichenkette ist. Falls ja, vergleicht das '\ifx' nicht
-%      etwa '#1' mit '\@empty', sondern '\@empty' mit '\@empty' ':-)',
+%      etwa '#1' mit '\@empty', sondern '\@empty' mit '\@empty',
 %      und wir machen gar nichts (weil gleich danach das '\else' kommt).
 %    \begin{macrocode}
     \ifx#1\@empty\@empty
     \else
-%    \begin{macrocode}
+%    \end{macrocode}
 %      Ansonsten versuchen wir herauszufinden, ob \meta{token} eine
 %      Kontrollsequenz o.ä. ist -- dann verwendet '\ifcat' die Kategorie
-%      16 (das ist keine der normalen Kategorien).
+%      16 (das ist keine der normalen Kategorien), wie auch bei '\relax'.
 %
-%      In dem Fall geben wir '\string' und eine String-Darstellung der
+%      In diesem Fall geben wir '\string' und eine String-Darstellung der
 %      Kontrollsequenz aus, wodurch diese nach dem Einlesen angezeigt
 %      (und nicht interpretiert) wird.
-%    \end{macrocode}
+%    \begin{macrocode}
     \ifcat\noexpand\relax
           \noexpand#1%
       \string\string\string#1%
     \else
 %    \end{macrocode}
-%    Ansonsten haben wir es mit einem normalen Zeichen zu tun.
+%    Ansonsten haben wir es mit einem einzelnen Zeichen zu tun.
 %
 %    Wir überprüfen, welchen '\catcode' das Zeichen hätte, wenn
 %    es jetzt eingelesen würde. Hoffentlich ist das der gleiche,
@@ -1416,16 +1414,25 @@ utile.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  Hier noch ein paar Hilfs-Makros, geklaut aus \pack{gmutils}:
-%
+%  
+%  Hier noch ein Hilfs-Makro, geklaut\footnote{Ich habe absichtlich nur
+%    dieses Makro hier kopiert, anstatt das \pack{gmutils}-Paket einzubinden,
+%    denn \pack{gmutils} führt auch noch einige Redefinitionen in ganz
+%    anderen Bereichen durch, die ich nicht brauche bzw. haben will.}
+%  aus \pack{gmutils}\footnote{von Grzegorz Murzynowski, auf CTAN unter
+%    '/macros/contrib/gmutils'.}:
 %  \begin{macro}\afterfi\marg{cmd}
-%     Führt \meta{cmd} nach dem nächsten '\fi' aus -- alles dazwischen
-%     wird übersprungen.
-%     Damit kann man zu tiefe '\if'-Verschachtelungen im Falle einer
-%     Rekursion vermeiden.
-%     
-%     Achtung: es geht hier wirklich um das lexikalisch nächste '\fi',
-%     auch wenn das eventuell zu einem dazwischen kommenden '\if' gehört.
+%
+%    Führt \meta{cmd} nach dem nächsten '\fi' aus -- alles dazwischen
+%    wird übersprungen.
+%    Damit kann man zu tiefe '\if'-Verschachtelungen im Falle einer
+%    Rekursion vermeiden.
+%    
+%    Achtung: es geht hier wirklich um das lexikalisch nächste '\fi',
+%    auch wenn das eigentlich zu einem dazwischen kommenden '\if' gehört.
+%    In unserem Fall kommen solche pathologischen Fälle nicht vor -- falls
+%    doch, verwende man analog definierte '\afteriffifi' etc. -- ich verweise
+%    auf die Dokumentation von \pack{gmutils}.
 %     
 %    \begin{macrocode}
 \long\def\afterfi#1#2\fi{%
@@ -1455,15 +1462,13 @@ utile.
 %<*escape-original>
 %    \end{macrocode}
 %
-%  Hier der Original-Code, durch einen '<*...>'-Block davor bewahrt,
-%  in der Package-Datei zu landen.
 %  \begin{macro}{\dateiliste@general@escape}\marg{text}\marg{suche}\marg{ersetze}
 %   Dieses Makro könnte (wenn es denn funktionieren würde) von
 %   '\@writefilelist' innerhalb eines '\edef' oder '\write' aufgerufen
 %   werden, um gefährliche Zeichen zu escapen, so dass sie nach dem Einlesen
 %   im Dokument anzeigbar sind. Da es innerhalb des '\edef' sitzt, muss
 %   es expandierbar sein, darf also kein '\def' etc. enthalten.
-%   (Aha, da ist das Problem.)  (TODO)
+%   (Aha, da ist das Problem.)
 %   
 %  Zwei Ansätze:
 %  \begin{enumerate}
@@ -1477,6 +1482,12 @@ utile.
 %  Der erste Ansatz wurde etwas abgewandelt als '\dateiliste@escapeii'
 %  in Abschnitt \ref{escape} umgesetzt, und ist auch der, welcher jetzt
 %  verwendet wird.
+%
+%  Hier der erste Versuch, implementiert als einfache Ersetzungsfunktion.
+%  Durch den '%<*escape-original>'-Abschnitt wird er nicht in die Package-Datei
+%  aufgenommen. (Es wäre zusätzlich dazu auch noch eine entsprechende Änderung
+%  in '\dateiliste@parse@ver' sowie in '\@writefilelist' notwendig.)
+%
 %
 %    \begin{macrocode}
 \newcommand*{\dateiliste@general@escape}[3]{
@@ -1680,17 +1691,26 @@ utile.
 %
 %  \subsection{Hauptdatei in die Dateiliste}
 %  \begin{macro}{\mainFileToList}
-%  \changes{v0.1}{2006/04/02}{Neu}
-%  \changes{v0.2}{2006/04/19}{Mögliche Erkennung des Dateinamens jetzt auch ohne \eTeX}
-%   Zunächst sehen wir nach, ob es eine Datei mit Namen \meta{jobname}'.tex'
-%   gibt. 
+%    \changes{v0.1}{2006/04/02}{Neu}
+%    \changes{v0.2}{2006/04/19}{Mögliche Erkennung des Dateinamens jetzt
+%      auch ohne \eTeX}
+%    Hier unser Nutzer-Makro für die Inklusion der Hauptdatei
+%    in die Dateiliste.
+%    
+%    Zunächst sehen wir nach, ob es eine Datei mit Namen \meta{jobname}'.tex'
+%    gibt. 
 %    \begin{macrocode}
 \newcommand*{\mainFileToList}{%  \mainFileToList
    \IfFileExists{\jobname.tex} {%
       \begingroup
 %    \end{macrocode}
 %   Falls ja, dann ist das höchstwahrscheinlich die Haupt-Datei des
-%   Dokumentes, und taucht wahrscheinlich -- nämlich, wenn sie auf der
+%   Dokumentes\footnote{Andernfalls hat entweder jemand '\jobname' manipuliert,
+%     oder die Hauptdatei ist eine Datei, die nicht auf '.tex' endet,
+%     etwa \meta{jobname}'.dtx' -- in dem Fall sollte man eigentlich keine Datei
+%     \meta{jobname}'.tex' daneben haben. Ansonsten ist es wohl zumutbar, die
+%     Option 'noaddmainfile' anzugeben.
+%   }, und taucht wahrscheinlich -- nämlich, wenn sie auf der
 %   Kommandozeile oder mit '\input '\meta{jobname}'.tex' anstatt
 %   '\input{'\meta{jobname}'.tex}' geladen wurde -- nicht in der Dateiliste
 %   auf. 
@@ -1704,15 +1724,16 @@ utile.
 %   Ich habe drei Möglichkeiten gefunden, damit umzugehen:
 %   \begin{enumerate}[(1)]
 %    \item Wir wandeln '\@filelist' komplett in Kategorie-12-Zeichen um.
-%       (Den Tipp, wie das geht, habe ich zufällig beim Durchstöbern der UK-\TeX-FAQ
-%        gefunden: \texttt{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=compjobnam})
-%    \item Wir wandeln '\jobname' (bzw. die Buchstaben darin) in ihre "`richtige"'
-%      Kategorie (11 für Buchstaben) um.
+%       \footnote{Den Tipp, wie das geht, habe ich zufällig beim Durchstöbern
+%         der UK-\TeX-FAQ gefunden:
+%         \texttt{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=compjobnam}}
+%    \item Wir wandeln '\jobname' (bzw. die Buchstaben darin) in ihre
+%      "`richtige"' Kategorie (11 für Buchstaben) um.
 %    \item Wir ignorieren das Problem und leben damit, dass eventuell der
 %      Dateiname doppelt auftaucht.
 %   \end{enumerate}
 %
-%   (2) funktioniert leider nur bei Verwendung von \eTeX, (1)
+%   Variante (2) funktioniert leider nur bei Verwendung von \eTeX, (1)
 %   hat den Nachteil, dass anschließend '\@filelist' komplett aus
 %   Kategorie-12-Zeichen besteht, was eventuell zu Problemen mit anderen
 %   Paketen führt, welche ebenfalls diese Liste verarbeiten und auf deren
@@ -1722,13 +1743,15 @@ utile.
 %   Auswahl ermöglichen:
 %   \begin{description}
 %     \item[Standardvorgehen:] Falls \eTeX\ verwendet wurde, nimm (2),
-%       für \TeX\ nimm (1).
-%     \item[Mit Option \texttt{nocat12}:] Falls \eTeX\ verwendet wurde, nimm (2),
-%       sonst (3).
-%     \item[Mit Option \texttt{cat12}:] Nimm immer (1).
+%       für \TeX\ nimm (1). (Die Unterscheidung läuft dabei natürlich nicht
+%       über die Existenz von \eTeX, sondern über die Existenz von
+%       '\scantokens', der beötigten Kontrollsequenz.)
+%     \item[Mit Option \texttt{nocat12}:] \DescribeOption{nocat12}
+%       Falls \eTeX\ verwendet wurde, nimm (2), sonst (3).
+%     \item[Mit Option \texttt{cat12}:] \DescribeOption{cat12}
+%       Nimm immer (1).
 %   \end{description}
-%  
-%  (Vor Version 0.2 gab es nur das Verhalten, welches jetzt 'nocat12' entspricht.)
+%   Vor Version 0.2 gab es nur das Verhalten, welches jetzt 'nocat12' entspricht.)
 %
 %   \begin{macro}{\dateiliste@catxii@transform}
 %   Hier die Implementation für (1). Wir wandeln auch das '.tex' in Kategorie 12 um,
