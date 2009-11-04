@@ -188,7 +188,7 @@ function rss_kreu_item($elemento, $lingvo, $ligobazo)
     $titolo = "";
   }
   if (isset($elemento['teksto_' . $lingvo])) {
-    $description = $elemento['teksto_'.$lingvo]
+    $description = $elemento['teksto_'.$lingvo];
   } else if (isset($elemento['teksto'])) {
     $description = $elemento['teksto'];
   } else {
