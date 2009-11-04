@@ -1,98 +1,7 @@
 <?php
 
-function linkto($adreso, $teksto) {
-    return "<a href='"
-        . htmlspecialchars($adreso,
-                           ENT_QUOTES)
-        . "' >"
-        . htmlspecialchars($teksto) . "</a>";
-}
-
-function linkline($kategorio, $ligo, $teksto="") {
-    $rez = "    <tr><th>";
-    $rez .= htmlspecialchars($kategorio);
-    $rez .= "</th><td>";
-    if ("" == $teksto) {
-        $teksto = rtrim($ligo, '/');
-        $teksto = strrchr($teksto, '/');
-        $teksto = substr($teksto, 1);
-    }
-    $rez .= linkto($ligo, $teksto);
-    $rez .= "</td></tr>\n";
-    return $rez;
-}
-
-function linkSVN($packagename) {
-
-	 $rez = "";
-    $rez .= "    <tr><th>Subversion</th><td>";
-    $rez .=
-        linkto("http://svn.berlios.de/wsvn/paullatex/trunk/src/"
-               . $packagename . "/#_trunk_src_" . $packagename .
-               "_", "WebSVN");
-    $rez .= " ";
-    $rez .=
-        linkto("http://svn.berlios.de/viewvc/paullatex/trunk/src/"
-               .  $packagename . "/",
-               "ViewCV");
-    $rez .= " ";
-    $rez .=
-        linkto("http://svn.berlios.de/svnroot/repos/" .
-               "paullatex/trunk/src/" . $packagename . '/',
-               "HTTP");
-    $rez .= " ";
-    $rez .=
-        linkto("svn://svn.berlios.de/paullatex/trunk/src/" . $packagename . "/",
-               "svn:");
-
-    return $rez;
-
-}
-
-
-function linkbox($packagename, $dokusprache, $depend=null) {
-    $rez = "";
-
-    $rez .= "  <table class='linkbox'>\n";
-    $rez .= "    <caption>Links f&uuml;r " .$packagename . "</caption>\n";
-    $rez .=
-        linkline("CTAN-Verzeichnis",
-                 "http://www.ctan.org/tex-archive/macros/latex/contrib/" .
-                 $packagename . '/', 
-                 "macros/latex/contrib/" . $packagename);
-    $rez .=
-        linkline("CTAN-Package",
-                 "http://www.ctan.org/cgi-bin/ctanPackageInformation.py?id=" . $packagename,
-                 $packagename);
-    $rez .=
-        linkline("TeX Catalogue",
-                 "http://texcatalogue.sarovar.org/entries/"
-                 . $packagename . ".html");
-
-    // CVS/SVN-link
-    $rez .= linkSVN($packagename);
-
-    $rez .= "    <tr><th>Doku-Sprache</th><td>" . $dokusprache .
-        "</td></tr>\n";
-
-    if ($depend) {
-        // TODO
-    }
-
-
-    $rez .= "  </table>\n";
-    return $rez;
-
-}
-
-
-function pack_intro($packagename, $dokusprache, $depend=null)
-{
-    echo "<div id='" . $packagename . "'>\n";
-    echo linkbox($packagename, $dokusprache, $depend);
-    echo "  <h3>" . $packagename . "</h3>\n";
-}
-
+require_once ("./boxes.php.inc");
+require_once ("./neu-liste.php.inc");
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -100,7 +9,12 @@ function pack_intro($packagename, $dokusprache, $depend=null)
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Pauls LaTeX-Packages</title>
-<link rel="stylesheet" type="text/css" href="paullatex.css" />
+    <link rel="stylesheet" type="text/css" href="paullatex.css" />
+    <link rel='alternate'
+          type='application/rss+xml'
+          title="RSS-Feed der Neuigkeiten"
+	  href='rss.php'
+	  />
   </head>
 
   <body>
@@ -108,34 +22,15 @@ function pack_intro($packagename, $dokusprache, $depend=null)
 	<div class="disclaimer">
 	<h3>Werbung</h3>
 	<p>
-<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt="">Berlios Developer</a> stellt uns <del>CVS</del><ins>Subversion</ins>, Webseite und Entwicklungstools zur Verfügung – danke!
+<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt=""><br/>Berlios Developer</a> stellt uns Subversion, Webseite und Entwicklungstools zur Verfügung – danke!
 	</p>
 	</div>
 
 <div class='inhalt'>
-	<div id='neues'>
-	  <h2>Änderungen</h2>
-	  <dl>
-<dt>2009-03-11</dt>
-<dd>
-Die Pakete sind jetzt in einem Subversion-Repository, das CVS wird
-    nicht mehr benutzt.
-</dd>
-<dt>2009-03-10</dt>
-<dd>
-Nach fast drei Jahren dachte ich mir, ich könnte die Homepage
-    mal überarbeiten. Jetzt funktionieren die Links, scheint mir.
-    Außerdem sind jetzt alle Pakete dabei, die zwischendurch
-    dazugekommen sind.
-</dd>
-<dt>2006-05-31</dt>
-<dd>Kleine Aktualisierungen der Homepage</dd>
-	<dt>2006-05-25</dt>
-	<dd>Erste Version der Homepage online</dd>
-	</dl>
-	</div>
+<?php neuigkeiten_box($mesagxoj); ?>
 
-	<h1>Pauls L<sup>A</sup>T<sub>E</sub>X-Packages</h1>
+
+<h1>Pauls L<sup>A</sup>T<sub>E</sub>X-Packages</h1>
 
 	<ul id='menu'>
       <li><a href="#einfuehrung">Einführung</a>
@@ -188,8 +83,8 @@ aktuellen Projekt, einer
     </p>
 
 
-<div id='installation'>
-<h2>Installation</h2>
+<div>
+<h2  id='installation'>Installation</h2>
 
 <p>Die LaTeX-Pakete sind alle auf <a href='www.ctan.org/'>CTAN</a>
 zu finden (den Link gibt es jeweils im blauen Kasten).
@@ -246,8 +141,12 @@ Rand der Seite unterzubringen.
 
 <?php pack_intro("dateiliste", "Deutsch"); ?>
 <p>
-Dieses Package erstellt eine Liste aller geladenen Dateien
-und nimmt sie auch noch in die Ausgabedatei auf.
+  Dieses Package erstellt eine Liste aller geladenen Dateien
+  und nimmt sie auch noch in die Ausgabedatei auf.
+</p>
+<p>
+  Dabei können die Änderungsdaten und Revisionsnummern der
+  einzelnen Dateien aus einem CVS oder Subversion geholt werden.
 </p>
 
 </div>
@@ -376,7 +275,8 @@ Kommandos, um selbst solche Pfeile zu erstellen.
   <table class='linkbox'>
     <caption>Links f&uuml;r die Skripte</caption>
 <?php
-    echo linkline("CVS", 'http://cvs.berlios.de/cgi-bin/viewvc.cgi/paullatex/src/scripts/');
+    echo linkSVNline('scripts', "/trunk/src/", "Subversion (Trunk)");
+
 ?>
     <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
   </table>

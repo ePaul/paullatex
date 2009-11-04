@@ -27,19 +27,28 @@ li:first-child ul li,
 /* li ul li ul, */
 li ul li { display: inline; }
 #neues { float:right;
-  width: 35ex;
-/*  max-height: 12em; */
+  width: 50ex;
+  max-height: 30em; 
   border:solid thin;
   padding: 0.5ex 1ex 0.5ex 1ex;
   overflow: auto;
   margin: 2em -10em 1em 1em;
 }
-#neues dt { display: run-in;
+#neues dt { display: block;
   font-weight: bold;
 }
-#neues dt:after{ content: ": " }
 #neues dd { margin-left:1em;
-  text-indent: -1em; } 
+	    margin-bottom: 1ex;
+	  } 
+
+dd > p:first-child {
+    margin-top: 0ex;
+}
+
+dd > p:last-child {
+    margin-bottom: 0ex;
+}
+
 
 .linkbox {
 /*	position: relative;
