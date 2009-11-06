@@ -341,8 +341,34 @@ nacheinander auf (in einer Reihenfolge, die Abhängigkeiten
 	  aktualisieren wie die Pakete.)</p>
 	  
 </div>
+	
+<div id="wer-ist">
+  <h2>Wer ist Paul?</h2>
+  <p>
+    Der Paul, nach dem PaulLaTeX benannt ist, ist der Autor der Pakete,
+    Paul Ebermann.</p>
+  <p>
+    Für Fehlermeldungen zu den Paketen (oder Lob, Anregungen,
+    etc.) bin ich zu erreichen unter
+    <a href="mailto:Paul-Ebermann@gmx.de">Paul-Ebermann@gmx.de</a>.
+  </p>
+  <p>
+    Auch so ziemlich jeder andere Paul Ebermann, der 
+    <a href="http://www.google.com/search?q=Paul+Ebermann">mit Google zu finden
+    ist</a>, bin ich. Unter Esperantisten bin ich auch als
+    <a href="http://www.google.com/search?hl=eo&q=Pa%C5%ADlo+Ebermann">Paŭlo
+      Ebermann</a> bekannt.
+  </p>
+  <p>Ich habe eine (nicht mehr sehr aktuelle)
+    <a href="http://www.math.hu-berlin.de/">Homepage</a> beim Institut
+    für Mathematik der Humboldt-Universität – da sind auch weitere meiner
+    Projekte zu finden.
+  </p>
+</div>
 
 </div>
+
+<p>$Id$</p>
 
   </body>
 </html>
