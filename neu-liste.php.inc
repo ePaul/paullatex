@@ -4,6 +4,18 @@
    * Liste der Informationen für die Webseite.
    */
 
+$mesagxoj[] = 
+    array('dato' => '2009-11-06',
+	  'id' => 'pauldoc-v0.5',
+	  'titolo' => "Pauldoc 0.5",
+	  'tigo' => "#pauldoc",
+	  'teksto' => "<p>Für Dokumentation der neuesten Version von
+<em>dateiliste</em> habe ich auch ein paar Änderungen an <em>pauldoc</em>
+gemacht – diese habe ich gerade nach CTAN hochgeladen.
+</p><p>
+Es gibt jetzt eine neue Paket-Option, um die Doku UTF-8-kodiert zu setzen.
+</p>");
+
 
 $mesagxoj[] =
     array('dato' => '2009-11-04',
