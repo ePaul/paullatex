@@ -40,7 +40,7 @@ function linkSVNline($packagename, $prefix, $titel) {
 		 $packagename . '_',
 		 "WebSVN");
   $rez .= " ";
-  $rez .= linkto("http://svn.berlios.de/wiewvc/paullatex" . $prefix .
+  $rez .= linkto("http://svn.berlios.de/viewvc/paullatex" . $prefix .
 		 $packagename . "/",
 		 "ViewCV");
     $rez .= " ";
