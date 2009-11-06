@@ -1,0 +1,463 @@
+/**
+ * Abhängigkeitsgraph
+ */
+
+
+digraph{
+
+	center = true;
+	rankdir = LR;
+//	concentrate = true;
+//	ranksep = "1";
+
+	// zuerst die Root-LaTeX-Dateien.
+
+	node [fillcolor = limegreen, style = filled, shape = box];
+
+	"robustcommand.dtx" ; 
+	"randbild.dtx";
+	"noitcrul.dtx" ;
+	"faktor.dtx" ;
+	"extpfeil.dtx"; 
+	"dateiliste.dtx" ;
+	"pauldoc.dtx";
+
+	"exp-testopt.dtx";
+	"gmdoc-enhance.dtx";
+	"minipage-marginpar.dtx";
+	
+
+	// die eingebundenen TeX-Dateien.
+	node [shape = trapezium, fillcolor = forestgreen]
+
+
+	// dann meine Pakete.
+	node [shape = pentagon, fillcolor = cyan3]
+
+	robustcommand [label = "robustcommand.sty"];
+	randbild [label = "randbild.sty"];
+	noitcrul [label="noitcrul.sty"];
+	faktor [label = "faktor.sty"];
+	extpfeil [label = "extpfeil.sty"];	
+	dateiliste [label = "dateiliste.sty"];
+	pauldoc [label = "pauldoc.sty"];
+
+	exp_testopt [label = "exp-testopt.sty"];
+	gmdoc_enhance [label = "gmdoc-enhance.sty"];
+	minipage_marginpar [label="minipage-marginpar.sty"];
+	mpgmgpar [label="mpgmgpar.sty"];
+	
+
+	// dann die sonstigen Pakete.
+	node [shape = house, fillcolor = orange2]
+
+    "babel.def" ;
+    "color.cfg" ;
+    "dvips.def" ;
+//    "hyperref.cfg" ;
+//    "hypertex.def" ;
+//    "leqno.clo";
+    "lppl.tex";
+    "multido.tex" ;
+//    "pd1enc.def" ;
+//    "pst-node" [label = "pst-node.sty"];
+//    "pst-node.tex" ;
+    "pst-plot.tex" ;
+    "pstricks.con";
+    "pstricks.tex" ;
+    "size10.clo";
+    "t1enc.def" ;
+    amsbsy  [ label = "amsbsy.sty"];
+    amsfonts [label = "amsfonts.sty"]
+    amsgen [ label = "amsgen.sty"];
+    amsmath  [ label = "amsmath.sty" ];
+    amsopn  [ label = "amsopn.sty"];
+    amssymb [label = "amssymb.sty"]
+    amstext [ label = "amstext.sty"];
+    array [label = "array.sty"];
+    article [label = "article.cls"];
+    babel [ label = "babel.sty" ];
+//    bk11 [ label = "bk11.clo" ];
+    doc [label = "doc.sty"];
+    fontenc [label = "fontenc.sty"];
+//    glossary [label = "glossary.sty"];
+    hyperref [label = "hyperref.sty"];
+    gmdoc [label="gmdoc.sty"];
+    gmiflink [label="gmiflink.sty"];
+    gmverb [label = "gmverb.sty"];
+//    ifthen [label = "ifthen.sty"];
+    inputenc [ label="inputenc.sty" ];
+    latin1 [ label = "latin1.def" ];
+    lmodern [label="lmodern.sty"];
+    longtable [label = "longtable.sty"];
+    ltxdoc [label = "ltxdoc.cls"];
+    ltxtable [label = "ltxtable.sty"];
+    makeidx [ label="makeidx.sty"];
+    multicol [label = "multicol.sty"];
+//    nameref [ label = "nameref.sty"];
+    ngermanb [ label = "ngermanb.ldf" ];
+    pst_plot [label = "pst-plot.sty"];
+    pstricks [label="pstricks.sty"];
+    rcsinfo [label = "rcsinfo.sty"];
+//    scrbook [ label = "scrbook.cls" ];
+    scrartcl [ label = "scrartcl.cls" ];
+    scrlfile  [ label = "scrlfile.sty" ];
+//    showkeys [label="showkeys.sty"];
+    tabularx [label = "tabularx.sty"];
+    typearea  [ label = "typearea.sty" ];
+//    url [ label = "url.sty"];
+    utf8x [ label = "utf8x.def" ];
+    ucs [ label = "ucs.sty"];
+    xcolor [label="xcolor.sty"];
+//    "draftcopy.cfg" ;
+//    amscd [ label = "amscd.sty" ];
+//    amsthm [label = "amsthm.sty"];
+//    calc [label = "calc.sty"];
+//    cancel [label = "cancel.sty"];
+//    draftcopy [label = "draftcopy.sty"];
+//    enumerate [ label="enumerate.sty" ];
+//    eucal [ label = "eucal.sty" ];
+    keyval [label = "keyval.sty"];
+//    mathtools [label = "mathtools.sty"];
+//    mhsetup [label = "mhsetup.sty"];
+//    stmaryrd [label = "stmaryrd.sty"];
+//    xspace [ label = "xspace.sty"]
+
+
+	// Jetzt kommen nur noch Abhängigkeiten - eigentlich
+	// sollten da keine neuen Nodes mehr dabei sein. Was durchgerutscht ist,
+	// markieren wir rot (:-)
+
+	node [shape = ellipse, fillcolor = red];
+
+	// -------------------------------------------------------------------------
+	// \documentclass, \LoadClass, \RequirePackage, \usepackage, \input,  ohne Optionen.
+	edge [style=solid, color = darkgreen];
+
+
+	mpgmgpar -> minipage_marginpar;
+	"minipage-marginpar.dtx" -> minipage_marginpar;
+
+//	"gmdoc-enhance.dtx" -> gmdoc_enhance;
+	gmdoc_enhance -> gmdoc;
+//	"gmdoc-enhance.dtx" -> scrartcl;
+	"gmdoc-enhance.dtx" -> lmodern;
+	"gmdoc-enhance.dtx" -> ucs;
+
+
+
+	pauldoc -> "lppl.tex";
+
+	"pauldoc.dtx" -> pauldoc;
+	
+	randbild -> pst_plot;
+
+	"randbild.dtx" -> randbild;
+	"randbild.dtx" -> pauldoc;
+
+	noitcrul -> robustcommand;
+
+	"noitcrul.dtx" -> noitcrul;
+	"noitcrul.dtx" -> pauldoc;
+
+	"faktor.dtx" -> faktor;
+	"faktor.dtx" -> amssymb;
+	"faktor.dtx" -> pauldoc;
+
+	extpfeil -> amsmath;
+	extpfeil -> amssymb;
+
+	"extpfeil.dtx" -> pauldoc;
+	"extpfeil.dtx" -> extpfeil;
+	"extpfeil.dtx" -> array;
+	
+	dateiliste -> ltxtable;
+
+	"dateiliste.dtx" -> pauldoc;
+	"dateiliste.dtx" -> dateiliste;
+
+	"robustcommand.dtx" -> pauldoc;
+	"robustcommand.dtx" -> robustcommand;
+
+	// ----------
+	// Packages von anderen Leuten.
+
+//	scrbook -> scrlfile;
+//	scrbook -> "leqno.clo";
+//	scrbook -> bk11;
+//	scrbook -> typearea;
+
+	scrartcl -> scrkbase;
+	scrkbase -> scrlfile;
+	scrkbase -> keyval;
+//	scrartcl -> "leqno.clo";
+	scrartcl -> bk11;
+	scrartcl -> typearea;
+
+
+	doc -> multicol;
+
+	amsmath -> amstext;
+	amsmath -> amsbsy;
+	amsmath -> amsopn;
+
+	amstext -> amsgen;
+
+	amssymb -> amsfonts;
+
+	inputenc -> latin1;
+	inputenc -> utf8x;
+
+	ucs -> "uni-global.def";
+
+
+	gmdoc -> gmutils;
+	gmutils -> calc;
+
+	gmdoc -> xkeyval;
+	xkeyval -> "xkeyval.tex";
+
+	gmdoc -> xcolor;
+	gmdoc -> hyperref;
+	gmdoc -> gmiflink;
+	gmdoc -> gmverb;
+	gmdoc -> makeidx;
+
+
+	babel -> ngermanb;
+	babel -> "babel.def";
+
+//	draftcopy -> "draftcopy.cfg";
+	
+
+	pst_plot -> pstricks;
+	pst_plot -> "pst-plot.tex";
+	
+	pstricks -> "pstricks.tex";
+	pstricks -> xcolor;
+
+	"pstricks.tex" -> "pstricks.con";
+
+	xcolor -> "color.cfg";
+	xcolor -> "dvips.def";
+
+	"pst-plot.tex" -> "multido.tex";
+	"pst-plot.tex" -> "pstricks.tex";
+
+//	mathtools -> keyval;
+//	mathtools -> calc;
+//	mathtools -> mhsetup;
+
+//	"pst-node" -> "pst-node.tex";
+//	"pst-node" -> pstricks;
+//
+//	"pst-node.tex" -> "pstricks.tex";
+
+	fontenc -> "t1enc.def";
+
+	hyperref -> "pd1enc.def";
+	hyperref -> "hyperref.cfg";
+	hyperref -> url;
+//	hyperref -> "hypertex.def";
+//	hyperref -> nameref;
+
+	hyperref -> hdvips;
+	hdvips -> pdfmark;
+
+//	glossary -> ifthen;
+//	glossary -> longtable;
+
+	ltxtable -> longtable;
+	ltxtable -> tabularx;
+	
+	tabularx -> array;
+
+	ltxdoc -> article;
+	article -> "size10.clo";
+	ltxdoc -> doc;
+
+
+	// -------------------------------------------------------------------------
+	// \documentclass, \LoadClass, \LoadPackage, etc. mit Optionen.
+	// das simulieren wir mit einer Node dazwischen.
+
+	edge [style=solid, color = blue];
+	node [shape = box, fillcolor = white, color = blue, margin="0.05,0.03", style=rounded];
+
+//	"l#1" [label="idxtotoc,\ldraft,\lopenany,\lleqno\l"];
+//	spezialisierung -> "l#1" [arrowhead=none];
+//	 "l#1" -> alg_script;
+
+//	"l#2" [label= "11pt,\na4paper,\nleqno"];
+//	alg_script -> "l#2"  [arrowhead=none];
+//	"l#2" -> scrbook;
+
+//	"l#3"  [label= "namelimits,\ncentertags"];
+//	alg_script -> "l#3"  [arrowhead=none];
+//	"l#3" -> amsmath;
+
+	"l#4"  [label="latin1"];
+//	alg_script -> "l#4"  [arrowhead=none];
+	"l#4" -> inputenc ;
+	pauldoc ->  "l#4"  [arrowhead=none];
+
+	"l#5"  [label = "ngerman"];
+//	alg_script -> "l#5"  [arrowhead=none];
+	"l#5" -> babel ;
+	pauldoc ->  "l#5"  [arrowhead=none];
+	"gmdoc-enhance.dtx" -> "l#5" [arrowhead=none];
+	
+//	"l#6"  [label= "draft,\ndoc,\noneside"];
+//	"alg-script.dtx" -> "l#6"  [arrowhead=none];
+//	"l#6" -> alg_script;
+
+//	"l#6a" [label = "chapter"];
+//	"alg-script.dtx" -> "l#6a"  [arrowhead=none];
+//	"l#6a" -> pauldoc;
+
+
+//	"l#7" [label = "conditional,\lgerman"];
+//	specdefs -> "l#7"   [arrowhead=none];
+//	"l#7" -> draftcopy;
+
+//	"l#8" [label="only\nlongmapsfrom\nmapsfrom"];
+//	specdefs -> "l#8"   [arrowhead=none];
+//	"l#8" -> stmaryrd;
+
+	"l#9" [label="T1"]
+//	specdefs -> "l#9"   [arrowhead=none];
+	"l#9" -> fontenc;
+	pauldoc -> "l#9"   [arrowhead=none];
+
+	"gmdoc-enhance.dtx" -> "l#9" [arrowhead=none];
+
+//	"l#10" [label="notcite,\nnotref"];
+//	specdefs -> "l#10"   [arrowhead=none];
+//	"l#10" -> showkeys;
+
+//	"l#11" [label = "final,\nhyperindex,\nnaturalnames"];
+//	specdefs -> "l#11"   [arrowhead=none];
+//	"l#11" -> hyperref;
+
+	"l#12" [label = "draft,\nngerman"];
+	"robustcommand.dtx" -> "l#12"  [arrowhead=none];
+	"pauldoc.dtx" -> "l#12"  [arrowhead=none];
+	"noitcrul.dtx" -> "l#12"  [arrowhead=none];
+	"faktor.dtx" -> "l#12"  [arrowhead=none];
+	"extpfeil.dtx" -> "l#12"  [arrowhead=none];
+//	"specdefs.dtx" -> "l#12"  [arrowhead=none];
+	"l#12" -> ltxdoc;
+
+	"l#13" [label = "draft"];
+	"randbild.dtx" -> "l#13"  [arrowhead=none];
+	"dateiliste.dtx" -> "l#13"  [arrowhead=none];
+	"l#13" -> ltxdoc;
+
+	"l#14" [label = "nofancy,\nnotoday"];
+	dateiliste -> "l#14"  [arrowhead=none];
+	"l#14" -> rcsinfo;
+
+
+	"inputenc#utf8x" [label = "utf8x"];
+	gmdoc_enhance -> "inputenc#utf8x" [arrowhead=none];
+	"inputenc#utf8x" -> inputenc;
+
+
+//	"gmdoc-enhance.dtx" -> scrartcl;
+	"scrartcl#idx" [label = "idxtotoc"];
+	"scrartcl#idx" -> scrartcl;
+	"gmdoc-enhance.dtx" -> "scrartcl#idx" [arrowhead=none];
+
+//	gmdoc_enhance -> gmdoc;
+
+	"gmdoc#opts" [label= "countalllines,\nwithmarginpar,\ncodespacesgrey"];
+	"gmdoc#opts" -> gmdoc;
+	"gmdoc-enhance.dtx" -> "gmdoc#opts";
+
+	"gmdoce#opts" [label= "visible,\ninline"];
+	"gmdoce#opts" -> gmdoc_enhance;
+	"gmdoc-enhance.dtx" -> "gmdoce#opts";
+
+
+
+	// -------------------------------------------------------------------------
+	// einfache Verwendung (vorher geladen)
+	node [shape = ellipse, fillcolor = red, style=filled];
+	edge [style = "dashed", color = indigo, ];
+
+//	spezialisierung -> dateiliste;
+//	spezialisierung -> glossary;
+//	spezialisierung -> makeidx ;
+//
+//
+//	glossar -> dateiliste ;
+//	glossar -> glossary;
+//
+//
+//	einleitung -> dateiliste;
+//
+//	algebraII -> dateiliste ;
+//	algebraII -> alg_script ;
+//
+//	katego -> dateiliste;
+//	katego -> specdefs ;
+//
+//	algebrGeomI -> dateiliste;
+//	algebrGeomI -> specdefs ;
+//	algebrGeomI -> randbild ;
+//	algebrGeomI -> "pst-node";
+//	algebrGeomI -> cancel;
+//	algebrGeomI -> faktor;
+//	algebrGeomI -> pst_plot ;
+//	algebrGeomI -> alg_script;
+//	
+//
+//	algebrGeomII -> dateiliste;
+//
+//	koHomoTheo -> dateiliste ;
+//
+//	"alg-script.dtx" -> "lppl.tex";
+
+	faktor -> amssymb;
+
+	// -------------------------------------------------------------------------
+	// erzeugt aus: 
+	edge [style = dashed, dir = back, color = goldenrod2];
+
+//	alg_script -> "alg-script.dtx" ;
+//	specdefs -> "specdefs.dtx" ;
+	"robustcommand.dtx" -> robustcommand;
+	"randbild.dtx" -> randbild;
+	"noitcrul.dtx" -> noitcrul;
+	"faktor.dtx" -> faktor;
+	"extpfeil.dtx" -> extpfeil;
+	"dateiliste.dtx" -> dateiliste;
+	"pauldoc.dtx" -> pauldoc ;
+
+	"gmdoc-enhance.dtx" -> gmdoc_enhance;
+
+	"minipage-marginpar.dtx" -> minipage_marginpar;
+	"minipage-marginpar.dtx" -> mpgmgpar;
+
+
+	// -------------------------------------------------------------------------
+	// der ganze Rest.
+	edge [style = solid, color = firebrick1, constraint = true];
+
+
+
+
+	
+
+
+
+
+		
+
+}
+
+
+
+
+// 
+//
