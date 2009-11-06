@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-%%  (C) 2006 Paul Ebermann
+%%  (C) 2006-2009 Paul Ebermann
 %%
 %%   Package pauldoc - Anpassungen für doc für Pauls Package-Dokus.
 %%   Die Datei pauldoc.dtx sowie die dazugehörige
@@ -23,7 +23,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{pauldoc}
-%<package> [2009/11/03 v0.5 Pauls Anpassungen fuer doc (PE)]
+%<package> [2009/11/06 v0.5 Pauls Anpassungen fuer doc (PE)]
 %
 % \changes{v0.2a}{2006/02/23}{'ue' statt 'ü' im Identifikations-String - gibt schönere
 %                             Ausgabe bei \cs{listfiles}.}
@@ -42,11 +42,12 @@
 %</driver>
 % \fi
 %
-% \CheckSum{0}
+% \CheckSum{139}
 %
 %
 % \changes{v0.0}{2006/01/31}{Erste Fassung}
 % \changes{v0.1}{2006/02/12}{Erste veröffentlichte Fassung}
+% \changes{v0.5}{2009/11/06}{README jetzt in UTF-8}
 %
 % \GetFileInfo{pauldoc.sty}
 %
@@ -256,7 +257,7 @@
 %  
 % Wir wollen natürlich in der Doku Querverweise haben,
 % die Änderungen registrieren (für eine entsprechende Liste)
-% und im Index mit Zeilennummern arbeiten. Codestellen
+% und im Index mit Zeilennummern arbeiten. Quelltext in der Doku
 % wollen wir mit \verb|'| markieren.
 %    \begin{macrocode}
 \EnableCrossrefs
@@ -265,8 +266,8 @@
 \AtBeginDocument{\MakeShortVerb{\'}\selectlanguage{ngerman}}
 %    \end{macrocode}
 %  Außerdem sollten Index und Änderungsliste auf deutsch beschriftet
-%  werden. Wie benutzen hier '\@pauldoc@indexsec', was entweder
-%  '\section' oder '\chapter' ist.
+%  werden. Wie benutzen hier für die Überschrift '\@pauldoc@indexsec', was
+%  entweder '\section' oder '\chapter' ist.
 %  \changes{v0.5}{2009/11/01}{Ä $\Rightarrow$ '\"A' in
 %    "`Liste der Änderungen"', und entsprechend für "`Schräggedruckte"'}
 %    \begin{macrocode}
@@ -285,8 +286,8 @@
 
  }
 %    \end{macrocode}
-% Der Index bekommt nur zwei Spalten (wir haben einige ziemlich lange
-% Makronamen).
+% Der Index bekommt nur zwei statt sonst drei Spalten (wir haben einige
+% ziemlich lange Makronamen).
 %    \begin{macrocode}
    \setcounter{IndexColumns}{2}
 %    \end{macrocode}
@@ -348,10 +349,10 @@
 %  vom 13. Januar 2006 einige Verrenkungen notwendig -- siehe unten.
 %
 %  Am 10. Februar habe ich einen Vorschlag zur Verbesserung
-%  an die LaTeX-Bug-Liste geschickt, das wurde positiv aufgenommen.
+%  an die LaTeX-Bug-Liste geschickt, das wurde positiv aufgenommen.%
 %  \footnote{Siehe \texttt{http://www.latex-project.org/cgi-bin/ltxbugs2html?pr=latex/3839}.}
-%  Ich habe jetzt von eine verbesserte Version von Frank Mittelbach bekommen,
-%  die hoffentlich demnächst auch veröffentlicht wird.
+%  Ich habe dann von eine verbesserte Version von Frank Mittelbach bekommen,
+%  die inzwischen auch veröffentlicht wurde.
 %
 %  Wir wollen die Abschnitte der Lizenz auch nummeriert
 %  (und im Inhaltsverzeichnis) haben, deswegen die Versionen
@@ -462,8 +463,8 @@
 %  das die unter dem Namen \texttt{\lpplfilename}
 %   verbreitete LPPL.
 %    \begin{macrocode}
-\AtBeginDocument{
-   \providecommand{\lpplfilename}{lppl.tex}
+\AtBeginDocument{%
+   \providecommand{\lpplfilename}{lppl.tex}%
 }
 %    \end{macrocode}
 %  \end{macro}
