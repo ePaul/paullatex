@@ -185,6 +185,10 @@ fi &&
 #
 $LATEX "${packagename}.dtx" &&
 #
+## Version mit Inhaltsverzeichnis
+#
+$LATEX "${packagename}.dtx" &&
+#
 #
 ## Versionsliste und Index erzeugen
 #
@@ -227,6 +231,7 @@ $LATEX "${packagename}.dtx" &&
 #
 ## Noch einmal alle Querverweise anpassen.
 #
+$LATEX "${packagename}.dtx" &&
 $LATEX "${packagename}.dtx" &&
 #
 #
