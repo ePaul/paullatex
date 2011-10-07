@@ -7,7 +7,7 @@ echo 'makepackage  -  installiert ein LaTeX-Package und erstellt die
 Nutzung:
    makepackage -help
    makepackage [-w <workdir>] -clean
-   makepackage [-w <workdir>] [-pdf] [<packagedir>] <dtxname>
+   makepackage [-w <workdir>] [-pdf] [-zip] [<packagedir>] <dtxname>
 
 Es wird das Package installiert (d.h. aus der .dtx-Datei eine .sty- oder
 .cls-Datei erstellt, und diese in das vorhergesehene Verzeichnis gesteckt),
@@ -24,6 +24,8 @@ Optionen:
    -w <workdir> das Arbeitsverzeichnis, in das gewechelst wird, um
                 dort Dateien zu erstellen. Default ist "work".
    -pdf         PDF-Datei der Doku erstellen.
+   -zip         CTAN-Zip-Datei erstellen - gleichzeitig werden die
+                
 Parameter:
  <packagedir>  das Verzeichnis des Packages (Default: "src/<dtxname>".)
  <dtxname>  der Name des Packages (ohne die Endung .dtx).
@@ -63,14 +65,13 @@ then
   exit
 fi
 
-if [ "$1" == "-PDF" ]
+if [ "$1" == "-pdf" ]
 then
   PDFKREILO="dvipdf"
   shift
 else
   PDFKREILO="true"
 fi
-
 
 
 	# Falls $DVIVIEWER nicht auf etwas anderes gesetzt wurde,
@@ -92,9 +93,21 @@ fi
 
 echo "Ich verwende $LATEX."
 
+if [ "$1" == "-zip" ]
+then
+   ZIPKREILO="zip"
+   shift
+else
+   ZIPKREILO="true"
+fi
+
+
+# Hier wird der Paranoid-Modus abgeschaltet, um auch
+# (Über-)Schreiben von Dateien außerhalb des eigenen
+# Verzeichnisses zu erlauben.
 if [ -z "$INSTALLTEX" ]
 then
-   INSTALLTEX='TEXMFCNF="$HOME/texmf" $LATEX'
+  INSTALLTEX='TEXMFCNF="$HOME/texmf" $LATEX'
 fi
 
 
@@ -115,7 +128,24 @@ echo Wir erzeugen Doku und Package für "${packagename}".
 ## Jetzt geht es los!
 #
 
-cp "$packagedir/$packagename.dtx" $WORKDIR/
+
+WORKDIR=$WORKDIR/$packagename
+
+rm -f $WORKDIR/* &&
+mkdir -p $WORKDIR &&
+
+cp "$packagedir/$packagename.dtx" "$WORKDIR/" &&
+
+if [ -e $packagedir/README ]
+then
+  cp $packagedir/README $WORKDIR/
+fi &&
+
+if [ $ZIPKREILO == "zip" ]
+then
+  touch $WORKDIR/docstrip.cfg
+  DVIVIEWER="true"
+fi &&
 
 
 #
@@ -128,6 +158,13 @@ then
 	eval $INSTALLTEX ${packagename}.ins
 else
 	pushd $WORKDIR
+fi &&
+if [ -e "${packagename}.README" ]
+then
+    mv "${packagename}.README" "README" &&
+    mv "${packagename}.README-eo" "README-eo" &&
+    mv "${packagename}.README-de" "README-de" &&
+    mv "${packagename}.README-en" "README-en"
 fi &&
 #
 #
@@ -168,5 +205,10 @@ $LATEX "${packagename}.dtx" &&
 #
 #echo "$PDFKREILO"  "${packagename}" && 
 $PDFKREILO "${packagename}" &&
-
+#
+#
+# zip-Datei erstellen:
+#
+$ZIPKREILO "$packagename.zip" README $packagename.pdf $packagename.dtx $packagename.sty $packagename.ins README-* &&
+#
 popd
