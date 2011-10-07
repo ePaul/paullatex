@@ -24,7 +24,7 @@ Optionen:
    -w <workdir> das Arbeitsverzeichnis, in das gewechelst wird, um
                 dort Dateien zu erstellen. Default ist "work".
    -pdf         PDF-Datei der Doku erstellen.
-   -zip         CTAN-Zip-Datei erstellen - gleichzeitig werden die
+   -zip         CTAN-Zip-Datei erstellen
                 
 Parameter:
  <packagedir>  das Verzeichnis des Packages (Default: "src/<dtxname>".)
@@ -141,7 +141,16 @@ then
   cp $packagedir/README $WORKDIR/
 fi &&
 
-if [ $ZIPKREILO == "zip" ]
+#
+## Wenn wir ein ZIP erstellen, sollten wir dafür sorgen, dass die 
+## generierten Dateien im richtigen Verzeichnis landen. 
+## Daher erstellen wir hier eine leere docstrip.cfg, weil die
+##  original-docstrip.cfg (bei mir) die Dateien in das passende
+##  Such-Verzeichnis von LaTeX legt (texmf/tex/latex/paul/).
+##
+## Außerdem schalten wir gleichzeitig die DVI-Ansicht ab.
+#
+if [ $ZIPKREILO != "true" ]
 then
   touch $WORKDIR/docstrip.cfg
   DVIVIEWER="true"
@@ -151,6 +160,7 @@ fi &&
 #
 #
 ## .sty erzeugen
+#
 if [ -e "${packagedir}/${packagename}.ins" ]
 then
 	cp "${packagedir}/${packagename}.ins" $WORKDIR/ &&
@@ -159,6 +169,9 @@ then
 else
 	pushd $WORKDIR
 fi &&
+
+#
+# auto-generierte README-Dateien umbenennen
 if [ -e "${packagename}.README" ]
 then
     mv "${packagename}.README" "README" &&
@@ -166,7 +179,7 @@ then
     mv "${packagename}.README-de" "README-de" &&
     mv "${packagename}.README-en" "README-en"
 fi &&
-#
+
 #
 ## Erste Version der Doku erzeugen
 #
@@ -175,13 +188,34 @@ $LATEX "${packagename}.dtx" &&
 #
 ## Versionsliste und Index erzeugen
 #
-if [ -e "${packagename}.glo" ]
-then
-	makeindex -g -s gglo.ist -o "${packagename}.gls" "${packagename}.glo"
-fi &&
-if [ -e "${packagename}.idx" ]
-then
-	makeindex -s gind.ist -o "${packagename}.ind" "${packagename}.idx" 
+
+if egrep -q '\usepackage(\[.*?\])?\{gmdoc\}' "${packagename}.dtx"
+ then
+    echo "
+------------------
+gmdoc gefunden 
+------------------"
+    if [ -e "${packagename}.glo" ]
+    then
+       makeindex -r -s gmglo.ist -o ${packagename}.gls ${packagename}.glo
+    fi &&
+    if [ -e "${packagename}.idx" ]
+    then
+        makeindex -r "$packagename"
+    fi
+else
+    echo "
+----------------
+kein gmdoc
+----------------"
+    if [ -e "${packagename}.glo" ]
+    then
+        makeindex -g -s gglo.ist -o "${packagename}.gls" "${packagename}.glo"
+    fi &&
+    if [ -e "${packagename}.idx" ]
+    then
+        makeindex -s gind.ist -o "${packagename}.ind" "${packagename}.idx" 
+    fi
 fi &&
 #
 #
@@ -209,6 +243,6 @@ $PDFKREILO "${packagename}" &&
 #
 # zip-Datei erstellen:
 #
-$ZIPKREILO "$packagename.zip" README $packagename.pdf $packagename.dtx $packagename.sty $packagename.ins README-* &&
+( shopt -s nullglob ; $ZIPKREILO "$packagename.zip" README $packagename.pdf $packagename.dtx *.sty $packagename.ins README-* ) &&
 #
 popd
