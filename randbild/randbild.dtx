@@ -36,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{34}
+% \CheckSum{0}
 %
 %
 % \changes{v0.0}{2005/12/11}{Anfang der Fassung als DTX}
@@ -162,6 +162,7 @@
 %  Die wichtigste (und namensgebende) Umgebung dieses Paketes.
 %    \begin{macrocode}
 \newenvironment*{randbild}[3][\ ]{%
+  \@bsphack%
 %    \end{macrocode}
 %  Wir rufen hier einfach die Umgebung 'randbildbasis' mit unseren drei Parametern auf.
 %    \begin{macrocode}
@@ -177,7 +178,8 @@
 %    \end{macrocode}
 %  Am Ende dieser Umgebung beenden wir natürlich auch 'randbildbasis'.
 %    \begin{macrocode}
-   \end{randbildbasis}
+   \end{randbildbasis}%
+   \@Esphack%
 }
 %    \end{macrocode}
 %  \end{environment}
@@ -190,12 +192,13 @@
 %  Da wir am Ende der Umgebung leider nicht mehr auf die Parameter
 %  zugreifen können, müssen wir uns den Titel hier merken.
 %    \begin{macrocode}
+  \@bsphack%
    \renewcommand{\randbild@titel}{#1}%
 %    \end{macrocode}
 %  Wir setzen zunächst die Maßeinheit ('unit') und die
 %  Linienbreite für unsere Zeichnung auf passende Werte.
 %    \begin{macrocode}
-   \psset{linewidth=.5pt,unit=0.5cm}
+   \psset{linewidth=.5pt,unit=0.5cm}%
 %    \end{macrocode}
 %  Da es '\fbox' und '\marginpar' leider nicht in Umgebungsform gibt, müssen wir
 %  zunächst (mit 'lrbox') eine Box erstellen und als '\randbild@box' speichern, um
@@ -241,6 +244,7 @@
 %    \begin{macrocode}
       {\small\randbild@titel}%
    }%
+   \@Esphack%
 }%
 %    \end{macrocode}
 %  \end{environment}
