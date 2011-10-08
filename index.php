@@ -13,8 +13,12 @@ require_once ("./neu-liste.php.inc");
     <link rel='alternate'
           type='application/rss+xml'
           title="RSS-Feed der Neuigkeiten"
-	  href='rss.php'
+	  href='feed.rss'
 	  />
+    <link rel="shortcut icon"
+       href="http://25.media.tumblr.com/avatar_86ea5a72e1d6_16.png" />
+    <link rel="apple-touch-icon"
+       href="http://28.media.tumblr.com/avatar_86ea5a72e1d6_128.png"/>
   </head>
 
   <body>
@@ -372,19 +376,26 @@ nacheinander auf (in einer Reihenfolge, die Abhängigkeiten
     <a href="http://www.google.com/search?q=Paul+Ebermann">mit Google zu finden
     ist</a>, bin ich. Unter Esperantisten bin ich auch als
     <a href="http://www.google.com/search?hl=eo&q=Pa%C5%ADlo+Ebermann">Paŭlo
-      Ebermann</a> bekannt.
+    Ebermann</a> bekannt, ebenso wie im
+    <a href="http://stackexchange.com/users/295869">Stack Exchange Netzwerk</a>
+    (z.B. auf
+     <a href="http://tex.stackexchange.com/users/3335/paulo-ebermann">TeX
+      Stack Exchange</a>).
   </p>
   <p>Ich habe eine (nicht mehr sehr aktuelle)
-    <a href="http://www.math.hu-berlin.de/">Homepage</a> beim Institut
+    <a href="http://www.math.hu-berlin.de/~ebermann/">Homepage</a> beim Institut
     für Mathematik der Humboldt-Universität – da sind auch weitere meiner
     Projekte zu finden.
   </p>
   <p>Ich habe auch ein <a href="http://paul-ebermann.tumblr.com/">Blog</a>.</p>
 </div>
 
-</div>
 
-<p>$Id$</p>
+<p>Letzte Änderung: <?php
+   echo date("Y-m-d H:i");
+?></p>
+
+</div>
 
   </body>
 </html>

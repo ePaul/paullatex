@@ -82,7 +82,9 @@ function neuigkeiten_box($listo)
 /*   echo "<pre>"; */
 /*   var_export($listo); */
 /*   echo "</pre>"; */
-  echo "<div id='neues'>\n<h2>Neuigkeiten</h2>\n<dl>\n";
+  echo "<div id='neues'>\n" .
+    "<p style='float:right;'>" . linkto("feed.rss", "RSS") . "</p>\n";
+  echo "<h2>Neuigkeiten</h2>\n<dl>\n";
   foreach($listo AS $element) {
     
     echo "<dt id='neues-".$element['id']."'>".$element['dato'] . ": ".
