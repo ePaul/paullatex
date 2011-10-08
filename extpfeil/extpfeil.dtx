@@ -40,7 +40,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{143}
+% \CheckSum{150}
 %
 % \changes{v0.0}{2006/01/18}{Anfang der Fassung als DTX}
 %
@@ -433,11 +433,25 @@
   }%
 %    \end{macrocode}
 %  \end{macro}
-
+%
+%  \begin{macro}{\xbigtoto}
+%  \changes{v0.5}{2011/10/08}{Neu}
+%  Ein Doppelpfeil: $A \xbigtoto[d_1]{d_2} B$.
+%    \begin{macrocode}
+\newextarrow%
+  {\xbigtoto}%
+  {{20}{20}{20}{20}}%
+  {%
+    \bigRelbar
+    \bigRelbar
+    {\bigtwoarrowsleft\rightarrow\rightarrow}%
+  }%
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \section{Schluss}
 %  Das war es fürs erste -- später kommen
 %  bestimmt noch mehr Pfeile hinzu.
-%
 %    \begin{macrocode}
 \endinput
 %</package>
