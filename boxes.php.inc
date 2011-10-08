@@ -28,36 +28,6 @@ function linkline($kategorio, $ligo, $teksto="") {
     return $rez;
 }
 
-/**
- * @param string $packagename
- * @param string $prefix - z.B. '/tags/' oder '/trunk/src/'.
- */
-function linkSVNline($packagename, $prefix, $titel) {
-  $rez = "";
-  $rez .= "   <tr><th>" . $titel . "</th><td>";
-  $rez .= linkto("http://svn.berlios.de/wsvn/paullatex" . $prefix .
-		 $packagename . "/#" . str_replace('/', '_', $prefix) .
-		 $packagename . '_',
-		 "WebSVN");
-  $rez .= " ";
-  $rez .= linkto("http://svn.berlios.de/viewvc/paullatex" . $prefix .
-		 $packagename . "/",
-		 "ViewCV");
-    $rez .= " ";
-    $rez .=
-        linkto("http://svn.berlios.de/svnroot/repos/paullatex" .
-               $prefix . $packagename . '/',
-               "HTTP");
-    $rez .= " ";
-  
-    $rez .=
-        linkto("svn://svn.berlios.de/paullatex" . $prefix . $packagename . "/",
-               "svn:");
-    $rez .= "</td></tr>\n";
-    return $rez;
-}
-
-
 function linkbox($packagename, $dokusprache, $depend=null) {
     $rez = "";
 
@@ -70,18 +40,21 @@ function linkbox($packagename, $dokusprache, $depend=null) {
                  "macros/latex/contrib/" . $packagename);
     $rez .=
         linkline("CTAN-Package",
-                 "http://www.ctan.org/cgi-bin/ctanPackageInformation.py?id=" . $packagename,
+                 "http://www.ctan.org/pkg/" .
+                 $packagename,
                  $packagename);
     $rez .=
         linkline("TeX Catalogue",
                  "http://texcatalogue.sarovar.org/entries/"
                  . $packagename . ".html");
 
-    // CVS/SVN-link
-    $rez .= linkSVNline($packagename, "/trunk/src/", "Subversion (Trunk)");
-    $rez .= linkSVNline($packagename, "/tags/", "Subversion (Tags)");
+    // Github-Link
+    $rez .=
+        linkLine("Github sources",
+                 "https://github.com/ePaul/paullatex/tree/master/" .
+                  $packagename,
+                  "epaul/paullatex/" . $packagename);
     
-    //    $rez .= linkSVN($packagename);
 
     $rez .= "    <tr><th>Doku-Sprache</th><td>" . $dokusprache .
         "</td></tr>\n";

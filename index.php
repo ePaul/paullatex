@@ -22,8 +22,10 @@ require_once ("./neu-liste.php.inc");
 	<div class="disclaimer">
 	<h3>Werbung</h3>
 	<p>
-<a href="http://developer.berlios.de" title="BerliOS Developer"> <img src="http://developer.berlios.de/bslogo.php?group_id=6747" width="124px" height="32px" border="0" alt=""><br/>Berlios Developer</a> stellt uns Subversion, Webseite und Entwicklungstools zur Verfügung – danke!
-	</p>
+          <a href="https://github.com/">GitHub</a> hosted unser Git-Repository,
+          und stellt uns auch den Webspace für diese Seiten zur Verfügung.
+          Danke!
+        </p>
 	</div>
 
 <div class='inhalt'>
@@ -80,7 +82,7 @@ aktuellen Projekt, einer
      LaTeX-Seite am Mathe-Institut</a>.
 (Wenn ich mal viel Zeit habe und/oder es jemanden interessiert,
  werde ich einiges davon hierher migrieren.)
-    </p>
+</p>
 
 
 <div>
@@ -124,6 +126,17 @@ Dokumentation. (Um auch Inhaltsverzeichnis, Index, Änderungsliste
      Datei extra herunterladen.)
 	</p>
 
+</div>
+
+<div id="Github">
+<h2>GitHub</h2>
+<p>
+  Alle Pakete sind auch in meinem GitHub-Repository <a href="https://github.com/ePaul/paullatex">paullatex</a> zu finden. Wer Verbesserungen beisteuern will,
+  sollte am besten dieses Repository clonen, die Änderungen in seinem Klon
+  durchführen und mir dann einen Pull-Request schicken.
+  (Aber auch Verbesserungsvorschläge in anderer Form nehme ich
+   gern entgegen.)
+</p>
 </div>
 
 <div id='endnutzer'>
@@ -275,7 +288,9 @@ Kommandos, um selbst solche Pfeile zu erstellen.
   <table class='linkbox'>
     <caption>Links f&uuml;r die Skripte</caption>
 <?php
-    echo linkSVNline('scripts', "/trunk/src/", "Subversion (Trunk)");
+    echo linkLine("Github sources",
+                 "https://github.com/ePaul/paullatex/tree/master/scripts",
+                  "epaul/paullatex/scripts");
 
 ?>
     <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
@@ -364,6 +379,7 @@ nacheinander auf (in einer Reihenfolge, die Abhängigkeiten
     für Mathematik der Humboldt-Universität – da sind auch weitere meiner
     Projekte zu finden.
   </p>
+  <p>Ich habe auch ein <a href="http://paul-ebermann.tumblr.com/">Blog</a>.</p>
 </div>
 
 </div>

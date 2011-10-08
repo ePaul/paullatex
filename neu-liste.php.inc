@@ -5,10 +5,20 @@
    */
 
 $mesagxoj[] = 
+    array('dato' => '2011-10-08',
+          'id' => 'berlios-github',
+          'titolo' => "Jetzt bei Github statt BerliOS",
+          'teksto' => "<p>Nachdem BerliOS
+<a href='http://developer.berlios.de/forum/forum.php?forum_id=37450'>
+angekündigt hat, zum Jahresende die Pforten zu schließen</a>, sind
+Paul's LaTeX-Pakete jetzt bei Github zu finden.
+</p>");
+
+$mesagxoj[] = 
     array('dato' => '2009-11-06',
 	  'id' => 'pauldoc-v0.5',
 	  'titolo' => "Pauldoc 0.5",
-	  'tigo' => "#pauldoc",
+	  'ligo' => "#pauldoc",
 	  'teksto' => "<p>Für Dokumentation der neuesten Version von
 <em>dateiliste</em> habe ich auch ein paar Änderungen an <em>pauldoc</em>
 gemacht – diese habe ich gerade nach CTAN hochgeladen.
