@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Pauls LaTeX-Packages</title>
+    <link rel="stylesheet" type="text/css" href="paullatex.css" />
+    <link rel='alternate'
+          type='application/rss+xml'
+          title="RSS-Feed der Neuigkeiten"
+	  href='feed.rss'
+	  />
+    <link rel="shortcut icon"
+       href="http://25.media.tumblr.com/avatar_86ea5a72e1d6_16.png" />
+    <link rel="apple-touch-icon"
+       href="http://28.media.tumblr.com/avatar_86ea5a72e1d6_128.png"/>
+  </head>
+
+  <body>
+
+	<div class="disclaimer">
+	<h3>Werbung</h3>
+	<p>
+          <a href="https://github.com/">GitHub</a> hosted unser Git-Repository,
+          und stellt uns auch den Webspace für diese Seiten zur Verfügung.
+          Danke!
+        </p>
+	</div>
+
+<div class='inhalt'>
+<div id='neues'>
+<p style='float:right;'><a href='feed.rss' >RSS</a></p>
+<h2>Neuigkeiten</h2>
+<dl>
+<dt id='neues-berlios-github'>2011-10-08: Jetzt bei Github statt BerliOS</dt>
+<dd><p>Nachdem BerliOS
+<a href='http://developer.berlios.de/forum/forum.php?forum_id=37450'>
+angekündigt hat, zum Jahresende die Pforten zu schließen</a>, sind
+Paul's LaTeX-Pakete jetzt bei Github zu finden.
+</p></dd>
+<dt id='neues-pauldoc-v0.5'>2009-11-06: Pauldoc 0.5</dt>
+<dd><p>Für Dokumentation der neuesten Version von
+<em>dateiliste</em> habe ich auch ein paar Änderungen an <em>pauldoc</em>
+gemacht – diese habe ich gerade nach CTAN hochgeladen.
+</p><p>
+Es gibt jetzt eine neue Paket-Option, um die Doku UTF-8-kodiert zu setzen.
+</p><a href='#pauldoc'>⇨</a></dd>
+<dt id='neues-dateiliste-v0.5'>2009-11-04: Dateiliste 0.5</dt>
+<dd><p>Nach meiner letzten Umstellung meiner privaten
+ Arbeitsumgebung von CVS auf Subversion habe ich festgestellt, dass mein
+ <em>dateiliste-Paket</em> nicht mit den SVN-generierten Id-Tags
+ zusammenarbeitet (es erwartet CVS/RCS-Tags).
+</p><p>
+ Also habe ich es um Subversion-Unterstützung erweitert (dabei half sehr, dass
+ das Paket <em>svninfo</em> quasi analog zu <em>rcsinfo</em> aufgebaut ist,
+ zumindest nach außen).
+</p><p>
+ Außerdem habe ich die Doku etwas verbessert (und auf Unicode umgestellt), und
+ eine schon vor längerer Zeit angefangene Verbesserung (Filtern der Dateinamen
+ und Beschreibungen, damit gefährliche Zeichen mir die Ausgabe nicht kaputt
+ machen) jetzt wirklich umgesetzt.
+</p><a href='#dateiliste'>⇨</a></dd>
+<dt id='neues-extpfeil-v0.4'>2009-10-31: extpfeil 0.4</dt>
+<dd><p>Ich habe bei meinem Ubuntu zu Hause mal einige
+LaTeX-Pakete über den Paketmanager installiert, darunter auch <em>extpfeil</em>.
+Mein Schreck war groß, als meine Diplom-Notizen damit nicht mehr kompilierbar
+waren ...
+</p><p>
+Es stellte sich heraus, dass ich schon sein Monaten intern eine andere
+(erweiterte) Version von <em>extpfeil</em> verwende, die ich noch nicht
+veröffentlicht habe (wenn man das <em>paullatex</em>-Subversion-Repository mal
+vernachlässigt).
+</p><p>
+Daher eine neuere Version (jetzt auf CTAN), mit ein paar neuen Pfeilen.
+</p><a href='/#extpfeil'>⇨</a></dd>
+<dt id='neues-dateiliste-v0.4'>2009-10-26: Dateiliste 0.4</dt>
+<dd>Nach einem Bugreport habe ich eine neue Version des
+'dateiliste'-Paketes nach CTAN hochgeladen.<a href='http://paullatex.berlios.de/#dateiliste'>⇨</a></dd>
+<dt id='neues-subversion'>2009-03-11: Subversion</dt>
+<dd>Die Pakete sind jetzt in einem Subversion-Repository, das CVS wird
+    nicht mehr benutzt.</dd>
+<dt id='neues-homepage-neu'>2009-03-10: Homepage überarbeitet</dt>
+<dd>Nach fast drei Jahren dachte ich mir, ich könnte
+ die Homepage mal überarbeiten. Jetzt funktionieren die Links, scheint mir.
+    Außerdem sind jetzt alle Pakete dabei, die zwischendurch
+    dazugekommen sind.</dd>
+</dl>
+</div>
+
+<h1>Pauls L<sup>A</sup>T<sub>E</sub>X-Packages</h1>
+
+	<ul id='menu'>
+      <li><a href="#einfuehrung">Einführung</a>
+		  <li><a href='#installation'>Installation</a></li>
+		  <li><a href='#download'>Pakete für Endnutzer</a>
+			<ul>
+			  <li><a href='#randbild'>randbild</a></li>
+<li><a href='#dateiliste'>dateiliste</a></li>
+			  <li><a href='#faktor'>faktor</a></li>
+			  <li><a href='#noitcrul'>noitcrul</a></li>
+			</ul>
+</li>
+		  <li><a href='#download'>Pakete für Paketautoren</a>
+			<ul>
+			  <li><a href='#exp-testopt'>exp-testopt</a></li>
+			  <li><a href='#robustcommand'>robustcommand</a></li>
+			  <li><a href='#pauldoc'>pauldoc</a></li>
+			  <li><a href='#gmdoc-enhance'>gmdoc-enhance</a></li>
+</ul></li>
+		  <li><a href='#download'>Pakete für beide</a>
+			<ul>
+			  <li><a href='#minipage-marginpar'>minipage-marginpar</a></li>
+			  <li><a href='#extpfeil'>extpfeil</a></li>
+</ul>
+		  </li>
+<li><a href='#makedvi'>Makedvi + makepackage</a></li>
+<li><a href="#abhang">Abhängigkeitsgraph</a></li>
+	</ul>
+
+
+    <h2 id="einfuehrung">Einführung</h2>
+
+<p>
+Ich habe im Laufe der Zeit eine Reihe LaTeX-Pakete geschrieben,
+um einige Sachen umzusetzen, für die ich bisher keine Lösungen
+gefunden habe.
+</p>
+
+<p>
+Einige der hier vorhandenen Pakete sind durch die Arbeit an meinem
+aktuellen Projekt, einer
+ <a href="http://www.math.hu-berlin.de/~ebermann/alg-script/">
+     Digitalisierung einer Vorlesungs-Mitschrift</a>, entstanden.
+     Einige frühere LaTeX-Pakete, allerdings schlechter
+     dokumentiert und nicht mehr gepflegt, gibt es auf meiner
+     <a href="http://www.math.hu-berlin.de/~ebermann/packages/latex.html">
+     LaTeX-Seite am Mathe-Institut</a>.
+(Wenn ich mal viel Zeit habe und/oder es jemanden interessiert,
+ werde ich einiges davon hierher migrieren.)
+</p>
+
+
+<div>
+<h2  id='installation'>Installation</h2>
+
+<p>Die LaTeX-Pakete sind alle auf <a href='www.ctan.org/'>CTAN</a>
+zu finden (den Link gibt es jeweils im blauen Kasten).
+</p>
+<p>
+Einige davon sind in MikTeX und/oder TeXLive schon enthalten,
+    dann ist keine Installation notwendig
+    (oder sie geht – zumindest bei MikTeX –  automatisch).
+</p>
+<p>
+Ansonsten braucht müsst ihr die jeweilige .sty-Datei
+in ein Verzeichnis packen, in dem TeX es findet — es
+    geht das Verzeichnis, in dem das Dokument liegt,
+    oder etwa "texmf/tex/latex/paul/".
+</p>
+
+	<p>
+	  Die Pakete sind als jeweils ein <abbr>DTX</abbr>-Archiv
+      vorhanden, welches den dokumentierten Quelltext sowie
+     die Benutzerdokumentation enthält.
+     Dazu gibt es eine Installationsdatei (<code>.ins</code>).
+	</p>
+	<p>
+	  Mit <kbd>latex <var>paketname</var>.ins</kbd> kann man aus
+      dem DTX-Archiv das fertige Package oder die Klasse kreieren,
+     mit
+	  <kbd>latex <var>paketname</var>.dtx</kbd> erstellt man die
+Dokumentation. (Um auch Inhaltsverzeichnis, Index, Änderungsliste
+                sowie korrekte Querreferenzen zu erhalten,
+                sollte man mehrfach LaTeX und makeindex laufen
+                lassen &mdash; mein
+                <a href='#makepackage'>Makepackage-Skript</a>
+                kann einem das abnehmen.)
+    (Für die Dokumentationserstellung wird je nach Paket
+     <code>pauldoc.sty</code> oder <code>gmdoc-enhance</code>
+     benötigt &mdash; also entweder damit anfangen, oder die
+     Datei extra herunterladen.)
+	</p>
+
+</div>
+
+<div id="Github">
+<h2>GitHub</h2>
+<p>
+  Alle Pakete sind auch in meinem GitHub-Repository <a href="https://github.com/ePaul/paullatex">paullatex</a> zu finden. Wer Verbesserungen beisteuern will,
+  sollte am besten dieses Repository clonen, die Änderungen in seinem Klon
+  durchführen und mir dann einen Pull-Request schicken.
+  (Aber auch Verbesserungsvorschläge in anderer Form nehme ich
+   gern entgegen.)
+</p>
+</div>
+
+<div id='endnutzer'>
+<h2>Pakete für End-Nutzer</h2>
+
+<div id='randbild'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r randbild</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/randbild/' >macros/latex/contrib/randbild</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/randbild' >randbild</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/randbild.html' >randbild.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/randbild' >epaul/paullatex/randbild</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>randbild</h3>
+
+<p>
+Dieses Package hilft dabei, kleine pstricks-Diagramme auf dem
+Rand der Seite unterzubringen.
+</p>
+</div>
+
+<div id='dateiliste'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r dateiliste</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/dateiliste/' >macros/latex/contrib/dateiliste</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/dateiliste' >dateiliste</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/dateiliste.html' >dateiliste.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/dateiliste' >epaul/paullatex/dateiliste</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>dateiliste</h3>
+<p>
+  Dieses Package erstellt eine Liste aller geladenen Dateien
+  und nimmt sie auch noch in die Ausgabedatei auf.
+</p>
+<p>
+  Dabei können die Änderungsdaten und Revisionsnummern der
+  einzelnen Dateien aus einem CVS oder Subversion geholt werden.
+</p>
+
+</div>
+
+
+<div id='faktor'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r faktor</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/faktor/' >macros/latex/contrib/faktor</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/faktor' >faktor</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/faktor.html' >faktor.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/faktor' >epaul/paullatex/faktor</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>faktor</h3>
+
+<p>
+Dieses Package hilft beim Setzen von Faktorstrukturen
+(Faktormengen, Faktorringe, Faktormoduln etc.).
+</p>
+<p>
+  Das sind so Sachen wie <sup>Z</sup>/<sub>2Z</sub>.
+</p>
+
+</div>
+
+<div id='noitcrul'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r noitcrul</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/noitcrul/' >macros/latex/contrib/noitcrul</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/noitcrul' >noitcrul</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/noitcrul.html' >noitcrul.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/noitcrul' >epaul/paullatex/noitcrul</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>noitcrul</h3>
+
+<p>
+Dieses Package ermöglicht schönere Unterstreichungen im
+Mathe-Modus (z.B. für Kategoriennamen).
+</p>
+<p>
+Der Name steht für <em>no italics correction underline</em>.
+</p>
+
+</div>
+
+
+
+</div>
+
+<div id='autoren'>
+<h2>Pakete für Package-Autoren</h2>
+
+<p>
+  Die hier genannten Pakete sind vor allem für Autoren anderer
+Pakete interessant – insbesondere werden sie teilweise von meinen
+eigenen Paketen verwendet.
+Endnutzer brauchen sie nur, wennn das sie ein
+    Paket verwenden, welches diese als Abhängigkeit hat.
+</p>
+
+<div id='exp-testopt'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r exp-testopt</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/exp-testopt/' >macros/latex/contrib/exp-testopt</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/exp-testopt' >exp-testopt</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/exp-testopt.html' >exp-testopt.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/exp-testopt' >epaul/paullatex/exp-testopt</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Esperanto</td></tr>
+  </table>
+  <h3>exp-testopt</h3>
+
+<p>Das Paket <abbr>exp-testopt</abbr> hilft dabei, Kommandos mit
+     optionalen Argumenten so zu definieren, dass das Kommando
+     expandibel bleibt.
+</p>
+</div>
+
+</div>
+
+<div id='robustcommand'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r robustcommand</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/robustcommand/' >macros/latex/contrib/robustcommand</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/robustcommand' >robustcommand</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/robustcommand.html' >robustcommand.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/robustcommand' >epaul/paullatex/robustcommand</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>robustcommand</h3>
+
+<p>
+Dieses Package definiert ein Kommando, welches beim Definieren
+    von anderen Kommandos hilft.
+</p>
+
+</div>
+
+<div id='pauldoc'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r pauldoc</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/pauldoc/' >macros/latex/contrib/pauldoc</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/pauldoc' >pauldoc</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/pauldoc.html' >pauldoc.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/pauldoc' >epaul/paullatex/pauldoc</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>pauldoc</h3>
+
+<p>
+Ein Paket, um LaTeX-Pakete nach meinem Geschmack zu dokumentieren.
+    Basiert auf doc und einigen anderen Standard-Paketen.
+</p>
+
+</div>
+
+
+<div id='gmdoc-enhance'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r gmdoc-enhance</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/gmdoc-enhance/' >macros/latex/contrib/gmdoc-enhance</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/gmdoc-enhance' >gmdoc-enhance</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/gmdoc-enhance.html' >gmdoc-enhance.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/gmdoc-enhance' >epaul/paullatex/gmdoc-enhance</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>gmdoc-enhance</h3>
+
+<p>
+  Eine Alternative zu doc ist gmdoc. Dieses Paket fügt zu
+den Features von gmdoc noch drei weitere hinzu.
+(Nicht kompatibel zu pauldoc).
+</p>
+
+</div>
+
+<div id='gemischt'>
+<h2>Gemischte Pakete</h2>
+<p>
+Diese Pakete stellen sowohl Benutzerbefehle als auch
+zusätzliche Funktionalität für Package-Autoren zur Verfügung.
+</p>
+
+<div id='minipage-marginpar'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r minipage-marginpar</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/minipage-marginpar/' >macros/latex/contrib/minipage-marginpar</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/minipage-marginpar' >minipage-marginpar</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/minipage-marginpar.html' >minipage-marginpar.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/minipage-marginpar' >epaul/paullatex/minipage-marginpar</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>minipage-marginpar</h3>
+
+<p>
+Ermöglicht es, <code>\marginpar</code>-Befehle innerhalb von Boxen
+    (wie minipages) anzuwenden – die Befehle werden
+    gesammelt und dann nach der Box abgesetzt.
+</p>
+<p>
+    Für Nutzer gibt es die Umgebung
+<code>minipagewithmarginpars</code>, und
+    die internen Befehle können von Package-Autoren genutzt
+    werden, die ähnliche Funktionalität für ihre Makros/Umgebungen
+    bereitstellen wollen.
+    </p>
+
+</div>
+
+<div id='extpfeil'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r extpfeil</caption>
+    <tr><th>CTAN-Verzeichnis</th><td><a href='http://www.ctan.org/tex-archive/macros/latex/contrib/extpfeil/' >macros/latex/contrib/extpfeil</a></td></tr>
+    <tr><th>CTAN-Package</th><td><a href='http://www.ctan.org/pkg/extpfeil' >extpfeil</a></td></tr>
+    <tr><th>TeX Catalogue</th><td><a href='http://texcatalogue.sarovar.org/entries/extpfeil.html' >extpfeil.html</a></td></tr>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/extpfeil' >epaul/paullatex/extpfeil</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+  <h3>extpfeil</h3>
+
+<p>
+Dieses Package erstellt verlängerbare Pfeile im Mathe-Modus
+mit Super- und Subskript.
+</p>
+
+<p>
+Für Paket-Autoren (oder fortgeschrittene Benutzer) gibt es auch
+Kommandos, um selbst solche Pfeile zu erstellen.
+</p>
+
+</div>
+
+</div> <!-- gemischte -->
+
+
+<div id='skripte'>
+  <table class='linkbox'>
+    <caption>Links f&uuml;r die Skripte</caption>
+    <tr><th>Github sources</th><td><a href='https://github.com/ePaul/paullatex/tree/master/scripts' >epaul/paullatex/scripts</a></td></tr>
+    <tr><th>Doku-Sprache</th><td>Deutsch</td></tr>
+  </table>
+<h2>Hilfs-Skripte</h2>
+
+<p>Ich habe mir zwei Bash-Skripte geschrieben, um beim Erstellen
+    der Pakete zu helfen.
+</p>
+
+<div id='makepackage'>
+    <h3>makepackage.sh</h3>
+<p>makepackage erstellt (in einem neuen Arbeitsverzeichnis) aus
+der DTX-Datei die Paketdatei und danach die Dokumentation, mit
+    mehreren LaTeX-Durchläufen.
+    Bei Bedarf kann auch eine PDF-Datei sowie eine ZIP-Datei
+    für den CTAN-Upload erstellt werden.
+</p>
+<p>
+    makepackage.sh sollte aus dem Verzeichnis oberhalb des
+Quelltextverzeichnisses aufgerufen werden. Mit <code>--help</code>
+gibt es eine Kommandozeilenhilfe.
+</p>
+</div>
+
+<div id='makepackages'>
+<h3>makepackages.sh</h3>
+<p>
+  makepackages ruft einfach nur makepackage für alle Pakete
+nacheinander auf (in einer Reihenfolge, die Abhängigkeiten
+                  berücksichtigt).
+</p>
+</div>
+</div>
+
+<div id='abhang'>
+
+	<h2>Abhängigkeitsgraph</h2>
+	<div style="float:right; margin: 1ex;">
+	  <a href="abhang.png"><img  src="abhang-klein2.png" alt=""></a>
+	</div>
+	<p>
+	  Ich habe einen <a href="abhang.png">Abhängigkeitsgraphen</a>
+    gemalt (bzw. von <a href="http://www.graphviz.org/">dot</a>
+            malen lassen).
+	  Eingezeichnet sind alle für die Dokumentation
+    der (im April 2006 vorhandenen) Packages
+	  verwendeten TeX/LaTeX-Quelltexte, inklusive der bei meinem
+	  <acronym title="LaTeX">L<sup>A</sup>T<sub>E</sub>X</acronym>-System
+	  (MikTeX) mitgelieferten Pakete, aber ohne Fontdeskriptoren und
+	  Kernel-Dateien.
+	</p>
+	<p>
+	  Eine Legende habe ich nicht gemalt, aber es scheint mir gerade
+	  ziemlich selbsterklären, wenn man sich diese Seite hier
+                              angesehen
+	  hat. (In dem Bereich der Pakete, die nicht von mir sind,
+            fehlen wahrscheinlich noch einige Quer-Abhängigkeiten.)
+	</p>
+	<p>Stand ist der 4.4.2006, daher heißt auf dem Bild das
+     <a href="#noitcrul">noitcrul-Paket</a> noch
+    <em>underline</em>. (Ich werde den Graphen wohl nicht so häufig
+	  aktualisieren wie die Pakete.)</p>
+	  
+</div>
+	
+<div id="wer-ist">
+  <h2>Wer ist Paul?</h2>
+  <p>
+    Der Paul, nach dem PaulLaTeX benannt ist, ist der Autor der Pakete,
+    Paul Ebermann.</p>
+  <p>
+    Für Fehlermeldungen zu den Paketen (oder Lob, Anregungen,
+    etc.) bin ich zu erreichen unter
+    <a href="mailto:Paul-Ebermann@gmx.de">Paul-Ebermann@gmx.de</a>.
+  </p>
+  <p>
+    Auch so ziemlich jeder andere Paul Ebermann, der 
+    <a href="http://www.google.com/search?q=Paul+Ebermann">mit Google zu finden
+    ist</a>, bin ich. Unter Esperantisten bin ich auch als
+    <a href="http://www.google.com/search?hl=eo&q=Pa%C5%ADlo+Ebermann">Paŭlo
+    Ebermann</a> bekannt, ebenso wie im
+    <a href="http://stackexchange.com/users/295869">Stack Exchange Netzwerk</a>
+    (z.B. auf
+     <a href="http://tex.stackexchange.com/users/3335/paulo-ebermann">TeX
+      Stack Exchange</a>).
+  </p>
+  <p>Ich habe eine (nicht mehr sehr aktuelle)
+    <a href="http://www.math.hu-berlin.de/~ebermann/">Homepage</a> beim Institut
+    für Mathematik der Humboldt-Universität – da sind auch weitere meiner
+    Projekte zu finden.
+  </p>
+  <p>Ich habe auch ein <a href="http://paul-ebermann.tumblr.com/">Blog</a>.</p>
+</div>
+
+
+<p>Letzte Änderung: 2011-10-08 20:42</p>
+
+</div>
+
+  </body>
+</html>

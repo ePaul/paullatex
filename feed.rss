@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Pauls LaTeX-Pakete</title>
+    <link>http://epaul.berlios.de/paullatex</link>
+    <description>Neuigkeiten zu Pauls LaTeX-Paketen, wie etwa neue
+Versionen etc.</description>
+    <language>de</language>
+    <generator>RSS-Generilo de Pa&#365;lo 2.0<!-- http://www.esperanto.de/dej/aktivikio.pl?Retejo-Funkciado/RSS --></generator>
+    <ttl>1</ttl>
+    <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+    <lastBuildDate>Sat, 08 Oct 2011 12:02:16 +0200</lastBuildDate>
+    <copyright>Paul Ebermann</copyright>
+    <pubDate>Sat, 08 Oct 2011 00:00:00 +0200</pubDate>
+    <item>
+      <title>Jetzt bei Github statt BerliOS</title>
+      <link>http://epaul.berlios.de/paullatex#neues-berlios-github</link>
+      <description>&lt;p&gt;Nachdem BerliOS
+&lt;a href=&#039;http://developer.berlios.de/forum/forum.php?forum_id=37450&#039;&gt;
+angekündigt hat, zum Jahresende die Pforten zu schließen&lt;/a&gt;, sind
+Paul&#039;s LaTeX-Pakete jetzt bei Github zu finden.
+&lt;/p&gt;</description>
+      <pubDate>Sat, 08 Oct 2011 00:00:00 +0200</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-berlios-github</guid>
+    </item>
+    <item>
+      <title>Pauldoc 0.5</title>
+      <link>#pauldoc</link>
+      <description>&lt;p&gt;Für Dokumentation der neuesten Version von
+&lt;em&gt;dateiliste&lt;/em&gt; habe ich auch ein paar Änderungen an &lt;em&gt;pauldoc&lt;/em&gt;
+gemacht – diese habe ich gerade nach CTAN hochgeladen.
+&lt;/p&gt;&lt;p&gt;
+Es gibt jetzt eine neue Paket-Option, um die Doku UTF-8-kodiert zu setzen.
+&lt;/p&gt;</description>
+      <pubDate>Fri, 06 Nov 2009 00:00:00 +0100</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-pauldoc-v0.5</guid>
+    </item>
+    <item>
+      <title>Dateiliste 0.5</title>
+      <link>#dateiliste</link>
+      <description>&lt;p&gt;Nach meiner letzten Umstellung meiner privaten
+ Arbeitsumgebung von CVS auf Subversion habe ich festgestellt, dass mein
+ &lt;em&gt;dateiliste-Paket&lt;/em&gt; nicht mit den SVN-generierten Id-Tags
+ zusammenarbeitet (es erwartet CVS/RCS-Tags).
+&lt;/p&gt;&lt;p&gt;
+ Also habe ich es um Subversion-Unterstützung erweitert (dabei half sehr, dass
+ das Paket &lt;em&gt;svninfo&lt;/em&gt; quasi analog zu &lt;em&gt;rcsinfo&lt;/em&gt; aufgebaut ist,
+ zumindest nach außen).
+&lt;/p&gt;&lt;p&gt;
+ Außerdem habe ich die Doku etwas verbessert (und auf Unicode umgestellt), und
+ eine schon vor längerer Zeit angefangene Verbesserung (Filtern der Dateinamen
+ und Beschreibungen, damit gefährliche Zeichen mir die Ausgabe nicht kaputt
+ machen) jetzt wirklich umgesetzt.
+&lt;/p&gt;</description>
+      <pubDate>Wed, 04 Nov 2009 00:00:00 +0100</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-dateiliste-v0.5</guid>
+    </item>
+    <item>
+      <title>extpfeil 0.4</title>
+      <link>/#extpfeil</link>
+      <description>&lt;p&gt;Ich habe bei meinem Ubuntu zu Hause mal einige
+LaTeX-Pakete über den Paketmanager installiert, darunter auch &lt;em&gt;extpfeil&lt;/em&gt;.
+Mein Schreck war groß, als meine Diplom-Notizen damit nicht mehr kompilierbar
+waren ...
+&lt;/p&gt;&lt;p&gt;
+Es stellte sich heraus, dass ich schon sein Monaten intern eine andere
+(erweiterte) Version von &lt;em&gt;extpfeil&lt;/em&gt; verwende, die ich noch nicht
+veröffentlicht habe (wenn man das &lt;em&gt;paullatex&lt;/em&gt;-Subversion-Repository mal
+vernachlässigt).
+&lt;/p&gt;&lt;p&gt;
+Daher eine neuere Version (jetzt auf CTAN), mit ein paar neuen Pfeilen.
+&lt;/p&gt;</description>
+      <pubDate>Sat, 31 Oct 2009 00:00:00 +0100</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-extpfeil-v0.4</guid>
+    </item>
+    <item>
+      <title>Dateiliste 0.4</title>
+      <link>http://paullatex.berlios.de/#dateiliste</link>
+      <description>Nach einem Bugreport habe ich eine neue Version des
+&#039;dateiliste&#039;-Paketes nach CTAN hochgeladen.</description>
+      <pubDate>Mon, 26 Oct 2009 00:00:00 +0100</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-dateiliste-v0.4</guid>
+    </item>
+    <item>
+      <title>Subversion</title>
+      <link>http://epaul.berlios.de/paullatex#neues-subversion</link>
+      <description>Die Pakete sind jetzt in einem Subversion-Repository, das CVS wird
+    nicht mehr benutzt.</description>
+      <pubDate>Wed, 11 Mar 2009 00:00:00 +0100</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-subversion</guid>
+    </item>
+    <item>
+      <title>Homepage überarbeitet</title>
+      <link>http://epaul.berlios.de/paullatex#neues-homepage-neu</link>
+      <description>Nach fast drei Jahren dachte ich mir, ich könnte
+ die Homepage mal überarbeiten. Jetzt funktionieren die Links, scheint mir.
+    Außerdem sind jetzt alle Pakete dabei, die zwischendurch
+    dazugekommen sind.</description>
+      <pubDate>Tue, 10 Mar 2009 00:00:00 +0100</pubDate>
+      <guid>http://epaul.berlios.de/paullatex#neues-homepage-neu</guid>
+    </item>
+  </channel>
+</rss>
