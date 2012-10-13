@@ -1,6 +1,6 @@
 % \iffalse meta-comment   -*- coding: utf-8 -*-
 %<*package|driver>
-%%  (C) 2006, 2009 Paul Ebermann (Hauptautor)
+%%  (C) 2006, 2009, 2012 Paul Ebermann (Hauptautor)
 %%  (C) 2006 Rolf Niepraschk (einiges an Code gespendet)
 %%
 %%   Package dateiliste - Zur Ausgabe der Liste der Dateien im Dokument.
@@ -65,7 +65,7 @@ mit \string{Test\string} und noch einer Gruppe. ]
 %<package>\ProvidesPackage{dateiliste}[%
 %
 %
-%<package|readme|en|de|eo>      2009/11/04 v0.5 %
+%<package|readme|en|de|eo>      2012/10/13 v0.6 %
 %
 %
 %<package>      Ausgabe der Dateiliste (PE)]
@@ -1554,6 +1554,8 @@ utile.
 \newcommand*\descriptionName{description}
 %    \end{macrocode}
 %   \begin{macro}{\dateiliste@babel}
+%   \changes{v0.6}{2012/10/13}{Zeilenenden in den \cs{addto}\cs{extras...} auskommentiert, die zu
+%      überflüssigen Leerzeichen in Headings führten. Siehe \texttt{http://tex.} \texttt{stackexchange.com/q/75533}.}
 %  Hier noch gleich ein paar Übersetzungen.
 %  Wir definieren hier ein einmal-Makro, welches
 %  für mehrere Sprachen\footnote{Genauer: genau für die Sprachen, welche ich soweit
@@ -1570,14 +1572,14 @@ utile.
          which produced this document.\footnote{More precisely, it is
             the list of files used one \LaTeX-run before the one which
             produced this document, but after some runs the list
-            should stabilize.}
-      }
+            should stabilize.}%
+      }%
       \renewcommand*\fileListName{List of Files}%
-      \renewcommand*\fileNameName{file name}
-      \renewcommand*\pageName{page}
-      \renewcommand*\dateName{release date}
-      \renewcommand*\verName{ver.}
-      \renewcommand*\descriptionName{description}
+      \renewcommand*\fileNameName{file name}%
+      \renewcommand*\pageName{page}%
+      \renewcommand*\dateName{release date}%
+      \renewcommand*\verName{ver.}%
+      \renewcommand*\descriptionName{description}%
    }%
 %    \end{macrocode}
 %  Deutsch mit neuer Rechtschreibung.
@@ -1592,14 +1594,14 @@ utile.
          welcher dieses Dokument erzeugte, verwendet wurden.
          \footnote{genauer: Es ist die Liste aller Dokumente, die 
             einen \LaTeX-Lauf fr\"uher verwendet wurden. Aber nach
-            einigen L\"aufen sollte sich die Liste stabilisieren.}
-      }
+            einigen L\"aufen sollte sich die Liste stabilisieren.}%
+      }%
       \renewcommand*\fileListName{Liste der Dateinamen}%
-      \renewcommand*\fileNameName{Dateiname}
-      \renewcommand*\pageName{\llap{Se}ite}
-      \renewcommand*\dateName{Datum}
-      \renewcommand*\verName{Ver.}
-      \renewcommand*\descriptionName{Beschreibung}
+      \renewcommand*\fileNameName{Dateiname}%
+      \renewcommand*\pageName{\llap{Se}ite}%
+      \renewcommand*\dateName{Datum}%
+      \renewcommand*\verName{Ver.}%
+      \renewcommand*\descriptionName{Beschreibung}%
    }%
 %    \end{macrocode}
 %  Deutsch mit alter Rechtschreibung: ist das gleiche (hier tauchen
@@ -1611,14 +1613,14 @@ utile.
          welcher dieses Dokument erzeugte, verwendet wurden.
          \footnote{genauer: Es ist die Liste aller Dokumente, die 
             einen \LaTeX-Lauf fr\"uher verwendet wurden. Aber nach
-            einigen L\"aufen sollte sich die Liste stabilisieren.}
-      }
+            einigen L\"aufen sollte sich die Liste stabilisieren.}%
+      }%
       \renewcommand*\fileListName{Liste der Dateinamen}%
-      \renewcommand*\fileNameName{Dateiname}
-      \renewcommand*\pageName{Seite}
-      \renewcommand*\dateName{Datum}
-      \renewcommand*\verName{Ver.}
-      \renewcommand*\descriptionName{Beschreibung}
+      \renewcommand*\fileNameName{Dateiname}%
+      \renewcommand*\pageName{Seite}%
+      \renewcommand*\dateName{Datum}%
+      \renewcommand*\verName{Ver.}%
+      \renewcommand*\descriptionName{Beschreibung}%
    }%
 %    \end{macrocode}
 %  Für die Verwender der Internationalen Sprache (siehe 'www.esperanto.de'):
@@ -1630,14 +1632,14 @@ utile.
          \footnote{Pli precize: estas la listo de dosieroj uzitaj
             unu rulon anta\u{u} tiu, kiu produktis tiun \^ci
             dokumenton. Sed kutime post kelkaj ruloj la listo
-            devus stabili\^gi.}
-      }
+            devus stabili\^gi.}%
+      }%
       \renewcommand*\fileListName{Listo de dosieroj}%
-      \renewcommand*\fileNameName{dosiernomo}
-      \renewcommand*\pageName{pa\^go}
-      \renewcommand*\dateName{dato}
-      \renewcommand*\verName{versio}
-      \renewcommand*\descriptionName{priskribo}
+      \renewcommand*\fileNameName{dosiernomo}%
+      \renewcommand*\pageName{pa\^go}%
+      \renewcommand*\dateName{dato}%
+      \renewcommand*\verName{versio}%
+      \renewcommand*\descriptionName{priskribo}%
    }%
 %    \end{macrocode}
 %  Am Ende der Ausführung von '\dateiliste@babel' vernichtet der Befehl sich
@@ -1758,7 +1760,7 @@ utile.
 %   mittels '\meaning' (mit '\strip@prefix' entfernen wir etwas Text, der vor der
 %   Makrodefinition steht)
 %    \begin{macrocode}
-      \newcommand*{\dateiliste@catxii@transform}
+      \newcommand*{\dateiliste@catxii@transform}%
       {
          \edef\dateiliste@mainfile{\jobname.tex}%
          \edef\dateiliste@mainfile{%
@@ -1791,7 +1793,7 @@ utile.
 %   ausgeführt wird, sind ja die Dokumenten-Catcodes in Kraft, nicht die einer
 %    Package-Datei.)
 %    \begin{macrocode}
-      \newcommand*{\dateiliste@scantoken@tr}
+      \newcommand*{\dateiliste@scantoken@tr}%
       {%
          \scantokens
          \expandafter{%
@@ -1811,7 +1813,7 @@ utile.
       \if@dateiliste@catxii
         \dateiliste@catxii@transform
       \else
-        \@ifundefined{scantokens}
+        \@ifundefined{scantokens}%
         {%
           \if@dateiliste@nocatxii
 %    \end{macrocode}
@@ -1824,7 +1826,7 @@ utile.
           \else
             \dateiliste@catxii@transform
           \fi
-        }
+        }%
         {%
           \dateiliste@scantoken@tr
         }%
