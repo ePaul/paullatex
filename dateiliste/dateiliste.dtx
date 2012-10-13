@@ -1693,16 +1693,38 @@ utile.
 %
 %  \subsection{Hauptdatei in die Dateiliste}
 %  \begin{macro}{\mainFileToList}
+%    \changes{v0.6}{2012/10/13}{Wir geben eine Warnung aus anstatt einer Endlosschleife,
+%        wenn \cs{@filelist} undefiniert ist. Danke an Markus Kohm, Matthias Kospiech
+%        und Andrew Swann für Bugreport and Analyse, siehe auch
+%        \texttt{http://tex.stackexchange.} \texttt{com/q/75533/3335}.}
 %    \changes{v0.1}{2006/04/02}{Neu}
 %    \changes{v0.2}{2006/04/19}{Mögliche Erkennung des Dateinamens jetzt
 %      auch ohne \eTeX}
 %    Hier unser Nutzer-Makro für die Inklusion der Hauptdatei
 %    in die Dateiliste.
-%    
+%    \begin{macrocode}
+\newcommand*{\mainFileToList}{%  \mainFileToList
+%    \end{macrocode}
+%    Falls die Dateiliste (d.h. das Makro '\@filelist') nicht definiert ist,
+%    geben wir eine Warnung aus, und tun nichts weiter. (Ohne das würde es
+%    in dem Fall eine Endlosschleife/-rekursion geben, wenn wir versuchen, aus
+%    dieser Liste etwas zu entfernen.)
+%    \begin{macrocode}
+  \@ifundefined{@filelist}{%
+      \PackageWarning{dateiliste}%
+      {%
+         ^^J
+         \protect\mainFileToList\space (i.e. using the {dateiliste}
+            package withouth^^J
+         the [noaddmain] option) works only if \protect\listfiles\space
+            is given^^J
+         in the preamble.^^J
+      }%
+  }{%
+%    \end{macrocode}
 %    Zunächst sehen wir nach, ob es eine Datei mit Namen \meta{jobname}'.tex'
 %    gibt. 
 %    \begin{macrocode}
-\newcommand*{\mainFileToList}{%  \mainFileToList
    \IfFileExists{\jobname.tex} {%
       \begingroup
 %    \end{macrocode}
@@ -1858,6 +1880,7 @@ utile.
    }{%
       \relax
    }%
+  }%
 }%
 %    \end{macrocode}
 %  \end{macro}
